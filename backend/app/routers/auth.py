@@ -8,7 +8,9 @@ router = APIRouter()
 @router.post("/register")
 def register(email: str, password: str):
     db = SessionLocal()
-    db.add(User(email=email, password=hash_password(password)))
+    db.add(User(email=email, password=hash_password(password),
+               role="admin"
+               ))
     db.commit()
     return {"msg": "ok"}
 
