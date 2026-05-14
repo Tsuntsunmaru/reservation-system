@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>管理画面</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h2>管理画面</h2>
+
+<button onclick="addRoom()">会議室追加</button>
+<button onclick="addCar()">車追加</button>
+
+<br><br>
+
+<input type="date" id="holidayDate">
+<button onclick="setHoliday()">休日設定</button>
+
+<script>
+const API = "http://127.0.0.1:8000";
+const token = localStorage.getItem("token");
+
+async function addRoom(){
+  await fetch(API + "/admin/resources?name=会議室A&type=room", {
+    method:"POST",
+    headers:{token}
+  });
+  alert("追加完了");
+}
+
+async function addCar(){
+  await fetch(API + "/admin/resources?name=社用車A&type=car", {
+    method:"POST",
+    headers:{token}
+  });
+  alert("追加完了");
+}
+
+async function setHoliday(){
+  const date = document.getElementById("holidayDate").value;
+
+  await fetch(API + "/admin/holiday?date=" + date, {
+    method:"POST",
+    headers:{token}
+  });
+
+  alert("休日設定");
+}
+</script>
+
+</body>
+</html>
