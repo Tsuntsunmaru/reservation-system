@@ -1,0 +1,88 @@
+const API = "http://127.0.0.1:8000";
+const token = localStorage.getItem("token");
+
+let calendar;
+
+async function loadResources() {
+  const res = await fetch(API + "/resources");
+  const data = await res.json();
+
+  const select = document.getElementById("resourceSelect");
+
+  select.innerHTML = "";
+
+  data.forEach(r => {
+    const opt = document.createElement("option");
+    opt.value = r.id;
+    opt.textContent = r.name;
+    select.appendChild(opt);
+  });
+}
+
+async function loadEvents(resourceId) {
+  const res = await fetch(API + "/bookings");
+  const data = await res.json();
+
+  return data
+    .filter(b => b.resource_id == resourceId)
+    .map(b => ({
+      title: "予約",
+      start: b.start_at,
+      end: b.end_at,
+      color: "red"
+    }));
+}
+
+async function initCalendar() {
+
+  const select = document.getElementById("resourceSelect");
+  const resourceId = select.value;
+
+  const events = await loadEvents(resourceId);
+
+  const calendarEl = document.getElementById("calendar");
+
+  if (calendar) calendar.destroy();
+
+  calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "timeGridWeek",
+    selectable: true,
+
+    select: async (info) => {
+
+      const res = await fetch(API + "/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "token": token
+        },
+        body: JSON.stringify({
+          resource_id: Number(resourceId),
+          start_at: info.startStr,
+          end_at: info.endStr
+        })
+      });
+
+      if (res.ok) {
+        alert("予約成功");
+        initCalendar();
+      } else {
+        alert("予約不可");
+      }
+    },
+
+    events: events
+  });
+
+  calendar.render();
+}
+
+function logout(){
+  localStorage.removeItem("token");
+  alert("ログアウトしました");
+}
+
+document.getElementById("resourceSelect")
+  .addEventListener("change", initCalendar);
+
+loadResources().then(initCalendar);
