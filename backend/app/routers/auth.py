@@ -23,7 +23,7 @@ def register(user: UserCreate):
 
     new_user = User(
         email=user.email,
-        password=user.password,
+        password=hash_password(user.password),
         role="user"
     )
 
@@ -39,7 +39,7 @@ def login(user: LoginUser):
 
     db_user = db.query(User).filter(User.email == user.email).first()
 
-    if not db_user or user.password != db_user.password:
+    if not db_user or not verify_password(user.password,db_user.password):
         raise HTTPException(status_code=401, detail="Unauthorized")
 
     return {"token": create_token({"user_id": db_user.id})}
