@@ -2,8 +2,20 @@ from fastapi import APIRouter, HTTPException
 from app.database import SessionLocal
 from app.models.user import User
 from app.core.auth import *
+from pydantic import BaseModel
 
 router = APIRouter()
+
+
+class UserCreate(BaseModel):
+    email: str
+    password: str
+
+
+class LoginUser(BaseModel):
+    email: str
+    password: str
+
 
 @router.post("/register")
 def register(user: UserCreate):
@@ -20,6 +32,7 @@ def register(user: UserCreate):
 
     return {"msg": "ok"}
 
+
 @router.post("/login")
 def login(user: LoginUser):
     db = SessionLocal()
@@ -27,6 +40,6 @@ def login(user: LoginUser):
     db_user = db.query(User).filter(User.email == user.email).first()
 
     if not db_user or not verify_password(user.password, db_user.password):
-        raise HTTPException(401)
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
     return {"token": create_token({"user_id": db_user.id})}
