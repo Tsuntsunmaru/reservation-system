@@ -1,0 +1,50 @@
+from fastapi import APIRouter, Depends, HTTPException, Header
+from app.database import SessionLocal
+from app.models.resource import Resource
+from app.models.blocked import BlockedSlot
+from app.models.holiday import Holiday
+from app.models.user import User
+from app.core.auth import decode_token
+
+router = APIRouter()
+
+def admin_user(token: str = Header()):
+    payload = decode_token(token)
+    db = SessionLocal()
+    user = db.query(User).get(payload["user_id"])
+
+    if user.role != "admin":
+        raise HTTPException(403)
+
+    return user
+
+@router.post("/admin/resources")
+def create_resource(name: str, type: str, user: User = Depends(admin_user)):
+    db = SessionLocal()
+    db.add(Resource(name=name, type=type))
+    db.commit()
+    return {"msg": "ok"}
+
+@router.post("/admin/block")
+def block(resource_id: int, start_at: str, end_at: str, user: User = Depends(admin_user)):
+    db = SessionLocal()
+    db.add(BlockedSlot(resource_id=resource_id, start_at=start_at, end_at=end_at))
+    db.commit()
+    return {"msg": "ok"}
+
+@router.post("/admin/holiday")
+def holiday(date: str, user: User = Depends(admin_user)):
+    db = SessionLocal()
+    db.add(Holiday(date=date, is_blocked=1))
+    db.commit()
+    return {"msg": "ok"}
+
+@router.get("/admin/blocks")
+def get_blocks(user: User = Depends(admin_user)):
+    db = SessionLocal()
+    return db.query(BlockedSlot).all()
+
+@router.get("/admin/holidays")
+def get_holidays(user: User = Depends(admin_user)):
+    db = SessionLocal()
+    return db.query(Holiday).all()
