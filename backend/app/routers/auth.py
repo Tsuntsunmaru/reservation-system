@@ -6,20 +6,27 @@ from app.core.auth import *
 router = APIRouter()
 
 @router.post("/register")
-def register(email: str, password: str):
+def register(user: UserCreate):
     db = SessionLocal()
-    db.add(User(email=email, password=hash_password(password),
-               role="admin"
-               ))
+
+    new_user = User(
+        email=user.email,
+        password=hash_password(user.password),
+        role="user"
+    )
+
+    db.add(new_user)
     db.commit()
+
     return {"msg": "ok"}
 
 @router.post("/login")
-def login(email: str, password: str):
+def login(user: LoginUser):
     db = SessionLocal()
-    user = db.query(User).filter(User.email == email).first()
 
-    if not user or not verify_password(password, user.password):
+    db_user = db.query(User).filter(User.email == user.email).first()
+
+    if not db_user or not verify_password(user.password, db_user.password):
         raise HTTPException(401)
 
-    return {"token": create_token({"user_id": user.id})}
+    return {"token": create_token({"user_id": db_user.id})}
