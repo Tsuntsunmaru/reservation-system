@@ -1,7 +1,7 @@
 from jose import jwt
 from passlib.context import CryptContext
 
-SECRET KEY = "secret"
+SECRET_KEY = "secret"
 ALGORITHM = "HS256"
 
 pwd context = CryptContext(schemes=["bcrypt"])
