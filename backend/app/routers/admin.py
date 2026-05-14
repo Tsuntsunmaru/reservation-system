@@ -49,7 +49,7 @@ def get_holidays(user: User = Depends(admin_user)):
     db = SessionLocal()
     return db.query(Holiday).all()
 @router.post("/admin/promote")
-def promote_user(email: str, user: User = Depends(admin_user)):
+def promote_user(email: str):
     db = SessionLocal()
 
     target = db.query(User).filter(User.email == email).first()
