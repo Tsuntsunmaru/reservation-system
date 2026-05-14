@@ -14,13 +14,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-import os
-
-if os.path.exists("test.db"):
-    os.remove("test.db")
-
-Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
 app.include_router(auth.router)
