@@ -48,3 +48,15 @@ def get_blocks(user: User = Depends(admin_user)):
 def get_holidays(user: User = Depends(admin_user)):
     db = SessionLocal()
     return db.query(Holiday).all()
+@router.post("/admin/promote")
+def promote_user(email: str, user: User = Depends(admin_user)):
+    db = SessionLocal()
+
+    target = db.query(User).filter(User.email == email).first()
+    if not target:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    target.role = "admin"
+    db.commit()
+
+    return {"msg": "promoted to admin"}
