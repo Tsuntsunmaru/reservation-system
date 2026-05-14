@@ -91,8 +91,10 @@ async function initCalendar() {
   const resourceId = document.getElementById("resourceSelect").value;
 
   const bookings = await loadBookings(resourceId);
-  const blocks = await loadBlocks(resourceId);
-  const holidays = await loadHolidays();
+  //const blocks = await loadBlocks(resourceId);
+  const blocks = [];
+  //const holidays = await loadHolidays();
+  const holidays = [];
 
   const calendarEl = document.getElementById("calendar");
 
