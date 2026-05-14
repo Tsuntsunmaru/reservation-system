@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 SECRET_KEY = "secret"
 ALGORITHM = "HS256"
 
-pwd context = CryptContext(schemes=["bcrypt"])
+pwd_context = CryptContext(schemes=["bcrypt"])
 
 def hash_password(p):
     return pwd_context.hash(p)
