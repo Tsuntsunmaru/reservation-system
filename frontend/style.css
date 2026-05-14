@@ -86,3 +86,7 @@ document.getElementById("resourceSelect")
   .addEventListener("change", initCalendar);
 
 loadResources().then(initCalendar);
+
+#calendar {
+  height: 700px;
+}
