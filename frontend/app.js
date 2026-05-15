@@ -145,7 +145,6 @@ async function initCalendar() {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + token
         },
-       
         body: JSON.stringify({
           resource_id: Number(resourceId),
           start_at: new Date(info.startStr).toISOString(),
