@@ -123,5 +123,5 @@ body.modal-open .fc {
 }
 
 body.modal-open #calendar {
-  display: none;
+  visibility: none;
 }
