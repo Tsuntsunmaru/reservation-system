@@ -4,6 +4,9 @@ from app.database import Base, engine
 from app.routers import auth, booking, resource, admin
 
 app = FastAPI()
+@app.get("/")
+def root():
+    return {"message": "ok"}
 
 from fastapi.middleware.cors import CORSMiddleware
 
