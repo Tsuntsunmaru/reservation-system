@@ -165,6 +165,7 @@ const endText = new Date(info.endStr).toLocaleString("ja-JP", {
 
   // ✅ モーダル表示
   document.getElementById("confirmBox").style.display = "block";
+  document.body.classList.add("modal-open");
 
   // ✅ OK押したら実行する処理をセット
   pendingReservation = async function() {
@@ -223,6 +224,7 @@ let pendingReservation = null;
 
 function confirmOk() {
   document.getElementById("confirmBox").style.display = "none";
+  document.body.classList.remove("modal-open");
 
   if (pendingReservation) {
     pendingReservation();
@@ -232,5 +234,6 @@ function confirmOk() {
 
 function confirmCancel() {
   document.getElementById("confirmBox").style.display = "none";
+  document.body.classList.remove("modal-open");
   pendingReservation = null;
 }
