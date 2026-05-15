@@ -101,101 +101,73 @@ async function initCalendar() {
 
   if (calendar) calendar.destroy();
 
-  calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: "timeGridWeek",
-    selectable: true,
+calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: "timeGridWeek",
+  selectable: true,
+
   selectAllow: function(selectInfo) {
+    const start = new Date(selectInfo.start);
+    const end = new Date(selectInfo.end);
 
-  const start = new Date(selectInfo.start);
-  const end = new Date(selectInfo.end);
+    for (let event of calendar.getEvents()) {
+      if (event.display === "background") {
+        let bStart = event.start;
+        let bEnd = event.end;
 
-  for (let event of calendar.getEvents()) {
-
-    // background（グレー）だけチェック
-    if (event.display === "background") {
-
-      let bStart = event.start;
-      let bEnd = event.end;
-
-      // 重なってたらNG
-      if (!(end <= bStart || start >= bEnd)) {
-        return false;
+        if (!(end <= bStart || start >= bEnd)) {
+          return false;
+        }
       }
     }
+
+    return true;
+  },
+
+  events: [
+    ...bookings,
+    ...blocks,
+    ...holidays,
+    generateWeekendEvents()
+  ],
+
+  select: function(info) {
+    console.log("SELECT動いた");   // ←デバッグ
+
+    const startText = new Date(info.startStr).toLocaleString("ja-JP");
+    const endText = new Date(info.endStr).toLocaleString("ja-JP");
+
+    document.getElementById("confirmText").innerText =
+      `${startText}\n〜\n${endText}\nで予約しますか？`;
+
+    document.getElementById("confirmBox").style.display = "block";
+    document.body.classList.add("modal-open");
+
+    pendingReservation = async function() {
+      const res = await fetch(API + "/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+          resource_id: Number(resourceId),
+          start_at: new Date(info.startStr).toISOString(),
+          end_at: new Date(info.endStr).toISOString()
+        })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("予約成功");
+        initCalendar();
+      } else {
+        alert(data.detail || "予約不可");
+      }
+    };
   }
 
-  return true;
-},
-
-
-    // ⭐ イベント統合
-    events: [
-      ...bookings,
-      ...blocks,
-      ...holidays,
-      generateWeekendEvents()
-    ],
-
-    //
-
-    // ----------------
-    // 予約操作
-    // ----------------    
-
-select: async function(info) {
-  console.log("SELECT動いた");
-const startText = new Date(info.startStr).toLocaleString("ja-JP", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit"
 });
-
-const endText = new Date(info.endStr).toLocaleString("ja-JP", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit"
-});
-
-  // ✅ 表示テキスト
-  document.getElementById("confirmText").innerText =
-    `${startText} 〜 ${endText} で予約しますか？`;
-
-  // ✅ モーダル表示
-  document.getElementById("confirmBox").style.display = "block";
-  document.body.classList.add("modal-open");
-
-  // ✅ OK押したら実行する処理をセット
-  pendingReservation = async function() {
-
-    const res = await fetch(API + "/bookings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-      },
-      body: JSON.stringify({
-        resource_id: Number(resourceId),
-        start_at: new Date(info.startStr).toISOString(),
-        end_at: new Date(info.endStr).toISOString()
-      })
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("予約を登録しました ✅");
-      initCalendar();
-    } else {
-      alert(data.detail || "予約不可");
-    }
-  };
-}
-  });
-
   calendar.render();
 }
 
