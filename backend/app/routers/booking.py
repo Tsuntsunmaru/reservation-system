@@ -8,7 +8,10 @@ from app.core.auth import decode_token
 
 router = APIRouter()
 
-def get_user(token: str = Header()):
+
+def get_user(authorization: str = Header()):
+    token = authorization.replace("Bearer ", "")
+
     payload = decode_token(token)
     db = SessionLocal()
     return db.query(User).get(payload["user_id"])
