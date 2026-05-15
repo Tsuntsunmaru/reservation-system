@@ -114,3 +114,7 @@ loadResources().then(initCalendar);
   text-align: center;
   border-radius: 10px;
 }
+
+body.modal-open .fc {
+  pointer-events: none !important;
+}
