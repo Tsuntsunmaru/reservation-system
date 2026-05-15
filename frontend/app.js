@@ -139,17 +139,36 @@ async function initCalendar() {
     // 予約操作
     // ----------------
     select: async function(info) {
-      const res = await fetch(API + "/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
-        },
-        body: JSON.stringify({
-          resource_id: Number(resourceId),
-          start_at: new Date(info.startStr).toISOString(),
-          end_at: new Date(info.endStr).toISOString()
-        })
+
+  // ✅ ① 確認ダイアログ追加
+  if (!confirm("この時間で予約しますか？")) {
+    return;
+  }
+
+  const res = await fetch(API + "/bookings", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({
+      resource_id: Number(resourceId),
+      start_at: new Date(info.startStr).toISOString(),
+      end_at: new Date(info.endStr).toISOString()
+    })
+  });
+
+  // ✅ ② エラーメッセージ取得
+  const data = await res.json();
+
+  if (res.ok) {
+    alert("予約成功");
+    initCalendar();
+  } else {
+    alert(data.detail || "予約不可");   // ←ここ変えた！
+  }
+}
+
       });
 
       if (res.ok) {
