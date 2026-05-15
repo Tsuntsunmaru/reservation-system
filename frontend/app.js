@@ -196,6 +196,8 @@ loadResources().then(initCalendar);
 let pendingReservation = null;
 
 function confirmOk() {
+  if (e) e.stopPropagation();
+  
   document.getElementById("confirmBox").style.display = "none";
   document.body.classList.remove("modal-open");
 
