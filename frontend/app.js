@@ -143,7 +143,7 @@ async function initCalendar() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "token": token
+          "Authorization": "Bearer " + token
         },
         body: JSON.stringify({
           resource_id: Number(resourceId),
