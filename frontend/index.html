@@ -36,8 +36,9 @@
 
 <script src="app.js"></script>
 
-<div id="confirmBox" class="modal">
-  <div class="modal-content">
+<div id="confirmBox" class="modal" onclick="confirmCancel()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+
     <p id="confirmText"></p>
 
     <button onclick="confirmOk()">OK</button>
