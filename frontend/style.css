@@ -90,3 +90,22 @@ loadResources().then(initCalendar);
 #calendar {
   height: 700px;
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  width: 300px;
+  margin: 200px auto;
+  text-align: center;
+  border-radius: 10px;
+}
