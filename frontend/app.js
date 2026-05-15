@@ -143,6 +143,7 @@ async function initCalendar() {
     // ----------------    
 
 select: async function(info) {
+  console.log("SELECT動いた");
 const startText = new Date(info.startStr).toLocaleString("ja-JP", {
   year: "numeric",
   month: "2-digit",
