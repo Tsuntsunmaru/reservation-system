@@ -38,3 +38,23 @@ def can_book(db, resource_id, start_at, end_at, user):
         # 他の予約が1件でもあればNG
         if bookings:
             return False, "外部予約不可（埋まってる）"
+
+
+from datetime import datetime
+
+def can_book(db, resource_id, start_at, end_at, user):
+
+    # ✅ 過去予約チェック
+    if start_at < datetime.utcnow():
+        return False, "過去の時間は予約できません"
+
+    # 既存の重複チェック（今のまま）
+    bookings = db.query(Booking).filter(
+        Booking.resource_id == resource_id
+    ).all()
+
+    for b in bookings:
+        if not (end_at <= b.start_at or start_at >= b.end_at):
+            return False, "他の予約と重なっています"
+
+    return True, "OK"
