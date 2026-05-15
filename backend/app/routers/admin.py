@@ -9,6 +9,8 @@ from app.core.auth import decode_token
 router = APIRouter()
 
 def admin_user(token: str = Header()):
+    token = authorization.replace("Bearer","")
+    
     payload = decode_token(token)
     db = SessionLocal()
     user = db.query(User).get(payload["user_id"])
