@@ -58,3 +58,5 @@ def can_book(db, resource_id, start_at, end_at, user):
             return False, "他の予約と重なっています"
 
     return True, "OK"
+if end_at <= start_at:
+    return False, "終了時間は開始時間より後にしてください"
