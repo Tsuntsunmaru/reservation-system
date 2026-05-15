@@ -145,10 +145,11 @@ async function initCalendar() {
           "Content-Type": "application/json",
           "Authorization": "Bearer " + token
         },
+       
         body: JSON.stringify({
           resource_id: Number(resourceId),
-          start_at: info.startStr,
-          end_at: info.endStr
+          start_at: new Date(info.startStr).toISOString(),
+          end_at: new Date(info.endStr).toISOString()
         })
       });
 
