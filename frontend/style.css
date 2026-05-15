@@ -121,3 +121,7 @@ loadResources().then(initCalendar);
 body.modal-open .fc {
   pointer-events: none !important;
 }
+
+body.modal-open #calendar {
+  display: none;
+}
