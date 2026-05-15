@@ -137,10 +137,10 @@ async function initCalendar() {
 
     // ----------------
     // 予約操作
-    // ----------------
-    select: async function(info) {
+    // ----------------    
+select: async function(info) {
 
-  // ✅ ① 確認ダイアログ追加
+  // ✅ ① 確認ダイアログ
   if (!confirm("この時間で予約しますか？")) {
     return;
   }
@@ -158,26 +158,15 @@ async function initCalendar() {
     })
   });
 
-  // ✅ ② エラーメッセージ取得
   const data = await res.json();
 
   if (res.ok) {
     alert("予約成功");
     initCalendar();
   } else {
-    alert(data.detail || "予約不可");   // ←ここ変えた！
+    alert(data.detail || "予約不可");
   }
 }
-
-      });
-
-      if (res.ok) {
-        alert("予約成功");
-        initCalendar();
-      } else {
-        alert("予約不可");
-      }
-    }
   });
 
   calendar.render();
