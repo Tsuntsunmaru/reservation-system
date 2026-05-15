@@ -191,3 +191,22 @@ document.getElementById("resourceSelect")
 // 初期化
 // ----------------
 loadResources().then(initCalendar);
+
+//-----------------
+//確認用ボックス
+//-----------------
+let pendingReservation = null;
+
+function confirmOk() {
+  document.getElementById("confirmBox").style.display = "none";
+
+  if (pendingReservation) {
+    pendingReservation();
+    pendingReservation = null;
+  }
+}
+
+function confirmCancel() {
+  document.getElementById("confirmBox").style.display = "none";
+  pendingReservation = null;
+}
