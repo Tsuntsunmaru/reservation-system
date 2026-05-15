@@ -141,9 +141,21 @@ async function initCalendar() {
     // ----------------    
 
 select: async function(info) {
+const startText = new Date(info.startStr).toLocaleString("ja-JP", {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit"
+});
 
-  const startText = new Date(info.startStr).toLocaleString();
-  const endText = new Date(info.endStr).toLocaleString();
+const endText = new Date(info.endStr).toLocaleString("ja-JP", {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit"
+});
 
   // ✅ 表示テキスト
   document.getElementById("confirmText").innerText =
