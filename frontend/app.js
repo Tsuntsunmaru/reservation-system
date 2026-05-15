@@ -31,9 +31,10 @@ async function loadBookings(resourceId) {
   return data
     .filter(b => b.resource_id == resourceId)
     .map(b => ({
+      id: b.id,
       title: "予約",
-      start: b.start_at,
-      end: b.end_at,
+      start: new Date(b.start_at),
+      end: new Date(b.end_at),
       color: "#e84118"
     }));
 }
