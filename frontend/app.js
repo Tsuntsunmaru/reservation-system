@@ -195,7 +195,7 @@ loadResources().then(initCalendar);
 //-----------------
 let pendingReservation = null;
 
-function confirmOk() {
+function confirmOk(e) {
   if (e) e.stopPropagation();
   
   document.getElementById("confirmBox").style.display = "none";
