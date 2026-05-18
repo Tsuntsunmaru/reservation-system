@@ -62,6 +62,8 @@ async function initCalendar() {
 
     select: async function(info) {
 
+      alert("select動いた");
+
       const startText = new Date(info.startStr).toLocaleString("ja-JP");
       const endText = new Date(info.endStr).toLocaleString("ja-JP");
 
