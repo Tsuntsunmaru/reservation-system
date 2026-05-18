@@ -142,6 +142,8 @@ calendar = new FullCalendar.Calendar(calendarEl, {
     document.getElementById("confirmBox").style.display = "block";
     document.body.classList.add("modal-open");
 
+    calendar.unselect();
+
     pendingReservation = async function() {
       const res = await fetch(API + "/bookings", {
         method: "POST",
