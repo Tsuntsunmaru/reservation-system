@@ -41,37 +41,32 @@ function generateWeekendEvents() {
   };
 }
 
-async function initCalendar() {
-
-  alert("init呼ばれた");
+function initCalendar() {
 
   const resourceId = document.getElementById("resourceSelect").value;
 
-  const bookings = await loadBookings(resourceId);
+  loadBookings(resourceId).then(bookings => {
 
-  const calendarEl = document.getElementById("calendar");
+    const calendarEl = document.getElementById("calendar");
 
-  if (calendar) calendar.destroy();
+    if (calendar) calendar.destroy();
 
-calendar = new FullCalendar.Calendar(calendarEl, {
-  initialView: "timeGridWeek",
-  selectable: true,
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "timeGridWeek",
+      selectable: true,
 
-  select: function() {
-    alert("select動いた！");
-  }
-});
+      events: [
+        ...bookings,
+        generateWeekendEvents()
+      ],
 
-      if (res.ok) {
-        alert("予約成功");
-        initCalendar();
-      } else {
-        alert("予約不可");
+      select: function(info) {
+        alert("select動いた！");
       }
-    }
-  });
+    });
 
-  calendar.render();
+    calendar.render();
+  });
 }
 
 // 初期化
