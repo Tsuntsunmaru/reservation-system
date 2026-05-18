@@ -197,6 +197,7 @@ let pendingReservation = null;
 
 function confirmOk(e) {
   if (e) e.stopPropagation();
+  window.event?.stopImmediatePropagation();
   
   document.getElementById("confirmBox").style.display = "none";
   document.body.classList.remove("modal-open");
