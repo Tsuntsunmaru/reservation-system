@@ -1,14 +1,26 @@
 #calendar {
   height: 700px;
 }
-.fc {
-  user-select: none;
-  pointer-events: none;
+
+.modal {
+  display: block; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.5); 
+
+  z-index: 9999;  
 }
-#calendar {
-  height: 700px;
-}
-.fc {
-  user-select: none;
-  pointer-events: none;
+
+.modal-content {
+  position: relative;
+  width: 300px;
+  margin: 200px auto;
+  background: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
 }
