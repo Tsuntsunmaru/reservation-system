@@ -5,3 +5,10 @@
   user-select: none;
   pointer-events: none;
 }
+#calendar {
+  height: 700px;
+}
+.fc {
+  user-select: none;
+  pointer-events: none;
+}
