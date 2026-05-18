@@ -131,7 +131,6 @@ calendar = new FullCalendar.Calendar(calendarEl, {
   ],
 
   select: function(info) {
-    console.log("SELECT動いた");   // ←デバッグ
 
     const startText = new Date(info.startStr).toLocaleString("ja-JP");
     const endText = new Date(info.endStr).toLocaleString("ja-JP");
@@ -141,6 +140,7 @@ calendar = new FullCalendar.Calendar(calendarEl, {
 
     document.getElementById("confirmBox").style.display = "block";
     document.body.classList.add("modal-open");
+    document.getElementById("calendar").style.pointerEvents = "none";
 
     calendar.unselect();
 
