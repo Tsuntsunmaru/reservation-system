@@ -1,3 +1,6 @@
 #calendar {
   height: 700px;
 }
+.fc {
+  user-select: none;
+}
