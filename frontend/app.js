@@ -51,40 +51,14 @@ async function initCalendar() {
 
   if (calendar) calendar.destroy();
 
-  calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: "timeGridWeek",
-    
-    selectable: true,
-    selectMirror: true,
-    longPressDelay: 0,
+calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: "timeGridWeek",
+  selectable: true,
 
-    events: [
-      ...bookings,
-      generateWeekendEvents()
-    ],
-
-    select: async function(info) {
-
-      console.log("select動いた");
-
-      const startText = new Date(info.startStr).toLocaleString("ja-JP");
-      const endText = new Date(info.endStr).toLocaleString("ja-JP");
-
-      const ok = confirm(`${startText}\n〜\n${endText}\nで予約しますか？`);
-      if (!ok) return;
-
-      const res = await fetch(API + "/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
-        },
-        body: JSON.stringify({
-          resource_id: Number(resourceId),
-          start_at: new Date(info.startStr).toISOString(),
-          end_at: new Date(info.endStr).toISOString()
-        })
-      });
+  select: function() {
+    alert("select動いた！");
+  }
+});
 
       if (res.ok) {
         alert("予約成功");
