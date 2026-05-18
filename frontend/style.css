@@ -3,4 +3,5 @@
 }
 .fc {
   user-select: none;
+  pointer-events: none;
 }
