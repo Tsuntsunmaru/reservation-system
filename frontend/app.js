@@ -75,7 +75,11 @@ document.getElementById("resourceSelect")
 
 initCalendar();
 document.addEventListener("DOMContentLoaded", () => {
-  loadResources().then(initCalendar);
+window.onload = () => {
+  loadResources();
+  initCalendar();
+}
+
 });
 
 function logout(){
