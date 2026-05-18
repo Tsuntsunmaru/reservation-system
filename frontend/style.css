@@ -92,13 +92,11 @@ document.getElementById("resourceSelect")
   height: 700px;
 }
 
-.header,
-h3,
-input,
-button {
+body > *:not(#calendar) {
   position: relative;
   z-index: 10;
 }
+
 loadResources().then(initCalendar);
 
  
