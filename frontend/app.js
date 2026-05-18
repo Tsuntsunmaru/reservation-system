@@ -53,7 +53,10 @@ async function initCalendar() {
 
   calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "timeGridWeek",
+    
     selectable: true,
+    selectMirror: true,
+    longPressDelay: 0,
 
     events: [
       ...bookings,
