@@ -79,6 +79,9 @@ document.getElementById("resourceSelect")
   .addEventListener("change", initCalendar);
 
 loadResources().then(initCalendar);
+document.addEventListener("DOMContentLoaded", () => {
+  loadResources().then(initCalendar);
+});
 
 function logout(){
   localStorage.removeItem("token");
