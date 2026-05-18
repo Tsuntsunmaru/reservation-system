@@ -203,6 +203,7 @@ function confirmOk(e) {
   
   document.getElementById("confirmBox").style.display = "none";
   document.body.classList.remove("modal-open");
+  document.getElementById("calendar").style.pointerEvents = "auto";
 
   if (pendingReservation) {
     pendingReservation();
@@ -213,5 +214,6 @@ function confirmOk(e) {
 function confirmCancel() {
   document.getElementById("confirmBox").style.display = "none";
   document.body.classList.remove("modal-open");
+  document.getElementById("calendar").style.pointerEvents = "auto";
   pendingReservation = null;
 }
