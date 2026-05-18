@@ -138,11 +138,12 @@ calendar = new FullCalendar.Calendar(calendarEl, {
     document.getElementById("confirmText").innerText =
       `${startText}\n〜\n${endText}\nで予約しますか？`;
 
-    document.getElementById("confirmBox").style.display = "block";
-    document.body.classList.add("modal-open");
-    document.getElementById("calendar").style.pointerEvents = "none";
-
     calendar.unselect();
+ 
+setTimeout(() => {
+    document.getElementById("confirmBox").style.display = "block";
+  }, 0);
+
 
     pendingReservation = async function() {
       const res = await fetch(API + "/bookings", {
