@@ -213,3 +213,14 @@ function confirmCancel() {
   document.getElementById("confirmBox").style.display = "none";
   pendingReservation = null;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("okBtn").addEventListener("click", () => {
+    document.getElementById("confirmBox").style.display = "none";
+
+    if (pendingReservation) {
+      pendingReservation();
+      pendingReservation = null;
+    }
+  });
+});
