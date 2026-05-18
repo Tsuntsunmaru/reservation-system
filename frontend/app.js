@@ -78,7 +78,7 @@ calendar = new FullCalendar.Calendar(calendarEl, {
 document.getElementById("resourceSelect")
   .addEventListener("change", initCalendar);
 
-loadResources().then(initCalendar);
+initCalendar();
 document.addEventListener("DOMContentLoaded", () => {
   loadResources().then(initCalendar);
 });
