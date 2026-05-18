@@ -53,7 +53,6 @@ async function initCalendar() {
 
   calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "timeGridWeek",
-    plugins: [ 'interaction' ],
     selectable: true,
 
     events: [
