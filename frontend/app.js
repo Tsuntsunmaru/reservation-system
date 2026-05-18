@@ -43,6 +43,8 @@ function generateWeekendEvents() {
 
 async function initCalendar() {
 
+  alert("init呼ばれた");
+
   const resourceId = document.getElementById("resourceSelect").value;
 
   const bookings = await loadBookings(resourceId);
