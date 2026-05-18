@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "timeGridWeek",
+    plugins: [ 'interaction' ],
     selectable: true,
-    dragScroll: false,
 
     select: function(info) {
       alert("動いた！！！！");
