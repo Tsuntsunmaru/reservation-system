@@ -1,6 +1,7 @@
 window.onload = () => {
 
   const calendarEl = document.getElementById("calendar");
+  console.log(calendarEl);
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "timeGridWeek",
