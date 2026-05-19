@@ -1,7 +1,7 @@
+<script>
 window.onload = () => {
 
   const calendarEl = document.getElementById("calendar");
-  console.log(calendarEl);
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "timeGridWeek",
@@ -9,16 +9,37 @@ window.onload = () => {
 
     select: function(info) {
 
-      const startText = new Date(info.startStr).toLocaleString("ja-JP");
-      const endText = new Date(info.endStr).toLocaleString("ja-JP");
+      // ✅ 日付整形
+      const start = new Date(info.startStr).toLocaleString("ja-JP");
+      const end = new Date(info.endStr).toLocaleString("ja-JP");
 
-      const ok = confirm(`${startText}\n〜\n${endText}\nで予約しますか？`);
+      // ✅ 見やすい確認メッセージ
+      const message =
+`========================
+      予約確認
+========================
+
+開始：${start}
+終了：${end}
+
+この内容で予約しますか？`;
+
+      // ✅ confirm
+      const ok = confirm(message);
       if (!ok) return;
 
-      alert("予約成功");
+      alert("✅ 予約成功");
 
+      // ✅ カレンダーに表示
+      calendar.addEvent({
+        title: "予約",
+        start: info.start,
+        end: info.end,
+        color: "#e84118"
+      });
     }
   });
 
   calendar.render();
 };
+</script>
