@@ -28,6 +28,13 @@
         const ok = confirm("テスト");
         if (!ok) return;
         alert("予約成功");
+        
+calendar.addEvent({
+    title: "予約",
+    start: info.start,
+    end: info.end,
+    color: "#e84118"
+
       }
     });
 
