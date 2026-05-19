@@ -6,24 +6,3 @@
 .fc {
   user-select: none;
 }
-
-/* ✅ モーダル表示時だけカレンダー止める */
-body.modal-open .fc {
-  pointer-events: none;
-}
-
-/* ✅ モーダルは必ず前面 */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  z-index: 9999;
-  pointer-events: auto;
-}
-
-.modal-content {
-  z-index: 10000;
-}
