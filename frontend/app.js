@@ -1,10 +1,9 @@
-document.addEventListener("DOMContentLoaded", () => {
+window.onload = () => {
 
   const calendarEl = document.getElementById("calendar");
 
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "timeGridWeek",
-    plugins: ['interaction'],
     selectable: true,
 
     select: function(info) {
@@ -15,10 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const ok = confirm(`${startText}\n〜\n${endText}\nで予約しますか？`);
       if (!ok) return;
 
-      alert("予約成功");   // ←ここで確認
+      alert("予約成功");
 
     }
   });
 
   calendar.render();
-});
+};
