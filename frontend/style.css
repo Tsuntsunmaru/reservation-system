@@ -1,5 +1,7 @@
 #calendar {
   height: 700px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 /* ✅ カレンダーは通常ON */
