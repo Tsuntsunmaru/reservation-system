@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <title>予約システム</title>
 
-  <!-- ✅ これは外部CDNだからそのまま使える -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-
 </head>
 
 <body>
@@ -15,31 +13,35 @@
 <div id="calendar" style="height:700px;"></div>
 
 <script>
-  // ✅ app.jsの内容をここに直接書く（これがポイント）
-  window.onload = () => {
+window.onload = () => {
 
-    const calendarEl = document.getElementById("calendar");
+  const calendarEl = document.getElementById("calendar");
 
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "timeGridWeek",
-      selectable: true,
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "timeGridWeek",
+    selectable: true,
 
-      select: function(info) {
-        const ok = confirm("テスト");
-        if (!ok) return;
-        alert("予約成功");
-        
-        calendar.addEvent({
-          title: "予約",
-          start: info.start,
-          end: info.end,
-          color: "#e84118"
+    select: function(info) {
 
+      const ok = confirm("テスト");
+      if (!ok) return;
+
+      alert("予約成功");
+
+      // ✅ 必ずここに入るか確認
+      console.log("addEvent 実行");
+
+      calendar.addEvent({
+        title: "予約",
+        start: info.start,
+        end: info.end,
+        color: "#e84118"
       });
-    });
+    }
+  });
 
-    calendar.render();
-  };
+  calendar.render();
+};
 </script>
 
 </body>
