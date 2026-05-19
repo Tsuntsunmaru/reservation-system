@@ -1,3 +1,4 @@
+console.log("app.js読み込まれた");
 <script>
 window.onload = () => {
 
