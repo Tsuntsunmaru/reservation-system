@@ -20,6 +20,18 @@ def get_user(authorization: str = Header()):
 def get_bookings():
     db = SessionLocal()
     return db.query(Booking).all()
+    
+    return [
+        {
+            "id": b.id,
+            "user_name": b.user_name,
+            "resource_id": b.resource_id,
+            "start_at": b.start_at,
+            "end_at": b.end_at
+        }
+        for b in bookings
+    ]
+
 
 @router.post("/bookings")
 def create_booking(data: BookingIn, user: User = Depends(get_user)):
@@ -38,6 +50,7 @@ def create_booking(data: BookingIn, user: User = Depends(get_user)):
 
     db.add(Booking(
         user_id=user.id,
+        user_name=user.name,
         resource_id=data.resource_id,
         start_at=data.start_at,
         end_at=data.end_at
