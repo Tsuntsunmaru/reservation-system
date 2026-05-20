@@ -4,15 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <title>予約システム</title>
-  
+
+  <!-- FullCalendar -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+  <h2>予約カレンダー</h2>
+
+  <!-- カレンダー -->
   <div id="calendar" style="height:700px;"></div>
 
+  <!-- 予約確認UI -->
+  <div id="modal" style="display:none;">
+    <p id="selectedTime"></p>
+    <button onclick="submitForm()">予約確定</button>
+    <button onclick="closeModal()">キャンセル</button>
+  </div>
+
+  <!-- JS -->
+  <script src="app.js"></script>
+
 </body>
+
 </html>
