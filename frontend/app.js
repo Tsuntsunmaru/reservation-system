@@ -42,6 +42,8 @@ window.onload = () => {
       select: function (info) {
         selectedInfo = info;
 
+        calendar.setOption("selectable", false);
+
         document.getElementById("selectedTime").textContent =
           `予約: ${info.startStr} ～ ${info.endStr}`;
 
@@ -63,6 +65,10 @@ function openModal() {
 // ✅ モーダル閉じる
 function closeModal() {
   document.getElementById("overlay").style.display = "none";
+}
+if (calendar) {
+    calendar.setOption("selectable", true);
+  }
 }
 
 // ✅ モーダルクリック貫通防止
