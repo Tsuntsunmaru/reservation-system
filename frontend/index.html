@@ -17,14 +17,15 @@
 
   <h2>予約カレンダー</h2>
 
-  <!-- カレンダー -->
-  <div id="calendar" style="height:700px;"></div>
+  <div id="calendar"></div>
 
-  <!-- 予約確認UI -->
-  <div id="modal" style="display:none;">
-    <p id="selectedTime"></p>
-    <button onclick="submitForm()">予約確定</button>
-    <button onclick="closeModal()">キャンセル</button>
+  <!-- ✅ モーダル -->
+  <div id="overlay" style="display:none;">
+    <div id="modal">
+      <p id="selectedTime"></p>
+      <button onclick="submitForm()">予約確定</button>
+      <button onclick="closeModal()">キャンセル</button>
+    </div>
   </div>
 
   <!-- JS -->
