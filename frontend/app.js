@@ -71,7 +71,7 @@ function closeModal() {
   document.getElementById("overlay").style.display = "none";
   
   const calendarEl = document.getElementById("calendar");
-  calendarEl.style.pointerEvents = "auto";
+  calendarEl.style.pointerEvents = "none";
 
 if (calendar) {
     calendar.setOption("selectable", true);
