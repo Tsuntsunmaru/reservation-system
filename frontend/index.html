@@ -20,13 +20,13 @@
   <div id="calendar"></div>
 
   <!-- ✅ モーダル -->
-  <div id="overlay" style="display:none;">
-    <div id="modal">
-      <p id="selectedTime"></p>
-      <button onclick="submitForm()">予約確定</button>
-      <button onclick="closeModal()">キャンセル</button>
-    </div>
+  <div id="overlay" onclick="closeModal()" style="display:none;">
+  <div id="modal" onclick="event.stopPropagation()">
+    <p id="selectedTime"></p>
+    <button onclick="submitForm()">予約確定</button>
+    <button onclick="closeModal()">キャンセル</button>
   </div>
+</div>
 
   <!-- JS -->
   <script src="app.js"></script>
