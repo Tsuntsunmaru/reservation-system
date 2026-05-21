@@ -10,7 +10,7 @@ def can_book(db, resource_id, start_at, end_at, user):
     from app.models.blocked import BlockedSlot
     from app.models.holiday import Holiday
 
-    # ✅ 統一（念のため）
+    # ✅ 🔥 全部統一（最重要）
     start_at = start_at.replace(tzinfo=None)
     end_at = end_at.replace(tzinfo=None)
 
@@ -35,10 +35,10 @@ def can_book(db, resource_id, start_at, end_at, user):
     for b in blocks:
         if b.resource_id is None or b.resource_id == resource_id:
 
+            # ✅ DB側も統一
             b_start = b.start_at.replace(tzinfo=None)
             b_end = b.end_at.replace(tzinfo=None)
 
-            # ✅ 🔥 ここ直す
             if overlap(start_at, end_at, b_start, b_end):
                 return False, "NG時間"
 
@@ -49,10 +49,10 @@ def can_book(db, resource_id, start_at, end_at, user):
 
     for b in bookings:
 
+        # ✅ DB側も統一
         b_start = b.start_at.replace(tzinfo=None)
         b_end = b.end_at.replace(tzinfo=None)
 
-        # ✅ 🔥 ここ直す
         if overlap(start_at, end_at, b_start, b_end):
             return False, "予約あり"
 
