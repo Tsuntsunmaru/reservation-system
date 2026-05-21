@@ -43,6 +43,10 @@ def can_book(db, resource_id, start_at, end_at, user):
     ).all()
 
     for b in bookings:
+
+        b_start = b.start_at.replace(tzinfo=None)
+        b_end = b.end_at.replace(tzinfo=None)
+
         if overlap(start_at, end_at, b.start_at, b.end_at):
             return False, "予約あり"
 
