@@ -20,31 +20,17 @@ def get_user(authorization: str = Header(None)):
     return db.query(User).get(payload["user_id"])
 
 
-    payload = decode_token(token)
-    db = SessionLocal()
-    return db.query(User).get(payload["user_id"])
-
 @router.get("/bookings")
 def get_bookings():
     db = SessionLocal()
     return db.query(Booking).all()
-    
-    return [
-        {
-            "id": b.id,
-            "user_name": b.user_name,
-            "resource_id": b.resource_id,
-            "start_at": b.start_at,
-            "end_at": b.end_at
-        }
-        for b in bookings
-    ]
 
 
 @router.post("/bookings")
 def create_booking(data: BookingIn, user: User = Depends(get_user)):
     db = SessionLocal()
 
+    # ✅ 入力値を統一（重要）
     start_at = data.start_at.replace(tzinfo=None)
     end_at = data.end_at.replace(tzinfo=None)
 
