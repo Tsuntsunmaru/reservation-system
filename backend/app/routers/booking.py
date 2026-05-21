@@ -55,3 +55,17 @@ def create_booking(data: BookingIn, user: User = Depends(get_user)):
 
     db.commit()
     return {"msg": "ok"}
+    
+@router.delete("/bookings/{booking_id}")
+def delete_booking(booking_id: int):
+    db = SessionLocal()
+
+    booking = db.query(Booking).filter(Booking.id == booking_id).first()
+
+    if not booking:
+        raise HTTPException(404, "見つからない")
+
+    db.delete(booking)
+    db.commit()
+
+    return {"msg": "deleted"}
