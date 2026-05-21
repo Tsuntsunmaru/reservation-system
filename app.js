@@ -35,17 +35,25 @@ window.onload = () => {
     if (calendar) calendar.destroy();
 
     calendar = new FullCalendar.Calendar(calendarEl, {
-      eventClick: function(info) {
+
+      // ✅ ✅ ✅ 🔥 削除（修正済）
+      eventClick: async function(info) {
         const ok = confirm("この予約を削除しますか？");
         if (!ok) return;
-        
-        fetch(API + "/bookings/" + info.event.id, {
-          method: "DELETE"
-        }).then(() => {
-          alert("削除しました");
-          window.initCalendar();
+
+        const token = localStorage.getItem("token");
+
+        await fetch(API + "/bookings/" + info.event.id, {
+          method: "DELETE",
+          headers: {
+            "Authorization": "Bearer " + token   // 🔥 追加
+          }
         });
+
+        alert("削除しました");
+        window.initCalendar();
       },
+
       initialView: "timeGridWeek",
       selectable: true,
       events: events,
@@ -53,7 +61,6 @@ window.onload = () => {
       select: function (info) {
         selectedInfo = info;
 
-        // ✅ UIロック
         calendar.setOption("selectable", false);
         calendarEl.style.pointerEvents = "none";
 
@@ -69,7 +76,6 @@ window.onload = () => {
 
   initCalendar();
 
-  // ✅ 外から使えるようにする（重要）
   window.initCalendar = initCalendar;
 };
 
@@ -79,8 +85,7 @@ function openModal() {
   document.getElementById("overlay").style.display = "block";
 }
 
-
-// ✅ ✅ ✅ モーダル閉じる（完全版）
+// ✅ モーダル閉じる
 function closeModal() {
   document.getElementById("overlay").style.display = "none";
 
@@ -90,8 +95,6 @@ function closeModal() {
   if (calendar) {
     calendar.setOption("selectable", true);
     calendar.unselect();
-
-    // ✅ 🔥 完全復活処理（これが決定打）
     calendar.render();
   }
 
@@ -110,18 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ✅ ✅ ✅ 予約送信（改善版）
+// ✅ ✅ ✅ 🔥 予約送信（修正済）
 async function submitForm() {
   if (!selectedInfo) return;
+
+  const token = localStorage.getItem("token");
 
   try {
     const res = await fetch(API + "/bookings", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token   // 🔥 追加
       },
       body: JSON.stringify({
-        user_name: "ユーザー",
         resource_id: 1,
         start_at: selectedInfo.startStr,
         end_at: selectedInfo.endStr
@@ -130,14 +135,8 @@ async function submitForm() {
 
     if (res.ok) {
       alert("予約成功");
-
       closeModal();
-
-      // ✅ 🔥 ページリロードせず更新
-      if (window.initCalendar) {
-        window.initCalendar();
-      }
-
+      window.initCalendar();
     } else {
       alert("予約失敗");
     }
