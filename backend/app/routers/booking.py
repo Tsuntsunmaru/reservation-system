@@ -13,7 +13,7 @@ def get_user(authorization: str = Header(None)):
     db = SessionLocal()
 
     if not authorization:
-        return db.query(User).first()
+        raise HTTPException(401, "ログインしてください")
 
     token = authorization.replace("Bearer ", "")
     payload = decode_token(token)
