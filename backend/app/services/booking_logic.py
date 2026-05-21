@@ -12,7 +12,7 @@ def can_book(db, resource_id, start_at, end_at, user):
     from app.models.holiday import Holiday
 
     # ✅ 過去チェック
-    if start_at < datetime.now(timezone.utc):
+    if start_at < datetime.utcnow():
         return False, "過去の時間は予約できません"
 
     # ✅ 時間逆転チェック ← ここに入れる！！
