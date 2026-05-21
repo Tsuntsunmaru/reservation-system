@@ -10,9 +10,16 @@ def can_book(db, resource_id, start_at, end_at, user):
     from app.models.blocked import BlockedSlot
     from app.models.holiday import Holiday
 
-    # ✅ 🔥 全部統一（最重要）
+    # ✅ 入力統一（重要）
+    if start_at is None or end_at is None:
+        return False, "時間が不正です"
+
     start_at = start_at.replace(tzinfo=None)
     end_at = end_at.replace(tzinfo=None)
+
+    # ✅ ユーザーチェック（今回の落とし穴対策）
+    if user is None:
+        return False, "ユーザー取得エラー"
 
     # ✅ 過去チェック
     if start_at < datetime.utcnow():
@@ -30,26 +37,32 @@ def can_book(db, resource_id, start_at, end_at, user):
     if holiday and holiday.is_blocked:
         return False, "休日NG"
 
-    # ✅ NG時間
+    # ✅ NG時間（BlockedSlot）
     blocks = db.query(BlockedSlot).all()
     for b in blocks:
+
+        # ✅ NULL保護
+        if b.start_at is None or b.end_at is None:
+            continue
+
+        b_start = b.start_at.replace(tzinfo=None)
+        b_end = b.end_at.replace(tzinfo=None)
+
         if b.resource_id is None or b.resource_id == resource_id:
-
-            # ✅ DB側も統一
-            b_start = b.start_at.replace(tzinfo=None)
-            b_end = b.end_at.replace(tzinfo=None)
-
             if overlap(start_at, end_at, b_start, b_end):
                 return False, "NG時間"
 
-    # ✅ 予約衝突
+    # ✅ 予約衝突（Booking）
     bookings = db.query(Booking).filter(
         Booking.resource_id == resource_id
     ).all()
 
     for b in bookings:
 
-        # ✅ DB側も統一
+        # ✅ NULL保護
+        if b.start_at is None or b.end_at is None:
+            continue
+
         b_start = b.start_at.replace(tzinfo=None)
         b_end = b.end_at.replace(tzinfo=None)
 
