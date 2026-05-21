@@ -31,6 +31,9 @@ def can_book(db, resource_id, start_at, end_at, user):
     blocks = db.query(BlockedSlot).all()
     for b in blocks:
         if b.resource_id is None or b.resource_id == resource_id:
+            b_start = b.start_at.replace(tzinfo=None)
+            b_end = b.end_at.replace(tzinfo=None)
+
             if overlap(start_at, end_at, b.start_at, b.end_at):
                 return False, "NG時間"
 
