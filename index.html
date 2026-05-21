@@ -14,6 +14,8 @@
 
 <body>
 
+  <button onclick="logout()">ログアウト</button>
+
   <h2>予約カレンダー</h2>
 
   <div id="calendar"></div>
@@ -34,6 +36,13 @@
 
   <!-- ✅ 自分のJS（最後に） -->
   <script src="app.js"></script>
+
+  <script>
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    }
+  </script>
 
 </body>
 
