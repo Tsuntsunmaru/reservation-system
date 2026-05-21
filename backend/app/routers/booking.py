@@ -56,6 +56,9 @@ def create_booking(data: BookingIn, user: User = Depends(get_user)):
     if not ok:
         raise HTTPException(400, msg)
 
+    start_at = data.start_at.replace(tzinfo=None)
+    end_at = data.end_at.replace(tzinfo=None)
+
     db.add(Booking(
         user_id=user.id,
         user_name=user.name,
