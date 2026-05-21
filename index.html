@@ -5,11 +5,10 @@
   <meta charset="UTF-8">
   <title>予約システム</title>
 
-  <!-- FullCalendar -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <!-- ✅ FullCalendar CSSだけhead -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 
-  <!-- CSS -->
+  <!-- ✅ 自分のCSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -21,14 +20,17 @@
 
   <!-- ✅ モーダル -->
   <div id="overlay" style="display:none;" onclick="closeModal()">
-  <div id="modal" onclick="event.stopPropagation()">
-    <p id="selectedTime"></p>
-    <button onclick="submitForm()">予約確定</button>
-    <button onclick="closeModal()">キャンセル</button>
+    <div id="modal" onclick="event.stopPropagation()">
+      <p id="selectedTime"></p>
+      <button onclick="submitForm()">予約確定</button>
+      <button onclick="closeModal()">キャンセル</button>
+    </div>
   </div>
-</div>
 
-  <!-- JS -->
+  <!-- ✅ 🔥 ここが重要（bodyの一番下に移動） -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+  <!-- ✅ 自分のJS（最後に） -->
   <script src="app.js"></script>
 
 </body>
