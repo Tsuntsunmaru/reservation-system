@@ -38,20 +38,17 @@ window.onload = () => {
       selectable: true,
       events: events,
 
-      // ✅ ここは「表示だけ」
       select: function (info) {
         selectedInfo = info;
 
+        // ✅ UIロック
         calendar.setOption("selectable", false);
-        
-        const calendarEl = document.getElementById("calendar");
         calendarEl.style.pointerEvents = "none";
-
 
         document.getElementById("selectedTime").textContent =
           `予約: ${info.startStr} ～ ${info.endStr}`;
 
-        openModal(); // ←ここがポイント
+        openModal();
       }
     });
 
@@ -59,24 +56,36 @@ window.onload = () => {
   }
 
   initCalendar();
+
+  // ✅ 外から使えるようにする（重要）
+  window.initCalendar = initCalendar;
 };
+
 
 // ✅ モーダル開く
 function openModal() {
   document.getElementById("overlay").style.display = "block";
 }
 
-// ✅ モーダル閉じる
+
+// ✅ ✅ ✅ モーダル閉じる（完全版）
 function closeModal() {
   document.getElementById("overlay").style.display = "none";
-  
-  const calendarEl = document.getElementById("calendar");
-  calendarEl.style.pointerEvents = "none";
 
-if (calendar) {
+  const calendarEl = document.getElementById("calendar");
+  calendarEl.style.pointerEvents = "auto";
+
+  if (calendar) {
     calendar.setOption("selectable", true);
+    calendar.unselect();
+
+    // ✅ 🔥 完全復活処理（これが決定打）
+    calendar.render();
   }
+
+  selectedInfo = null;
 }
+
 
 // ✅ モーダルクリック貫通防止
 document.addEventListener("DOMContentLoaded", () => {
@@ -88,7 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// ✅ ✅ ここで初めて予約送信
+
+// ✅ ✅ ✅ 予約送信（改善版）
 async function submitForm() {
   if (!selectedInfo) return;
 
@@ -108,14 +118,20 @@ async function submitForm() {
 
     if (res.ok) {
       alert("予約成功");
+
       closeModal();
-      location.reload(); // ←再読み込み
+
+      // ✅ 🔥 ページリロードせず更新
+      if (window.initCalendar) {
+        window.initCalendar();
+      }
+
     } else {
       alert("予約失敗");
     }
 
   } catch (e) {
-    console.log("予約失敗", e);
+    console.error(e);
     alert("通信エラー");
   }
 }
