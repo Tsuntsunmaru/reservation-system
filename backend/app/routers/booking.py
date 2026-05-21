@@ -45,26 +45,26 @@ def get_bookings():
 def create_booking(data: BookingIn, user: User = Depends(get_user)):
     db = SessionLocal()
 
+    start_at = data.start_at.replace(tzinfo=None)
+    end_at = data.end_at.replace(tzinfo=None)
+
     ok, msg = can_book(
         db,
         data.resource_id,
-        data.start_at,
-        data.end_at,
+        start_at,
+        end_at,
         user
     )
 
     if not ok:
         raise HTTPException(400, msg)
 
-    start_at = data.start_at.replace(tzinfo=None)
-    end_at = data.end_at.replace(tzinfo=None)
-
     db.add(Booking(
         user_id=user.id,
         user_name=user.name,
         resource_id=data.resource_id,
-        start_at=data.start_at,
-        end_at=data.end_at
+        start_at=start_at,
+        end_at=end_at
     ))
 
     db.commit()
