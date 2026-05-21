@@ -47,7 +47,7 @@ def create_booking(data: BookingIn, user: User = Depends(get_user)):
 
     db.add(Booking(
         user_id=user.id,
-        user_name=user.name,
+        user_name=user.username,
         resource_id=data.resource_id,
         start_at=start_at,
         end_at=end_at
