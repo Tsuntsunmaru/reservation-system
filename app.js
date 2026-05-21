@@ -4,6 +4,13 @@ let calendar;
 let selectedInfo = null;
 
 window.onload = () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("ログインしてください");
+    window.location.href = "login.html";
+    return;
+  }
 
   const calendarEl = document.getElementById("calendar");
 
