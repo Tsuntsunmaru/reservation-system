@@ -18,3 +18,4 @@ app.add_middleware(
 )
 
 app.include_router(booking.router)
+app.include_router(resource.router)
