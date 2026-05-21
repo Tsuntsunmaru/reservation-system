@@ -65,6 +65,9 @@ def delete_booking(booking_id: int):
     if not booking:
         raise HTTPException(404, "見つからない")
 
+    if booking.user_id != user.id:
+        raise HTTPException(403,"自分の予約のみ削除できます")
+
     db.delete(booking)
     db.commit()
 
