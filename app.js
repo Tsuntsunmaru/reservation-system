@@ -14,6 +14,7 @@ window.onload = () => {
       const bookings = await res.json();
 
       return bookings.map(b => ({
+        id: b.id,
         title: b.user_name || "予約",
         start: b.start_at,
         end: b.end_at,
@@ -34,6 +35,17 @@ window.onload = () => {
     if (calendar) calendar.destroy();
 
     calendar = new FullCalendar.Calendar(calendarEl, {
+      eventClick: function(info) {
+        const ok = confirm("この予約を削除しますか？");
+        if (!ok) return;
+        
+        fetch(API + "/bookings/" + info.event.id, {
+          method: "DELETE"
+        }).then(() => {
+          alert("削除しました");
+          window.initCalendar();
+        });
+      },
       initialView: "timeGridWeek",
       selectable: true,
       events: events,
