@@ -2,20 +2,9 @@ from fastapi import APIRouter, HTTPException
 from app.database import SessionLocal
 from app.models.user import User
 from app.core.auth import *
-from pydantic import BaseModel
+from app.schemas.user import UserCreate, LoginUser
 
 router = APIRouter()
-
-
-class UserCreate(BaseModel):
-    email: str
-    password: str
-
-
-class LoginUser(BaseModel):
-    email: str
-    password: str
-
 
 @router.post("/register")
 def register(user: UserCreate):
