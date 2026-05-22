@@ -202,5 +202,6 @@ async function updateUsername() {
     window.initCalendar();
   } else {
     const text = await res.text();
+    console.error(text);
     alert("変更できません" + text);
   }
