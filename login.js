@@ -18,17 +18,21 @@ async function login() {
     });
 
     const data = await res.json();
-
+    
     if (res.ok) {
-      // ✅ token保存
-      localStorage.setItem("token", data.access_token);
-
+      console.log(data);  // 🔥 確認用
+      const token = data.access_token || data.token || data.accessToken;
+      if (!token) {
+        alert("token取得失敗");
+        return;
+      }
+      localStorage.setItem("token", token);
       alert("ログイン成功");
-
-      // ✅ カレンダー画面へ移動
       window.location.href = "index.html";
+    }
 
-    } else {
+   
+    else {
       alert("ログイン失敗");
     }
 
