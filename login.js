@@ -28,7 +28,7 @@ async function login() {
       }
       localStorage.setItem("token", token);
       alert("ログイン成功");
-      window.location.href = "index.html";
+      //window.location.href = "index.html";
     }
 
    
