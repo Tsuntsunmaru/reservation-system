@@ -83,6 +83,7 @@ window.onload = () => {
           info.event.remove();
         } else {
           const text = await res.text();
+          console.error(text);
           alert("削除できません: " + text);
         }
       },
