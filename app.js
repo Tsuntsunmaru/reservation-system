@@ -55,7 +55,14 @@ window.onload = () => {
       
       resources.forEach(r => {
         const span = document.createElement("span");
-        const color = r.id === 1 ? "#e84118" : "#0984e3";
+        const color = {
+          1: "#e84118",
+          2: "#0984e3",
+          3: "#00b894"
+        };
+
+        const color = colors[r.id] || "#999";
+
         span.innerHTML = `
         <span style="color:${color}; font-weight:bold;">■</span>
         ${r.name}
