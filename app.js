@@ -172,7 +172,7 @@ async function submitForm() {
       closeModal();
       window.initCalendar();
     } else {
-      alert("予約失敗");
+      alert("予約失敗" + text);
     }
 
   } catch (e) {
