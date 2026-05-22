@@ -57,7 +57,7 @@ def create_booking(data: BookingIn, user: User = Depends(get_user)):
     return {"msg": "ok"}
     
 @router.delete("/bookings/{booking_id}")
-def delete_booking(booking_id: int):
+def delete_booking(booking_id: int ,user: User = Depends(get_user)):
     db = SessionLocal()
 
     booking = db.query(Booking).filter(Booking.id == booking_id).first()
