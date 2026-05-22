@@ -4,7 +4,7 @@ from app.models.user import User
 from app.core.auth import *
 from app.schemas.user import UserCreate, LoginUser
 from fastapi import Depends
-from app.routers.booking import get_user 
+from app.core.deps import get_user 
 
 router = APIRouter()
 
