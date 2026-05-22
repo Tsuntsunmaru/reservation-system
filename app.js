@@ -49,6 +49,22 @@ window.onload = () => {
     const events = await loadBookings();
     
     const resources = await loadResources();
+    const legend = document.getElementById("legend");
+    if (legend) {
+      legend.innerHTML = "";
+      
+      resources.forEach(r => {
+        const span = document.createElement("span");
+        const color = r.id === 1 ? "#e84118" : "#0984e3";
+        span.innerHTML = `
+        <span style="color:${color}; font-weight:bold;">■</span>
+        ${r.name}
+        &nbsp;&nbsp;
+        `;
+
+        legend.appendChild(span);
+      });
+    }
     const select = document.getElementById("resourceSelect");
     if (select) {
       select.innerHTML = "";
