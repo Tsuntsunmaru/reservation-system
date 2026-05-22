@@ -5,20 +5,9 @@ from app.services.booking_logic import can_book
 from app.models.booking import Booking
 from app.models.user import User
 from app.core.auth import decode_token
+from app.core.deps import get_user
 
 router = APIRouter()
-
-
-def get_user(authorization: str = Header(None)):
-    db = SessionLocal()
-
-    if not authorization:
-        raise HTTPException(401, "ログインしてください")
-
-    token = authorization.replace("Bearer ", "")
-    payload = decode_token(token)
-    return db.query(User).get(payload["user_id"])
-
 
 @router.get("/bookings")
 def get_bookings():
