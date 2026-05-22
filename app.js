@@ -175,3 +175,22 @@ async function submitForm() {
     alert("通信エラー");
   }
 }
+async function updateUsername() {
+  const token = localStorage.getItem("token");
+  const newName = document.getElementById("newUsername").value;
+
+  if (!newName) {
+    alert("名前を入力してください");
+    return;
+  }
+
+  await fetch(API + "/users/me?username=" + newName, {
+    method: "PUT",
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+
+  alert("名前を変更しました");
+  window.initCalendar();
+}
