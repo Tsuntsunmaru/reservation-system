@@ -173,6 +173,8 @@ async function submitForm() {
       closeModal();
       window.initCalendar();
     } else {
+      const text = await res.text();
+      console.error(text);
       alert("予約失敗" + text);
     }
 
