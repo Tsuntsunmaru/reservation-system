@@ -33,11 +33,32 @@ window.onload = () => {
       return [];
     }
   }
+  async function loadResources() {
+  try {
+    const res = await fetch(API + "/resources");
+    return await res.json();
+  } catch (e) {
+    console.log("resource取得失敗", e);
+    return [];
+  }
+}
 
   // ✅ カレンダー初期化
   async function initCalendar() {
 
     const events = await loadBookings();
+    
+    const resources = await loadResources();
+    const select = document.getElementById("resourceSelect");
+    if (select) {
+      select.innerHTML = "";
+      resources.forEach(r => {
+        const opt = document.createElement("option");
+        opt.value = r.id;
+        opt.textContent = r.name;
+        select.appendChild(opt);
+      });
+    }
 
     if (calendar) calendar.destroy();
 
@@ -125,6 +146,7 @@ async function submitForm() {
   if (!selectedInfo) return;
 
   const token = localStorage.getItem("token");
+  const selectedResource = document.getElementById("resourceSelect").value;
 
   try {
     const res = await fetch(API + "/bookings", {
@@ -134,7 +156,7 @@ async function submitForm() {
         "Authorization": "Bearer " + token   // 🔥 追加
       },
       body: JSON.stringify({
-        resource_id: 1,
+        resource_id: Number(selectedResource),
         start_at: selectedInfo.startStr,
         end_at: selectedInfo.endStr
       })
