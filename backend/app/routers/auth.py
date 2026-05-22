@@ -23,7 +23,7 @@ def register(user: UserCreate):
 
     new_user = User(
         email=user.email,
-        username=data.username,
+        username=user.username,
         password=hash_password(user.password),
         role="user"
     )
