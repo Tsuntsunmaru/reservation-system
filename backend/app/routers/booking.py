@@ -48,6 +48,10 @@ def create_booking(data: BookingIn, user: User = Depends(get_user)):
         db.commit()
         return {"msg": "ok"}
 
+    except Exception as e:
+        db.rollback()
+        raise e
+
     finally:
         db.close()
     
@@ -68,6 +72,10 @@ def delete_booking(booking_id: int ,user: User = Depends(get_user)):
         db.commit()
         
         return {"msg": "deleted"}
+
+    except Exception as e:
+        db.rollback()
+        raise e
         
     finally:
         db.close()
