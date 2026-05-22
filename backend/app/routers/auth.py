@@ -30,12 +30,16 @@ def register(user: UserCreate):
 def login(user: LoginUser):
     db = SessionLocal()
 
-    db_user = db.query(User).filter(User.email == user.email).first()
-
-    if not db_user or not verify_password(user.password,db_user.password):
-        raise HTTPException(status_code=401, detail="Unauthorized")
-
-    return {"token": create_token({"user_id": db_user.id})}
+    try:
+        db_user = db.query(User).filter(User.email == user.email).first()
+        
+        if not db_user or not verify_password(user.password,db_user.password):
+            raise HTTPException(status_code=401, detail="Unauthorized")
+            
+        return {"token": create_token({"user_id": db_user.id})}
+        
+    finally:
+        db.close()
 
 @router.put("/users/me")
 def update_user(username: str, user: User = Depends(get_user)):
