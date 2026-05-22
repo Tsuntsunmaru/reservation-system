@@ -51,7 +51,7 @@ def can_book(db, resource_id, start_at, end_at, user):
         b_end = b.end_at.replace(tzinfo=None)
 
         
-            if overlap(start_at, end_at, b_start, b_end):
+        if overlap(start_at, end_at, b_start, b_end):
                 return False, "NG時間"
 
     # ✅ 予約衝突（Booking）
