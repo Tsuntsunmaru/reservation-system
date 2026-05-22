@@ -14,7 +14,7 @@ window.onload = () => {
 
   const calendarEl = document.getElementById("calendar");
 
-  // 予約取得
+  // ✅ 予約取得
   async function loadBookings() {
     try {
       const res = await fetch(API + "/bookings");
@@ -25,7 +25,7 @@ window.onload = () => {
         title: b.user_name || "予約",
         start: b.start_at,
         end: b.end_at,
-        color: b.resource_id === 1 ? "#e84118" : "#0984e3"
+        resource_id: b.resource_id
       }));
 
     } catch (e) {
@@ -33,45 +33,51 @@ window.onload = () => {
       return [];
     }
   }
-  async function loadResources() {
-  try {
-    const res = await fetch(API + "/resources");
-    return await res.json();
-  } catch (e) {
-    console.log("resource取得失敗", e);
-    return [];
-  }
-}
 
-  // カレンダー初期化
+  // ✅ resource取得
+  async function loadResources() {
+    try {
+      const res = await fetch(API + "/resources");
+      return await res.json();
+    } catch (e) {
+      console.log("resource取得失敗", e);
+      return [];
+    }
+  }
+
+  // ✅ カレンダー初期化
   async function initCalendar() {
 
-    const events = await loadBookings();
-    
+    const eventsRaw = await loadBookings();
     const resources = await loadResources();
+
+    // ✅ 凡例作成
     const legend = document.getElementById("legend");
     if (legend) {
       legend.innerHTML = "";
-      
+
+      // 色設定（とりあえず固定版）
+      const colors = {
+        1: "#e84118",
+        2: "#0984e3",
+        3: "#00b894"
+      };
+
       resources.forEach(r => {
         const span = document.createElement("span");
-        const color = {
-          1: "#e84118",
-          2: "#0984e3",
-          3: "#00b894"
-        };
-
-        const color = colors[r.id] || "#999";
+        const legendColor = colors[r.id] || "#999";
 
         span.innerHTML = `
-        <span style="color:${color}; font-weight:bold;">■</span>
-        ${r.name}
-        &nbsp;&nbsp;
+          <span style="color:${legendColor}; font-weight:bold;">■</span>
+          ${r.name}
+          &nbsp;&nbsp;
         `;
 
         legend.appendChild(span);
       });
     }
+
+    // ✅ select更新
     const select = document.getElementById("resourceSelect");
     if (select) {
       select.innerHTML = "";
@@ -83,11 +89,22 @@ window.onload = () => {
       });
     }
 
+    // ✅ イベントに色付け（ここ重要）
+    const colors = {
+      1: "#e84118",
+      2: "#0984e3",
+      3: "#00b894"
+    };
+
+    const events = eventsRaw.map(e => ({
+      ...e,
+      color: colors[e.resource_id] || "#999"
+    }));
+
     if (calendar) calendar.destroy();
 
     calendar = new FullCalendar.Calendar(calendarEl, {
 
-      
       eventClick: async function(info) {
         const ok = confirm("この予約を削除しますか？");
         if (!ok) return;
@@ -97,11 +114,11 @@ window.onload = () => {
         const res = await fetch(API + "/bookings/" + info.event.id, {
           method: "DELETE",
           headers: {
-            "Authorization": "Bearer " + token  
+            "Authorization": "Bearer " + token
           }
         });
 
-        if(res.ok){
+        if (res.ok) {
           alert("削除しました");
           info.event.remove();
         } else {
@@ -132,17 +149,15 @@ window.onload = () => {
   }
 
   initCalendar();
-
   window.initCalendar = initCalendar;
 };
 
-
-// モーダル開く
+// ✅ モーダル開く
 function openModal() {
   document.getElementById("overlay").style.display = "block";
 }
 
-// モーダル閉じる
+// ✅ モーダル閉じる
 function closeModal() {
   document.getElementById("overlay").style.display = "none";
 
@@ -158,8 +173,7 @@ function closeModal() {
   selectedInfo = null;
 }
 
-
-// モーダルクリック貫通防止
+// ✅ モーダルクリック貫通防止
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modal");
   if (modal) {
@@ -169,8 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-
-// 
+// ✅ 予約送信
 async function submitForm() {
   if (!selectedInfo) return;
 
@@ -182,7 +195,7 @@ async function submitForm() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token  
+        "Authorization": "Bearer " + token
       },
       body: JSON.stringify({
         resource_id: Number(selectedResource),
@@ -198,7 +211,7 @@ async function submitForm() {
     } else {
       const text = await res.text();
       console.error(text);
-      alert("予約失敗" + text);
+      alert("予約失敗: " + text);
     }
 
   } catch (e) {
@@ -206,6 +219,8 @@ async function submitForm() {
     alert("通信エラー");
   }
 }
+
+// ✅ 名前変更
 async function updateUsername() {
   const token = localStorage.getItem("token");
   const newName = document.getElementById("newUsername").value;
@@ -228,6 +243,6 @@ async function updateUsername() {
   } else {
     const text = await res.text();
     console.error(text);
-    alert("変更できません" + text);
+    alert("変更できません: " + text);
   }
 }
