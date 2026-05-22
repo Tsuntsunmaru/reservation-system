@@ -3,6 +3,8 @@ from app.database import SessionLocal
 from app.models.user import User
 from app.core.auth import *
 from app.schemas.user import UserCreate, LoginUser
+from fastapi import Depends
+from app.routers.booking import get_user 
 
 router = APIRouter()
 
@@ -34,14 +36,16 @@ def login(user: LoginUser):
 
     return {"token": create_token({"user_id": db_user.id})}
 
-@router.get("/fix-user")
-def fix_user():
+@router.put("/users/me")
+def update_user(username: str, user: User = Depends(get_user)):
     db = SessionLocal()
 
-    user = db.query(User).filter(User.email == "admin3@nttlogisco.com").first()
+    db_user = db.query(User).filter(User.id == user.id).first()
 
-    if user:
-        user.username = "admin"
-        db.commit()
+    if not db_user:
+        raise HTTPException(404, "ユーザーが見つかりません")
 
-    return {"msg": "ok"}
+    db_user.username = username
+    db.commit()
+
+    return {"msg": "updated"}
