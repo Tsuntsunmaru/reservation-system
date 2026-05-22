@@ -65,7 +65,7 @@ window.onload = () => {
 
       resources.forEach(r => {
         const span = document.createElement("span");
-        const legendColor = colors[r.id] || "#999";
+        const legendColor = r.id === 1 ? "#e84118" : "#0984e3";
 
         span.innerHTML = `
           <span style="color:${legendColor}; font-weight:bold;">■</span>
