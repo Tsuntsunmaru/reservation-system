@@ -14,7 +14,7 @@ window.onload = () => {
 
   const calendarEl = document.getElementById("calendar");
 
-  // ✅ 予約取得
+  // 予約取得
   async function loadBookings() {
     try {
       const res = await fetch(API + "/bookings");
@@ -43,7 +43,7 @@ window.onload = () => {
   }
 }
 
-  // ✅ カレンダー初期化
+  // カレンダー初期化
   async function initCalendar() {
 
     const events = await loadBookings();
@@ -64,22 +64,27 @@ window.onload = () => {
 
     calendar = new FullCalendar.Calendar(calendarEl, {
 
-      // ✅ ✅ ✅ 🔥 削除（修正済）
+      
       eventClick: async function(info) {
         const ok = confirm("この予約を削除しますか？");
         if (!ok) return;
 
         const token = localStorage.getItem("token");
 
-        await fetch(API + "/bookings/" + info.event.id, {
+        const res = await fetch(API + "/bookings/" + info.event.id, {
           method: "DELETE",
           headers: {
-            "Authorization": "Bearer " + token   // 🔥 追加
+            "Authorization": "Bearer " + token  
           }
         });
 
-        alert("削除しました");
-        window.initCalendar();
+        if(res.ok){
+          alert("削除しました");
+          info.event.remove();
+        } else {
+          const text = await res.text();
+          alert("削除できません: " + text);
+        }
       },
 
       initialView: "timeGridWeek",
@@ -108,12 +113,12 @@ window.onload = () => {
 };
 
 
-// ✅ モーダル開く
+// モーダル開く
 function openModal() {
   document.getElementById("overlay").style.display = "block";
 }
 
-// ✅ モーダル閉じる
+// モーダル閉じる
 function closeModal() {
   document.getElementById("overlay").style.display = "none";
 
@@ -130,7 +135,7 @@ function closeModal() {
 }
 
 
-// ✅ モーダルクリック貫通防止
+// モーダルクリック貫通防止
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modal");
   if (modal) {
@@ -141,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ✅ ✅ ✅ 🔥 予約送信（修正済）
+// 
 async function submitForm() {
   if (!selectedInfo) return;
 
@@ -153,7 +158,7 @@ async function submitForm() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + token   // 🔥 追加
+        "Authorization": "Bearer " + token  
       },
       body: JSON.stringify({
         resource_id: Number(selectedResource),
@@ -184,13 +189,17 @@ async function updateUsername() {
     return;
   }
 
-  await fetch(API + "/users/me?username=" + newName, {
+  const res = await fetch(API + "/users/me?username=" + newName, {
     method: "PUT",
     headers: {
       "Authorization": "Bearer " + token
     }
   });
 
-  alert("名前を変更しました");
-  window.initCalendar();
-}
+  if (res.ok) {
+    alert("名前を変更しました");
+    window.initCalendar();
+  } else {
+    const text = await res.text();
+    alert("変更できません" + text);
+  }
