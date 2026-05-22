@@ -207,3 +207,4 @@ async function updateUsername() {
     console.error(text);
     alert("変更できません" + text);
   }
+}
