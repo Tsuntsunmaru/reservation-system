@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from app.database import SessionLocal
 from app.models.user import User
+from app.models.booking import Booking
 from app.core.auth import *
 from app.schemas.user import UserCreate, LoginUser
 from fastapi import Depends
@@ -46,6 +47,11 @@ def update_user(username: str, user: User = Depends(get_user)):
         raise HTTPException(404, "ユーザーが見つかりません")
 
     db_user.username = username
+    
+    bookings = db.query(Booking).filter(Booking.user_id == user.id).all()
+    for b in bookings:
+        b.user_name = username
+        
     db.commit()
 
     return {"msg": "updated"}
