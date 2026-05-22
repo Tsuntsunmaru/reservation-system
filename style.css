@@ -44,3 +44,8 @@ body {
   margin: 5px;
   padding: 8px 12px;
 }
+
+#legend {
+  margin: 10px 0;
+  font-size: 14px;
+}
