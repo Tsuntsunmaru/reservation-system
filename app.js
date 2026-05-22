@@ -67,11 +67,7 @@ window.onload = () => {
         const span = document.createElement("span");
         const legendColor = r.id === 1 ? "#e84118" : "#0984e3";
 
-        span.innerHTML = `
-          <span style="color:${legendColor}; font-weight:bold;">■</span>
-          ${r.name}
-          &nbsp;&nbsp;
-        `;
+        span.innerHTML = "<span style='color:" + legendColor + "; font-weight:bold;'>■</span>" +r.name + " ";
 
         legend.appendChild(span);
       });
