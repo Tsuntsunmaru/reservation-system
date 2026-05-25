@@ -149,11 +149,15 @@ window.onload = () => {
 
 function openModal() {
   document.getElementById("overlay").style.display = "block";
+  document.getElementById("settingsModal").style.display = "none";
+  document.getElementById("modal").style.display = "block";
 }
 
 function closeModal() {
   document.getElementById("overlay").style.display = "none";
-
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("settingsModal").style.display = "none";
+  
   const calendarEl = document.getElementById("calendar");
   calendarEl.style.pointerEvents = "auto";
 
@@ -168,6 +172,7 @@ function closeModal() {
 
 function openSettingsModal() {
   document.getElementById("overlay").style.display = "block";
+  document.getElementById("modal").style.display = "none";
   document.getElementById("settingsModal").style.display = "block";
 }
 
