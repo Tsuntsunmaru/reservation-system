@@ -104,13 +104,6 @@ window.onload = () => {
       slotMinTime: "00:00:00",
       slotMaxTime: "24:00:00",
 
-      dayCellClassNames: function(arg) {
-        const day = arg.date.getDay();
-        if (day === 0 || day === 6) {
-          return ["fc-weekend"];
-        }
-      },
-
       eventClick: async function(info) {
         const ok = confirm("この予約を削除しますか？");
         if (!ok) return;
