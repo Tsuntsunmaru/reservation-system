@@ -14,6 +14,11 @@ window.onload = () => {
 
   const calendarEl = document.getElementById("calendar");
 
+  document.getElementById("menuButton").onclick = () => {
+  const menu = document.getElementById("menu");
+  menu.style.display = (menu.style.display === "none") ? "block" : "none";
+};
+
   // ✅ 予約取得
   async function loadBookings() {
     try {
@@ -167,6 +172,12 @@ function closeModal() {
   }
 
   selectedInfo = null;
+}
+
+function openPasswordModal() {
+  document.getElementById("overlay").style.display = "block";
+
+  document.getElementById("selectedTime").textContent = "パスワード変更";
 }
 
 // ✅ モーダルクリック貫通防止
