@@ -63,8 +63,10 @@ body {
   margin-top: 2px;
 }
 
-.fc-day-sun,
-.fc-day-sat {
+.fc-daygrid-day.fc-day-sun,
+.fc-daygrid-day.fc-day-sat,
+.fc-timegrid-col.fc-day-sun,
+.fc-timegrid-col.fc-day-sat{
   background-color: #f0f0f0 !important;
 }
 
