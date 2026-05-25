@@ -68,11 +68,15 @@ body {
 }
 
 .fc-timegrid-slot {
-  border-top: 1px solid #ccc !important;
+  border-top: 1px solid #bbb !important;
 }
 
 .fc-timegrid-slot-minor {
-  border-top: 1px dotted #ddd !important;
+  border-top: 1px dashed #ddd !important;
+}
+
+.fc-timegrid-slot-lane {
+  background-clip: padding-box;
 }
 
 button:disabled {
