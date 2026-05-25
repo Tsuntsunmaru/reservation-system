@@ -8,12 +8,10 @@ body {
   margin: 0 auto;
 }
 
-/* ✅ FullCalendar */
 .fc {
   user-select: none;
 }
 
-/* ✅ 背景オーバーレイ（クリックブロック） */
 #overlay {
   position: fixed;
   top: 0;
@@ -25,7 +23,6 @@ body {
   pointer-events: all;
 }
 
-/* ✅ モーダル */
 #modal {
   position: fixed;
   top: 30%;
@@ -39,7 +36,6 @@ body {
   z-index: 9999;
 }
 
-/* ✅ ボタン */
 #modal button {
   margin: 5px;
   padding: 8px 12px;
@@ -48,4 +44,26 @@ body {
 #legend {
   margin: 10px 0;
   font-size: 14px;
+}
+
+.fc-event {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 4px 6px;
+  border: none;
+  color: white;
+}
+
+.fc-event-time {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.fc-event-title {
+  margin-top: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
