@@ -1,5 +1,6 @@
 const API = "https://reservation-system-nle7.onrender.com";
 
+let isLoading = false;
 async function login() {
   if (isLoading) return;
   isLoading = true;
