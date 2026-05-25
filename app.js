@@ -103,6 +103,7 @@ window.onload = () => {
       
       slotMinTime: "00:00:00",
       slotMaxTime: "24:00:00",
+      slotDuration: "00:30:00",
 
       eventClick: async function(info) {
         const ok = confirm("この予約を削除しますか？");
