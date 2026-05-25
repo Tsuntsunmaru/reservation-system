@@ -67,6 +67,14 @@ body {
   background-color: #f0f0f0 !important;
 }
 
+.fc-timegrid-slot {
+  border-top: 1px solid #ccc !important;
+}
+
+.fc-timegrid-slot-minor {
+  border-top: 1px dotted #ddd !important;
+}
+
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
