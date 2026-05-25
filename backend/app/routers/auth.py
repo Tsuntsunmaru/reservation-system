@@ -82,3 +82,30 @@ def update_password(data: PasswordUpdate, user: User = Depends(get_user)):
     db.commit()
 
     return {"msg": "パスワード変更成功"}
+
+class AdminPasswordUpdate(BaseModel):
+    email: str
+    new_password: str
+
+
+@router.put("/admin/users/password")
+def admin_update_password(data: AdminPasswordUpdate, user: User = Depends(get_user)):
+    db = SessionLocal()
+
+    try:
+        if user.role != "admin":
+            raise HTTPException(403, "権限がありません")
+
+        db_user = db.query(User).filter(User.email == data.email).first()
+
+        if not db_user:
+            raise HTTPException(404, "ユーザーが見つかりません")
+
+        db_user.password = hash_password(data.new_password)
+
+        db.commit()
+
+        return {"msg": "管理者によるパスワード変更成功"}
+
+    finally:
+        db.close()
