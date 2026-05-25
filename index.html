@@ -15,6 +15,7 @@
 <body>
   <div id="menuButton">☰</div>
   <div id="menu" style="display:none;">
+  <button onclick="updateUsername()">ユーザー名変更</button>
   <button onclick="openPasswordModal()">パスワード変更</button>
   <button onclick="logout()">ログアウト</button>
 </div>
@@ -32,8 +33,6 @@
       <select id="resourceSelect"></select>
       <input type="datetime-local" id="startInput">
       <input type="datetime-local" id="endInput">
-      <input type="text" id="newUsername" placeholder="新しい名前">
-      <button onclick="updateUsername()">名前変更</button>
       <button onclick="submitForm()">予約確定</button>
       <button onclick="closeModal()">キャンセル</button>
     </div>
@@ -51,6 +50,14 @@
       window.location.href = "login.html";
     }
   </script>
+
+  <div id="nameModal" style="display:none;">
+  <h3>ユーザー名変更</h3>
+
+  <input id="newUsername" placeholder="新しい名前">
+  <button onclick="updateUsername()">変更</button>
+  <button onclick="closeNameModal()">閉じる</button>
+</div>
 
 </body>
 
