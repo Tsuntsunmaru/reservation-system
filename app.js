@@ -99,6 +99,14 @@ window.onload = () => {
     if (calendar) calendar.destroy();
 
     calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "timeGridWeek",
+
+      dayCellClassNames: function(arg) {
+        const day = arg.date.getDay();
+        if (day === 0 || day === 6) {
+          return ["fc-weekend"];
+        }
+      },
 
       eventClick: async function(info) {
         const ok = confirm("この予約を削除しますか？");
