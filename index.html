@@ -10,27 +10,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-
-<div id="settingsModal" style="display:none; background:white;
-  padding:20px; position:fixed; top:30%; left:50%;
-  transform:translate(-50%,-30%); z-index:10000;">
-
-  <h3>設定</h3>
-
-  <h4>ユーザー名変更</h4>
-  <input id="newUsername" placeholder="新しい名前">
-  <button onclick="updateUsername()">変更</button>
-
-  <h4>パスワード変更</h4>
-  <input id="oldPassword" type="password" placeholder="現在のパスワード">
-  <input id="newPassword" type="password" placeholder="新しいパスワード">
-  <button onclick="updatePassword()">変更</button>
-
-  <br><br>
-  <button onclick="closeSettingsModal()">閉じる</button>
-
-</div>
-
 <body>
   <div id="menuButton">☰</div>
   <div id="menu" style="display:none;">
@@ -39,9 +18,7 @@
 </div>
 
   <h2>予約カレンダー</h2>
-
   <div id="legend"></div>
-
   <div id="calendar"></div>
 
   <!-- ✅ モーダル -->
@@ -54,7 +31,27 @@
       <button onclick="submitForm()">予約確定</button>
       <button onclick="closeModal()">キャンセル</button>
     </div>
-  </div>
+    
+    <div id="settingsModal" onclick="event.stopPropagation()"
+      style="display:none; background:white;
+      padding:20px; position:fixed; top:30%; left:50%;
+      transform:translate(-50%,-30%); z-index:10000;">
+      
+      <h3>設定</h3>
+      <h4>ユーザー名変更</h4>
+      <input id="newUsername" placeholder="新しい名前">
+      <button onclick="updateUsername()">変更</button>
+      
+      <h4>パスワード変更</h4>
+      <input id="oldPassword" type="password" placeholder="現在のパスワード">
+      <input id="newPassword" type="password" placeholder="新しいパスワード">
+      <button onclick="updatePassword()">変更</button>
+      
+      <br><br>
+      <button onclick="closeSettingsModal()">閉じる</button>
+    </div>
+  
+</div>
 
   <!-- ✅ 🔥 ここが重要（bodyの一番下に移動） -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
@@ -69,8 +66,5 @@
     }
   </script>
 
-</div>
-
 </body>
-
 </html>
