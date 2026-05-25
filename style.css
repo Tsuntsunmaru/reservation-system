@@ -67,16 +67,34 @@ body {
   background-color: #f0f0f0 !important;
 }
 
+.fc-timegrid-slot-lane {
+  background-color: #f5f5f5;
+  background-clip: padding-box;
+}
+
+.fc-timegrid-slot-lane[data-time^="09"],
+.fc-timegrid-slot-lane[data-time^="10"],
+.fc-timegrid-slot-lane[data-time^="11"],
+.fc-timegrid-slot-lane[data-time^="12"],
+.fc-timegrid-slot-lane[data-time^="13"],
+.fc-timegrid-slot-lane[data-time^="14"],
+.fc-timegrid-slot-lane[data-time^="15"],
+.fc-timegrid-slot-lane[data-time^="16"],
+.fc-timegrid-slot-lane[data-time^="17"] {
+  background-color: white;
+}
+
+.fc-day-sun .fc-timegrid-slot-lane,
+.fc-day-sat .fc-timegrid-slot-lane {
+  background-color: #f0f0f0;
+}
+
 .fc-timegrid-slot {
-  border-top: 1px solid #bbb !important;
+  border-top: 1px solid #999 !important;
 }
 
 .fc-timegrid-slot-minor {
-  border-top: 1px dashed #ddd !important;
-}
-
-.fc-timegrid-slot-lane {
-  background-clip: padding-box;
+  border-top: 1px dashed #ccc !important;
 }
 
 button:disabled {
