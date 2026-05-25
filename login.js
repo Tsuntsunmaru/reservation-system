@@ -4,6 +4,8 @@ async function login() {
   if (isLoading) return;
   isLoading = true;
 
+  const btn = document.getElementById("loginBtn");
+  btn.disabled = true;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
@@ -43,4 +45,5 @@ async function login() {
   }
 
   isLoading = false;
+  btn.disabled = false;
 }
