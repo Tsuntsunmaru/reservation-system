@@ -5,9 +5,14 @@ from app.models.booking import Booking
 from app.core.auth import *
 from app.schemas.user import UserCreate, LoginUser
 from fastapi import Depends
-from app.core.deps import get_user 
+from app.core.deps import get_user
+from pydantic import BaseModel
 
 router = APIRouter()
+
+class PasswordUpdate(BaseModel):
+    old_password: str
+    new_password: str
 
 @router.post("/register")
 def register(user: UserCreate):
@@ -59,3 +64,21 @@ def update_user(username: str, user: User = Depends(get_user)):
     db.commit()
 
     return {"msg": "updated"}
+
+@router.put("/users/password")
+def update_password(data: PasswordUpdate, user: User = Depends(get_user)):
+    db = SessionLocal()
+
+    db_user = db.query(User).filter(User.id == user.id).first()
+
+    if not db_user:
+        raise HTTPException(404, "ユーザーが見つかりません")
+
+    if not verify_password(data.old_password, db_user.password):
+        raise HTTPException(400, "現在のパスワードが違います")
+
+    db_user.password = hash_password(data.new_password)
+
+    db.commit()
+
+    return {"msg": "パスワード変更成功"}
