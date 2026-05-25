@@ -67,16 +67,20 @@ body {
   background-color: #f5f5f5 !important;
 }
 
-.fc-timegrid-slot-lane[data-time="09:30:00"],
-.fc-timegrid-slot-lane[data-time^="10"],
-.fc-timegrid-slot-lane[data-time^="11"],
-.fc-timegrid-slot-lane[data-time^="12"],
-.fc-timegrid-slot-lane[data-time^="13"],
-.fc-timegrid-slot-lane[data-time^="14"],
-.fc-timegrid-slot-lane[data-time^="15"],
-.fc-timegrid-slot-lane[data-time^="16"],
-.fc-timegrid-slot-lane[data-time^="17"] {
-  background-color: white !important;
+.fc-day-mon .fc-timegrid-col,
+.fc-day-tue .fc-timegrid-col,
+.fc-day-wed .fc-timegrid-col,
+.fc-day-thu .fc-timegrid-col,
+.fc-day-fri .fc-timegrid-col {
+  background: linear-gradient(
+    to bottom,
+    #f5f5f5 0%,
+    #f5f5f5 39%,
+    white 39%,      
+    white 75%,
+    #f5f5f5 75%,
+    #f5f5f5 100%
+  ) !important;
 }
 
 .fc-day-sun .fc-timegrid-slot-lane,
