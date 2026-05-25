@@ -100,6 +100,9 @@ window.onload = () => {
 
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "timeGridWeek",
+      
+      slotMinTime: "00:00:00",
+      slotMaxTime: "24:00:00",
 
       dayCellClassNames: function(arg) {
         const day = arg.date.getDay();
