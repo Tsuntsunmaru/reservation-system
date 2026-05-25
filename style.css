@@ -63,11 +63,14 @@ body {
   margin-top: 2px;
 }
 
-.fc-daygrid-day.fc-day-sun,
-.fc-daygrid-day.fc-day-sat,
 .fc-timegrid-col.fc-day-sun,
-.fc-timegrid-col.fc-day-sat{
-  background-color: #f0f0f0 !important;
+.fc-timegrid-col.fc-day-sat {
+  background-color: #f0f0f0;
+}
+
+.fc-col-header-cell.fc-day-sun,
+.fc-col-header-cell.fc-day-sat{
+  background-color: #f0f0f0;
 }
 
 .fc-timegrid-slot-lane {
@@ -123,7 +126,7 @@ body {
 .fc-day-fri .fc-timegrid-slot-lane[data-time^="15"],
 .fc-day-fri .fc-timegrid-slot-lane[data-time^="16"],
 .fc-day-fri .fc-timegrid-slot-lane[data-time^="17"] {
-  background-color: white !important;
+  background-color: white;
 }
 
 button:disabled {
