@@ -19,7 +19,6 @@ window.onload = () => {
   menu.style.display = (menu.style.display === "none") ? "block" : "none";
 };
 
-  // ✅ 予約取得
   async function loadBookings() {
     try {
       const res = await fetch(API + "/bookings");
@@ -39,7 +38,6 @@ window.onload = () => {
     }
   }
 
-  // ✅ resource取得
   async function loadResources() {
     try {
       const res = await fetch(API + "/resources");
@@ -50,7 +48,6 @@ window.onload = () => {
     }
   }
 
-  // ✅ カレンダー初期化
   async function initCalendar() {
 
     const eventsRaw = await loadBookings();
@@ -61,7 +58,6 @@ window.onload = () => {
     if (legend) {
       legend.innerHTML = "";
 
-      // 色設定（とりあえず固定版）
       const colors = {
         1: "#e84118",
         2: "#0984e3",
@@ -78,7 +74,6 @@ window.onload = () => {
       });
     }
 
-    // ✅ select更新
     const select = document.getElementById("resourceSelect");
     if (select) {
       select.innerHTML = "";
@@ -90,7 +85,6 @@ window.onload = () => {
       });
     }
 
-    // ✅ イベントに色付け（ここ重要）
     const colors = {
       1: "#e84118",
       2: "#0984e3",
@@ -153,12 +147,10 @@ window.onload = () => {
   window.initCalendar = initCalendar;
 };
 
-// ✅ モーダル開く
 function openModal() {
   document.getElementById("overlay").style.display = "block";
 }
 
-// ✅ モーダル閉じる
 function closeModal() {
   document.getElementById("overlay").style.display = "none";
 
@@ -174,13 +166,16 @@ function closeModal() {
   selectedInfo = null;
 }
 
-function openPasswordModal() {
+function openSettingsModal() {
   document.getElementById("overlay").style.display = "block";
-
-  document.getElementById("selectedTime").textContent = "パスワード変更";
+  document.getElementById("settingsModal").style.display = "block";
 }
 
-// ✅ モーダルクリック貫通防止
+function closeSettingsModal() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("settingsModal").style.display = "none";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modal");
   if (modal) {
@@ -190,7 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// ✅ 予約送信
 async function submitForm() {
   if (!selectedInfo) return;
 
@@ -227,7 +221,6 @@ async function submitForm() {
   }
 }
 
-// ✅ 名前変更
 async function updateUsername() {
   const token = localStorage.getItem("token");
   const newName = document.getElementById("newUsername").value;
