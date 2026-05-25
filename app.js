@@ -135,7 +135,7 @@ window.onload = () => {
         calendarEl.style.pointerEvents = "none";
 
         document.getElementById("selectedTime").textContent =
-          `予約: ${info.startStr} ～ ${info.endStr}`;
+          `予約: ${formatDateTime(info.startStr)} ～ ${formatDateTime(info.endStr)}`;
 
         openModal();
       }
@@ -241,4 +241,15 @@ async function updateUsername() {
     console.error(text);
     alert("変更できません: " + text);
   }
+}
+
+function formatDateTime(dateStr) {
+  const d = new Date(dateStr);
+
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const hour = d.getHours();
+  const min = String(d.getMinutes()).padStart(2, "0");
+
+  return month + "/" + day + " " + hour + ":" + min;
 }
