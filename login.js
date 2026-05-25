@@ -1,6 +1,8 @@
 const API = "https://reservation-system-nle7.onrender.com";
 
 async function login() {
+  if (isLoading) return;
+  isLoading = true;
 
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -39,4 +41,6 @@ async function login() {
   } catch (e) {
     alert("通信エラー");
   }
+
+  isLoading = false;
 }
