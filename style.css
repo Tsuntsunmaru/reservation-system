@@ -64,11 +64,11 @@ body {
 }
 
 .fc-non-business {
-  background-color: #f0f0f0 !important;
+  background-color: rgba(240, 240, 240, 0.9) !important;
 }
 
 .fc-timegrid-slot-lane {
-  background-color: #f5f5f5;
+  background-color: rgba(245, 245, 245, 0.5);
   background-clip: padding-box;
 }
 
@@ -81,27 +81,20 @@ body {
 .fc-timegrid-slot-lane[data-time^="15"],
 .fc-timegrid-slot-lane[data-time^="16"],
 .fc-timegrid-slot-lane[data-time^="17"] {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .fc-day-sun .fc-timegrid-slot-lane,
 .fc-day-sat .fc-timegrid-slot-lane {
-  background-color: #f0f0f0;
+  background-color: rgba(240, 240, 240, 0.7);
 }
 
 .fc-timegrid-slot {
   border-top: 1px solid #444 !important;
-  position: relative;
-  z-index:2;
 }
 
 .fc-timegrid-slot-minor {
   border-top: 1px dashed #999 !important;
-}
-
-.fc-timegrid-slot-lane {
-  position: relative;
-  z-index: 1;
 }
 
 button:disabled {
