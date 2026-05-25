@@ -91,10 +91,17 @@ body {
 
 .fc-timegrid-slot {
   border-top: 1px solid #444 !important;
+  position: relative;
+  z-index:2;
 }
 
 .fc-timegrid-slot-minor {
   border-top: 1px dashed #999 !important;
+}
+
+.fc-timegrid-slot-lane {
+  position: relative;
+  z-index: 1;
 }
 
 button:disabled {
