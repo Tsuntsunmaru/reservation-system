@@ -63,8 +63,9 @@ body {
   margin-top: 2px;
 }
 
-.fc-weekend {
-  background-color: #f0f0f0;
+.fc-day-sun,
+.fc-day-sat {
+  background-color: #f0f0f0 !important;
 }
 
 .fc-timegrid-slot-lane {
