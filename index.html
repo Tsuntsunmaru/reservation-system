@@ -33,6 +33,9 @@
       <select id="resourceSelect"></select>
       <input type="datetime-local" id="startInput">
       <input type="datetime-local" id="endInput">
+      <input id="oldPassword" type="password" placeholder="現在のパスワード">
+      <input id="newPassword" type="password" placeholder="新しいパスワード">
+      <button onclick="updatePassword()">変更</button>
       <button onclick="submitForm()">予約確定</button>
       <button onclick="closeModal()">キャンセル</button>
     </div>
