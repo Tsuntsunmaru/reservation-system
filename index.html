@@ -5,12 +5,31 @@
   <meta charset="UTF-8">
   <title>予約システム</title>
 
-  <!-- ✅ FullCalendar CSSだけhead -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 
-  <!-- ✅ 自分のCSS -->
   <link rel="stylesheet" href="style.css">
 </head>
+
+
+<div id="settingsModal" style="display:none; background:white;
+  padding:20px; position:fixed; top:30%; left:50%;
+  transform:translate(-50%,-30%); z-index:10000;">
+
+  <h3>設定</h3>
+
+  <h4>ユーザー名変更</h4>
+  <input id="newUsername" placeholder="新しい名前">
+  <button onclick="updateUsername()">変更</button>
+
+  <h4>パスワード変更</h4>
+  <input id="oldPassword" type="password" placeholder="現在のパスワード">
+  <input id="newPassword" type="password" placeholder="新しいパスワード">
+  <button onclick="updatePassword()">変更</button>
+
+  <br><br>
+  <button onclick="closeSettingsModal()">閉じる</button>
+
+</div>
 
 <body>
   <div id="menuButton">☰</div>
@@ -33,9 +52,6 @@
       <select id="resourceSelect"></select>
       <input type="datetime-local" id="startInput">
       <input type="datetime-local" id="endInput">
-      <input id="oldPassword" type="password" placeholder="現在のパスワード">
-      <input id="newPassword" type="password" placeholder="新しいパスワード">
-      <button onclick="updatePassword()">変更</button>
       <button onclick="submitForm()">予約確定</button>
       <button onclick="closeModal()">キャンセル</button>
     </div>
@@ -54,12 +70,6 @@
     }
   </script>
 
-  <div id="nameModal" style="display:none;">
-  <h3>ユーザー名変更</h3>
-
-  <input id="newUsername" placeholder="新しい名前">
-  <button onclick="updateUsername()">変更</button>
-  <button onclick="closeNameModal()">閉じる</button>
 </div>
 
 </body>
