@@ -104,6 +104,12 @@ window.onload = () => {
       slotMinTime: "00:00:00",
       slotMaxTime: "24:00:00",
       slotDuration: "00:30:00",
+
+      slotLabelFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      },
       
       //businessHours: {  
         //daysOfWeek: [1, 2, 3, 4, 5],
