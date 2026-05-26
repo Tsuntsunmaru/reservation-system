@@ -158,3 +158,8 @@ button:disabled {
 .fc-day-sat .fc-timegrid-slot-lane,{
   background-color: rgba(180, 180, 180, 0.6) !important;
 }
+
+.fc-day-sun,
+.fc-day-sat {
+  background-color: rgba(200, 200, 200, 0.4) !important;
+}
