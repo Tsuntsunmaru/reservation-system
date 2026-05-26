@@ -198,8 +198,6 @@ window.onload = () => {
         document.getElementById("detailModal").style.display = "block";
       }
       
-
-      initialView: "timeGridWeek",
       selectable: true,
       events: events,
 
