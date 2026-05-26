@@ -100,6 +100,32 @@ window.onload = () => {
     if (calendar) calendar.destroy();
 
     let selectedEvent = null;
+    function closeDetailModal() {
+      document.getElementById("detailModal").style.display = "none";
+    }
+    async function deleteFromDetail() {
+      if (!selectedEvent) return;
+      const token = localStorage.getItem("token");
+      const res = await fetch(API + "/bookings/" + selectedEvent.id, {
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+    
+      if (res.ok) {
+       alert("削除しました");
+       selectedEvent.remove();
+       closeDetailModal();
+     } else {
+       alert("削除失敗");
+     }
+   }
+
+   function editFromDetail() {
+     closeDetailModal();
+     openEditModal(selectedEvent);
+   }
     
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "timeGridWeek",
@@ -151,17 +177,7 @@ window.onload = () => {
           "備考: " + (event.extendedProps.note || "");
         document.getElementById("detailModal").style.display = "block";
       }
-
-
-        if (res.ok) {
-          alert("削除しました");
-          info.event.remove();
-        } else {
-          const text = await res.text();
-          console.error(text);
-          alert("削除できません: " + text);
-        }
-      },
+      
 
       initialView: "timeGridWeek",
       selectable: true,
