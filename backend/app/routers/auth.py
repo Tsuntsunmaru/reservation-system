@@ -1,10 +1,10 @@
-from fastapi import APIRouter, HTTPException
-from app.database import SessionLocal
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+from app.database import get_db
 from app.models.user import User
 from app.models.booking import Booking
 from app.core.auth import *
 from app.schemas.user import UserCreate, LoginUser
-from fastapi import Depends
 from app.core.deps import get_user
 from pydantic import BaseModel
 
@@ -14,10 +14,9 @@ class PasswordUpdate(BaseModel):
     old_password: str
     new_password: str
 
-@router.post("/register")
-def register(user: UserCreate):
-    db = SessionLocal()
 
+@router.post("/register")
+def register(user: UserCreate, db: Session = Depends(get_db)):
     try:
         new_user = User(
             email=user.email,
@@ -29,28 +28,27 @@ def register(user: UserCreate):
         db.commit()
         
         return {"msg": "ok"}
-    finally:
-        db.close()
+    except Exception:
+        db.rollback()
+        raise
+
 
 @router.post("/login")
-def login(user: LoginUser):
-    db = SessionLocal()
+def login(user: LoginUser, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.email == user.email).first()
 
-    try:
-        db_user = db.query(User).filter(User.email == user.email).first()
+    if not db_user or not verify_password(user.password, db_user.password):
+        raise HTTPException(status_code=401, detail="Unauthorized")
         
-        if not db_user or not verify_password(user.password,db_user.password):
-            raise HTTPException(status_code=401, detail="Unauthorized")
-            
-        return {"token": create_token({"user_id": db_user.id})}
-        
-    finally:
-        db.close()
+    return {"token": create_token({"user_id": db_user.id})}
+
 
 @router.put("/users/me")
-def update_user(username: str, user: User = Depends(get_user)):
-    db = SessionLocal()
-
+def update_user(
+    username: str,
+    user: User = Depends(get_user),
+    db: Session = Depends(get_db)
+):
     try:
         db_user = db.query(User).filter(User.id == user.id).first()
         
@@ -66,13 +64,17 @@ def update_user(username: str, user: User = Depends(get_user)):
         db.commit()
                 
         return {"msg": "updated"}
-    finally:
-        db.close()
+    except Exception:
+        db.rollback()
+        raise
+
 
 @router.put("/users/password")
-def update_password(data: PasswordUpdate, user: User = Depends(get_user)):
-    db = SessionLocal()
-
+def update_password(
+    data: PasswordUpdate,
+    user: User = Depends(get_user),
+    db: Session = Depends(get_db)
+):
     try:
         db_user = db.query(User).filter(User.id == user.id).first()
         
@@ -87,8 +89,10 @@ def update_password(data: PasswordUpdate, user: User = Depends(get_user)):
         db.commit()
         
         return {"msg": "パスワード変更成功"}
-    finally:
-        db.close()
+    except Exception:
+        db.rollback()
+        raise
+
 
 class AdminPasswordUpdate(BaseModel):
     email: str
@@ -96,9 +100,11 @@ class AdminPasswordUpdate(BaseModel):
 
 
 @router.put("/admin/users/password")
-def admin_update_password(data: AdminPasswordUpdate, user: User = Depends(get_user)):
-    db = SessionLocal()
-
+def admin_update_password(
+    data: AdminPasswordUpdate,
+    user: User = Depends(get_user),
+    db: Session = Depends(get_db)
+):
     try:
         if user.role != "admin":
             raise HTTPException(403, "権限がありません")
@@ -114,5 +120,6 @@ def admin_update_password(data: AdminPasswordUpdate, user: User = Depends(get_us
 
         return {"msg": "管理者によるパスワード変更成功"}
 
-    finally:
-        db.close()
+    except Exception:
+        db.rollback()
+        raise
