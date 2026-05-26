@@ -18,18 +18,19 @@ class PasswordUpdate(BaseModel):
 def register(user: UserCreate):
     db = SessionLocal()
 
-    new_user = User(
-        email=user.email,
-        username=user.username,
-        password=hash_password(user.password),
-        role="user"
-    )
-
-    db.add(new_user)
-    db.commit()
-
-    return {"msg": "ok"}
-
+    try:
+        new_user = User(
+            email=user.email,
+            username=user.username,
+            password=hash_password(user.password),
+            role="user"
+        )
+        db.add(new_user)
+        db.commit()
+        
+        return {"msg": "ok"}
+    finally:
+        db.close()
 
 @router.post("/login")
 def login(user: LoginUser):
@@ -50,38 +51,44 @@ def login(user: LoginUser):
 def update_user(username: str, user: User = Depends(get_user)):
     db = SessionLocal()
 
-    db_user = db.query(User).filter(User.id == user.id).first()
-
-    if not db_user:
-        raise HTTPException(404, "ユーザーが見つかりません")
-
-    db_user.username = username
-    
-    bookings = db.query(Booking).filter(Booking.user_id == user.id).all()
-    for b in bookings:
-        b.user_name = username
+    try:
+        db_user = db.query(User).filter(User.id == user.id).first()
         
-    db.commit()
-
-    return {"msg": "updated"}
+        if not db_user:
+            raise HTTPException(404, "ユーザーが見つかりません")
+            
+        db_user.username = username
+            
+        bookings = db.query(Booking).filter(Booking.user_id == user.id).all()
+        for b in bookings:
+            b.user_name = username
+        
+        db.commit()
+                
+        return {"msg": "updated"}
+    finally:
+        db.close()
 
 @router.put("/users/password")
 def update_password(data: PasswordUpdate, user: User = Depends(get_user)):
     db = SessionLocal()
 
-    db_user = db.query(User).filter(User.id == user.id).first()
-
-    if not db_user:
-        raise HTTPException(404, "ユーザーが見つかりません")
-
-    if not verify_password(data.old_password, db_user.password):
-        raise HTTPException(400, "現在のパスワードが違います")
-
-    db_user.password = hash_password(data.new_password)
-
-    db.commit()
-
-    return {"msg": "パスワード変更成功"}
+    try:
+        db_user = db.query(User).filter(User.id == user.id).first()
+        
+        if not db_user:
+            raise HTTPException(404, "ユーザーが見つかりません")
+            
+        if not verify_password(data.old_password, db_user.password):
+            raise HTTPException(400, "現在のパスワードが違います")
+            
+        db_user.password = hash_password(data.new_password)
+        
+        db.commit()
+        
+        return {"msg": "パスワード変更成功"}
+    finally:
+        db.close()
 
 class AdminPasswordUpdate(BaseModel):
     email: str
