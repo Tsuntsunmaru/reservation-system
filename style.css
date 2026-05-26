@@ -92,11 +92,6 @@ body {
   border-top: 1px dashed #999 !important;
 }
 
-.fc-day-sun .fc-timegrid-slot-lane,
-.fc-day-sat .fc-timegrid-slot-lane {
-  background-color: rgba(240, 240, 240, 0.7);
-}
-
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -117,4 +112,9 @@ button:disabled {
   background: white;
   border: 1px solid #ccc;
   padding: 10px;
+}
+
+.fc-day-sun .fc-timegrid-slot-lane,
+.fc-day-sat .fc-timegrid-slot-lane {
+  background-color: rgba(240, 240, 240, 0.7) !important;
 }
