@@ -35,7 +35,9 @@ def create_booking(
             user_name=user.username,
             resource_id=data.resource_id,
             start_at=start_at,
-            end_at=end_at
+            end_at=end_at,
+            title=data.title,
+            note=data.note
         ))
 
         db.commit()
