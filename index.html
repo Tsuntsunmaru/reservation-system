@@ -35,6 +35,19 @@
       <button onclick="submitForm()">予約確定</button>
       <button onclick="closeModal()">キャンセル</button>
     </div>
+
+    <div id="detailModal" style="display:none;" onclick="closeDetailModal()">
+      <div id="detailContent" onclick="event.stopPropagation()"
+        style="background:white; padding:20px; width:300px; margin:100px auto;">
+        <p id="detailTitle"></p>
+        <p id="detailTime"></p>
+        <p id="detailNote"></p>
+        <button onclick="editFromDetail()">編集</button>
+        <button onclick="deleteFromDetail()">削除</button>
+        <button onclick="closeDetailModal()">閉じる</button>
+      </div>
+    </div>
+
     
     <div id="settingsModal" onclick="event.stopPropagation()"
       style="display:none; background:white;
