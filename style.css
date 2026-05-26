@@ -72,15 +72,55 @@ body {
   background-clip: padding-box;
 }
 
-.fc-timegrid-slot-lane[data-time^="09"],
-.fc-timegrid-slot-lane[data-time^="10"],
-.fc-timegrid-slot-lane[data-time^="11"],
-.fc-timegrid-slot-lane[data-time^="12"],
-.fc-timegrid-slot-lane[data-time^="13"],
-.fc-timegrid-slot-lane[data-time^="14"],
-.fc-timegrid-slot-lane[data-time^="15"],
-.fc-timegrid-slot-lane[data-time^="16"],
-.fc-timegrid-slot-lane[data-time^="17"] {
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="09"],
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="10"],
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="11"],
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="12"],
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="13"],
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="14"],
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="15"],
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="16"],
+.fc-day-mon .fc-timegrid-slot-lane[data-time^="17"],
+
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="09"],
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="10"],
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="11"],
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="12"],
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="13"],
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="14"],
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="15"],
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="16"],
+.fc-day-tue .fc-timegrid-slot-lane[data-time^="17"],
+
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="09"],
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="10"],
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="11"],
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="12"],
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="13"],
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="14"],
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="15"],
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="16"],
+.fc-day-wed .fc-timegrid-slot-lane[data-time^="17"],
+
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="09"],
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="10"],
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="11"],
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="12"],
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="13"],
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="14"],
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="15"],
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="16"],
+.fc-day-thu .fc-timegrid-slot-lane[data-time^="17"],
+
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="09"],
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="10"],
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="11"],
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="12"],
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="13"],
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="14"],
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="15"],
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="16"],
+.fc-day-fri .fc-timegrid-slot-lane[data-time^="17"] {
   background-color: rgba(255, 255, 255, 1);
 }
 
@@ -115,8 +155,6 @@ button:disabled {
 }
 
 .fc-day-sun .fc-timegrid-slot-lane,
-.fc-day-sat .fc-timegrid-slot-lane,
-.fc-day-sun .fc-timegrid-slot,
-.fc-day-sat .fc-timegrid-slot{
-  background-color: rgba(240, 240, 240, 0.8) !important;
+.fc-day-sat .fc-timegrid-slot-lane,{
+  background-color: rgba(240, 240, 240, 0.8);
 }
