@@ -99,6 +99,8 @@ window.onload = () => {
 
     if (calendar) calendar.destroy();
 
+    let selectedEvent = null;
+    
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "timeGridWeek",
       
@@ -135,21 +137,21 @@ window.onload = () => {
         //startTime: "09:30",
         //endTime: "18:00"
       //},
-
       
+    
+    
+      eventClick: function(info) {
+        const event = info.event;
+        selectedEvent = event;
+        document.getElementById("detailTitle").textContent =
+          "タイトル: " + event.title;
+        document.getElementById("detailTime").textContent =
+          `時間: ${event.startStr}〜${event.endStr}`;
+        document.getElementById("detailNote").textContent =
+          "備考: " + (event.extendedProps.note || "");
+        document.getElementById("detailModal").style.display = "block";
+      }
 
-      eventClick: async function(info) {
-        const ok = confirm("この予約を削除しますか？");
-        if (!ok) return;
-
-        const token = localStorage.getItem("token");
-
-        const res = await fetch(API + "/bookings/" + info.event.id, {
-          method: "DELETE",
-          headers: {
-            "Authorization": "Bearer " + token
-          }
-        });
 
         if (res.ok) {
           alert("削除しました");
