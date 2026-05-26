@@ -164,6 +164,11 @@ function openModal() {
   document.getElementById("overlay").style.display = "block";
   document.getElementById("settingsModal").style.display = "none";
   document.getElementById("modal").style.display = "block";
+  const startInput = document.getElementById("startInput");
+  const endInput = document.getElementById("endInput");
+
+  startInput.value = selectedInfo.startStr.slice(0,16);
+  endInput.value = selectedInfo.endStr.slice(0,16);
 }
 
 function closeModal() {
