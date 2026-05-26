@@ -1,4 +1,4 @@
-from fastapi import Header
+from fastapi import Depends, Header
 from app.database import SessionLocal
 from app.models.user import User
 from app.core.auth import decode_token
