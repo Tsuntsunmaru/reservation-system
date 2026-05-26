@@ -117,6 +117,18 @@ window.onload = () => {
         minute: '2-digit',
         hour12: false
       },
+      eventContent: function(arg) {
+        return {
+          html: `
+          <div>
+          <div style="font-weight:bold;">${arg.event.title}</div>
+          <div style="font-size:11px;">
+            ${arg.event.extendedProps.user_name || ""}
+          </div>
+        </div>
+      `
+    };
+  },
       
       //businessHours: {  
         //daysOfWeek: [1, 2, 3, 4, 5],
