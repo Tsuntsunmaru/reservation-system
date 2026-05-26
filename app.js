@@ -213,6 +213,8 @@ async function submitForm() {
 
   const token = localStorage.getItem("token");
   const selectedResource = document.getElementById("resourceSelect").value;
+  const start = document.getElementById("startInput").value;
+  const end = document.getElementById("endInput").value;
 
   try {
     const res = await fetch(API + "/bookings", {
@@ -223,10 +225,10 @@ async function submitForm() {
       },
       body: JSON.stringify({
         resource_id: Number(selectedResource),
-        start_at: selectedInfo.startStr,
-        end_at: selectedInfo.endStr
+        start_at: start,
+        end_at: end
       })
-    });
+  });
 
     if (res.ok) {
       alert("予約成功");
