@@ -68,7 +68,7 @@ body {
 }
 
 .fc-timegrid-slot-lane {
-  background-color: rgba(245, 245, 245, 0.5);
+  background-color: rgba(200, 200, 200, 0.4);
   background-clip: padding-box;
 }
 
@@ -81,7 +81,7 @@ body {
 .fc-timegrid-slot-lane[data-time^="15"],
 .fc-timegrid-slot-lane[data-time^="16"],
 .fc-timegrid-slot-lane[data-time^="17"] {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .fc-day-sun .fc-timegrid-slot-lane,
