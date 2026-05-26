@@ -26,9 +26,10 @@ window.onload = () => {
 
       return bookings.map(b => ({
         id: b.id,
-        title: b.user_name || "予約",
+        title: b.title || "予約",
         start: b.start_at,
         end: b.end_at,
+        user_name: b.user_name,
         resource_id: b.resource_id
       }));
 
