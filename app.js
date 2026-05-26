@@ -30,6 +30,7 @@ window.onload = () => {
         start: b.start_at,
         end: b.end_at,
         user_name: b.user_name,
+        note: b.note,
         resource_id: b.resource_id
       }));
 
