@@ -110,6 +110,12 @@ window.onload = () => {
         minute: '2-digit',
         hour12: false
       },
+
+      eventTimeFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      },
       
       //businessHours: {  
         //daysOfWeek: [1, 2, 3, 4, 5],
