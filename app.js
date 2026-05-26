@@ -2,6 +2,25 @@ const API = "https://reservation-system-nle7.onrender.com";
 
 let calendar;
 let selectedInfo = null;
+let selectedEvent = null;
+
+function openEditModal(event) {
+  selectedEvent = event;
+
+  document.getElementById("startInput").value =
+    event.startStr.slice(0,16);
+
+  document.getElementById("endInput").value =
+    event.endStr.slice(0,16);
+
+  document.getElementById("titleInput").value =
+    event.title;
+
+  document.getElementById("noteInput").value =
+    event.extendedProps.note || "";
+
+  document.getElementById("overlay").style.display = "block";  
+}
 
 window.onload = () => {
   const token = localStorage.getItem("token");
