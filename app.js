@@ -105,11 +105,11 @@ window.onload = () => {
       slotMaxTime: "24:00:00",
       slotDuration: "00:30:00",
       
-      businessHours: {  
-        daysOfWeek: [1, 2, 3, 4, 5],
-        startTime: "09:30",
-        endTime: "18:00"
-      },
+      //businessHours: {  
+        //daysOfWeek: [1, 2, 3, 4, 5],
+        //startTime: "09:30",
+        //endTime: "18:00"
+      //},
 
       
 
