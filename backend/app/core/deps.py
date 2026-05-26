@@ -1,5 +1,5 @@
 from fastapi import Depends, Header
-from app.database import SessionLocal
+from app.database import get_db
 from app.models.user import User
 from app.core.auth import decode_token
 
