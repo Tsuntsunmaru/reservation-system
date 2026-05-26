@@ -227,6 +227,9 @@ async function submitForm() {
   const selectedResource = document.getElementById("resourceSelect").value;
   const start = document.getElementById("startInput").value;
   const end = document.getElementById("endInput").value;
+  const title = document.getElementById("titleInput").value;
+  const note = document.getElementById("noteInput").value;
+
 
   try {
     const res = await fetch(API + "/bookings", {
@@ -238,7 +241,9 @@ async function submitForm() {
       body: JSON.stringify({
         resource_id: Number(selectedResource),
         start_at: start,
-        end_at: end
+        end_at: end,
+        title: title,
+        note: note
       })
   });
 
