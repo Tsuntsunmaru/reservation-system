@@ -9,3 +9,5 @@ class Booking(Base):
     resource_id = Column(Integer, ForeignKey("resources.id"))
     start_at = Column(DateTime)
     end_at = Column(DateTime)
+    title = Column(String, nullable=True)
+    note = Column(Text, nullable=True)
