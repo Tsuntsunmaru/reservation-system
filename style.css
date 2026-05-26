@@ -84,17 +84,17 @@ body {
   background-color: rgba(255, 255, 255, 1);
 }
 
-.fc-day-sun .fc-timegrid-slot-lane,
-.fc-day-sat .fc-timegrid-slot-lane {
-  background-color: rgba(240, 240, 240, 0.7);
-}
-
 .fc-timegrid-slot {
   border-top: 1px solid #444 !important;
 }
 
 .fc-timegrid-slot-minor {
   border-top: 1px dashed #999 !important;
+}
+
+.fc-day-sun .fc-timegrid-slot-lane,
+.fc-day-sat .fc-timegrid-slot-lane {
+  background-color: rgba(240, 240, 240, 0.7);
 }
 
 button:disabled {
