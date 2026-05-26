@@ -115,6 +115,8 @@ button:disabled {
 }
 
 .fc-day-sun .fc-timegrid-slot-lane,
-.fc-day-sat .fc-timegrid-slot-lane {
-  background-color: rgba(240, 240, 240, 0.7) !important;
+.fc-day-sat .fc-timegrid-slot-lane,
+.fc-day-sun .fc-timegrid-slot,
+.fc-day-sat .fc-timegrid-slot{
+  background-color: rgba(240, 240, 240, 0.8) !important;
 }
