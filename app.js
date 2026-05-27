@@ -269,6 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function submitForm() {
+  console.log("submitForm実行された");
 
   const token = localStorage.getItem("token");
   const selectedResource = document.getElementById("resourceSelect").value;
