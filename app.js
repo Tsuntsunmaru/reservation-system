@@ -19,7 +19,8 @@ function openEditModal(event) {
   document.getElementById("noteInput").value =
     event.extendedProps.note || "";
 
-  document.getElementById("overlay").style.display = "block";  
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("modal").style.display = "block";
 }
 
 function closeDetailModal() {
