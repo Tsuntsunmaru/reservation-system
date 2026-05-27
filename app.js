@@ -80,7 +80,6 @@ async function submitForm() {
         location.reload();
       } else {
         alert("更新失敗");
-        selectedEvent = null;
       }
 
     } else {
@@ -105,7 +104,6 @@ async function submitForm() {
         location.reload();
       } else {
         alert("予約失敗");
-        selectedEvent = null;
       }
     }
 
