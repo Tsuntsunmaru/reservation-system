@@ -27,7 +27,7 @@ function closeDetailModal() {
       const modal = document.getElementById("detailModal");
       modal.style.setProperty("display", "none", "important");
       document.getElementById("overlay").style.display = "none";
-      document.getElementById("calendar").style.pointerEvents = "auto";
+      document.body.style.pointerEvents = "auto";
     }
 async function deleteFromDetail() {
       if (!selectedEvent) return;
@@ -259,8 +259,9 @@ window.onload = () => {
       eventClick: function(info) {
         const event = info.event;
         selectedEvent = event;
-        const calendarEl = document.getElementById("calendar");
-        calendarEl.style.pointerEvents = "none";
+        document.body.style.pointerEvents = "none";
+        document.getElementById("detailModal").style.pointerEvents = "auto";
+        document.getElementById("overlay").style.pointerEvents = "auto";
         document.getElementById("detailTitle").textContent =
           "タイトル: " + event.title;
         document.getElementById("detailTime").textContent =
