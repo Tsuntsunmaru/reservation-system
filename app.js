@@ -403,5 +403,4 @@ function closeAllModals() {
   document.getElementById("detailModal").style.display = "none";
   document.getElementById("settingsModal").style.display = "none";
 
-  document.body.style.pointerEvents = "auto";
 }
