@@ -311,9 +311,7 @@ function closeModal() {
   document.getElementById("overlay").style.display = "none";
   document.getElementById("modal").style.display = "none";
   document.getElementById("settingsModal").style.display = "none";
-  
-  const calendarEl = document.getElementById("calendar");
-  calendarEl.style.pointerEvents = "auto";
+  document.body.style.pointerEvents = "auto";
 
   if (calendar) {
     calendar.setOption("selectable", true);
