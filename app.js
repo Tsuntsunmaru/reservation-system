@@ -289,8 +289,8 @@ async function submitForm() {
         },
         body: JSON.stringify({
           resource_id: Number(selectedResource),
-          start_at: start.replace(" ", "T"),
-          end_at: end.replace(" ", "T"),
+          start_at: start.replace(/\//g, "-").replace(" ", "T") + ":00",
+          end_at: end.replace(/\//g, "-").replace(" ", "T") + ":00",
           title: title,
           note: note
         })
