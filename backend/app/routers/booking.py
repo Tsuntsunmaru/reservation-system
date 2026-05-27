@@ -14,6 +14,22 @@ router = APIRouter()
 def get_bookings(db: Session = Depends(get_db)):
     return db.query(Booking).all()
 
+def can_book(db, resource_id, start_at, end_at, user, booking_id=None):
+    q = db.query(Booking).filter(
+        Booking.resource_id == resource_id,
+        Booking.start_at < end_at,
+        Booking.end_at > start_at
+    )
+
+    if booking_id is not None:
+        q = q.filter(Booking.id != booking_id)
+
+    existing = q.first()
+
+    if existing:
+        return False, "その時間は既に予約があります"
+
+    return True, "ok"
 
 @router.post("/bookings")
 def create_booking(
