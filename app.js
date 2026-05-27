@@ -258,6 +258,8 @@ window.onload = () => {
       eventClick: function(info) {
         const event = info.event;
         selectedEvent = event;
+        const calendarEl = document.getElementById("calendar");
+        calendarEl.style.pointerEvents = "none";
         document.getElementById("detailTitle").textContent =
           "タイトル: " + event.title;
         document.getElementById("detailTime").textContent =
