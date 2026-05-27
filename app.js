@@ -276,8 +276,8 @@ async function submitForm() {
   const end = document.getElementById("endInput").value;
   const title = document.getElementById("titleInput").value;
   const note = document.getElementById("noteInput").value;
-  
-
+  console.log("送信値:", start, end);
+  console.log("完成値:", start + ":00", end + ":00");
 
   try {
 
