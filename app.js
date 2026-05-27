@@ -289,8 +289,8 @@ async function submitForm() {
         },
         body: JSON.stringify({
           resource_id: Number(selectedResource),
-          start_at: start,
-          end_at: end,
+          start_at: new Date(start).toISOString(),
+          end_at: new Date(end).toISOString(),
           title: title,
           note: note
         })
