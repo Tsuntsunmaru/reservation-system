@@ -1,3 +1,4 @@
+console.log("app.js 読み込まれた");
 const API = "https://reservation-system-nle7.onrender.com";
 
 let calendar;
