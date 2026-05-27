@@ -281,7 +281,7 @@ async function submitForm() {
   try {
 
     if(selectedEvent){
-      const res = await fetch(API + "/bookings" + selectedEvent.id, {
+      const res = await fetch(API + "/bookings/" + selectedEvent.id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
