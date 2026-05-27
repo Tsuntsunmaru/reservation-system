@@ -50,6 +50,76 @@ function editFromDetail() {
      openEditModal(selectedEvent);
    }
 
+async function submitForm() {
+  console.log("submitForm実行された");
+
+  const token = localStorage.getItem("token");
+  const selectedResource = document.getElementById("resourceSelect").value;
+  const start = document.getElementById("startInput").value;
+  const end = document.getElementById("endInput").value;
+  const title = document.getElementById("titleInput").value;
+  const note = document.getElementById("noteInput").value;
+  console.log("送信値:", start, end);
+  console.log("完成値:", start + ":00", end + ":00");
+
+  try {
+
+    if(selectedEvent){
+      const res = await fetch(API + "/bookings/" + selectedEvent.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+          resource_id: Number(selectedResource),
+          start_at: start + ":00",
+          end_at: end + ":00",
+          title: title,
+          note: note
+        })
+      });
+      if (res.ok) {
+        alert("更新しました");
+        location.reload();
+      } else {
+        alert("更新失敗");
+      }
+
+    } else {
+
+      // ✅ 新規作成
+      const res = await fetch(API + "/bookings/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+          resource_id: Number(selectedResource),
+          start_at: start,
+          end_at: end,
+          title: title,
+          note: note
+        })
+      });
+
+      if (res.ok) {
+        alert("予約しました");
+        location.reload();
+      } else {
+        alert("予約失敗");
+      }
+    }
+
+    selectedEvent = null;   // ✅ リセット
+
+  } catch (e) {
+    console.error(e);
+    alert("エラー");
+  }
+}
+
 window.onload = () => {
   const token = localStorage.getItem("token");
 
@@ -269,75 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-async function submitForm() {
-  console.log("submitForm実行された");
 
-  const token = localStorage.getItem("token");
-  const selectedResource = document.getElementById("resourceSelect").value;
-  const start = document.getElementById("startInput").value;
-  const end = document.getElementById("endInput").value;
-  const title = document.getElementById("titleInput").value;
-  const note = document.getElementById("noteInput").value;
-  console.log("送信値:", start, end);
-  console.log("完成値:", start + ":00", end + ":00");
-
-  try {
-
-    if(selectedEvent){
-      const res = await fetch(API + "/bookings/" + selectedEvent.id, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
-        },
-        body: JSON.stringify({
-          resource_id: Number(selectedResource),
-          start_at: start + ":00",
-          end_at: end + ":00",
-          title: title,
-          note: note
-        })
-      });
-      if (res.ok) {
-        alert("更新しました");
-        location.reload();
-      } else {
-        alert("更新失敗");
-      }
-
-    } else {
-
-      // ✅ 新規作成
-      const res = await fetch(API + "/bookings/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
-        },
-        body: JSON.stringify({
-          resource_id: Number(selectedResource),
-          start_at: start,
-          end_at: end,
-          title: title,
-          note: note
-        })
-      });
-
-      if (res.ok) {
-        alert("予約しました");
-        location.reload();
-      } else {
-        alert("予約失敗");
-      }
-    }
-
-    selectedEvent = null;   // ✅ リセット
-
-  } catch (e) {
-    console.error(e);
-    alert("エラー");
-  }
-}
 
 
 async function updateUsername() {
