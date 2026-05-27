@@ -84,6 +84,7 @@ async function submitForm() {
         location.reload();
       } else {
         alert("更新失敗");
+        selectedEvent = null;
       }
 
     } else {
@@ -97,8 +98,8 @@ async function submitForm() {
         },
         body: JSON.stringify({
           resource_id: Number(selectedResource),
-          start_at: start,
-          end_at: end,
+          start_at: start + ":00",
+          end_at: end + ":00",
           title: title,
           note: note
         })
@@ -109,6 +110,7 @@ async function submitForm() {
         location.reload();
       } else {
         alert("予約失敗");
+        selectedEvent = null;
       }
     }
 
