@@ -27,6 +27,7 @@ function closeDetailModal() {
       const modal = document.getElementById("detailModal");
       modal.style.setProperty("display", "none", "important");
       document.getElementById("overlay").style.display = "none";
+      document.getElementById("calendar").style.pointerEvents = "auto";
     }
 async function deleteFromDetail() {
       if (!selectedEvent) return;
@@ -389,4 +390,8 @@ window.addEventListener("load", () => {
     e.stopPropagation();
     e.preventDefault();
   });
+  overlay.addEventListener("mousedown", (e) =>
+    e.stopPropagation());
+  overlay.addEventListener("mouseup", (e) =>
+    e.stopPropagation());
 });
