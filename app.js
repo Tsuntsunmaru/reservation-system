@@ -381,3 +381,12 @@ function formatDateTime(dateStr) {
 
   return month + "/" + day + " " + hour + ":" + min;
 }
+
+window.addEventListener("load", () => {
+  const overlay = document.getElementById("overlay");
+
+  overlay.addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
