@@ -71,3 +71,28 @@ def delete_booking(
     except Exception:
         db.rollback()
         raise
+
+@router.put("/bookings/{booking_id}")
+def update_booking(
+    booking_id: int,
+    data: BookingIn,
+    user: User = Depends(get_user),
+    db: Session = Depends(get_db)
+):
+    booking = db.query(Booking).filter(Booking.id == booking_id).first()
+
+    if not booking:
+        raise HTTPException(404, "見つからない")
+
+    if booking.user_id != user.id:
+        raise HTTPException(403, "自分の予約のみ更新できます")
+
+    booking.start_at = data.start_at.replace(tzinfo=None)
+    booking.end_at = data.end_at.replace(tzinfo=None)
+    booking.resource_id = data.resource_id
+    booking.title = data.title
+    booking.note = data.note
+
+    db.commit()
+
+    return {"msg": "updated"}
