@@ -257,6 +257,7 @@ window.onload = () => {
     
     
       eventClick: function(info) {
+        closeAllModals();
         const event = info.event;
         selectedEvent = event;
         document.body.style.pointerEvents = "none";
@@ -276,6 +277,7 @@ window.onload = () => {
       events: events,
 
       select: function (info) {
+        closeAllModals();
         selectedInfo = info;
 
         calendar.setOption("selectable", false);
@@ -394,3 +396,12 @@ window.addEventListener("load", () => {
   overlay.addEventListener("mouseup", (e) =>
     e.stopPropagation());
 });
+
+function closeAllModals() {
+  document.getElementById("overlay").style.display = "none";
+  document.getElementById("modal").style.display = "none";
+  document.getElementById("detailModal").style.display = "none";
+  document.getElementById("settingsModal").style.display = "none";
+
+  document.body.style.pointerEvents = "auto";
+}
