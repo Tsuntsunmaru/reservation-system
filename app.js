@@ -276,6 +276,11 @@ async function submitForm() {
   const end = document.getElementById("endInput").value;
   const title = document.getElementById("titleInput").value;
   const note = document.getElementById("noteInput").value;
+  console.log({
+    start_at: start,
+    end_at: end
+  });
+
 
 
   try {
