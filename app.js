@@ -1,4 +1,3 @@
-console.log("app.js 読み込まれた");
 const API = "https://reservation-system-nle7.onrender.com";
 
 let calendar;
@@ -51,7 +50,6 @@ function editFromDetail() {
    }
 
 async function submitForm() {
-  console.log("submitForm実行された");
 
   const token = localStorage.getItem("token");
   const selectedResource = document.getElementById("resourceSelect").value;
@@ -59,8 +57,6 @@ async function submitForm() {
   const end = document.getElementById("endInput").value;
   const title = document.getElementById("titleInput").value;
   const note = document.getElementById("noteInput").value;
-  console.log("送信値:", start, end);
-  console.log("完成値:", start + ":00", end + ":00");
 
   try {
 
@@ -89,7 +85,6 @@ async function submitForm() {
 
     } else {
 
-      // ✅ 新規作成
       const res = await fetch(API + "/bookings/", {
         method: "POST",
         headers: {
@@ -114,7 +109,7 @@ async function submitForm() {
       }
     }
 
-    selectedEvent = null;   // ✅ リセット
+    selectedEvent = null;  
 
   } catch (e) {
     console.error(e);
@@ -174,7 +169,6 @@ window.onload = () => {
     const eventsRaw = await loadBookings();
     const resources = await loadResources();
 
-    // ✅ 凡例作成
     const legend = document.getElementById("legend");
     if (legend) {
       legend.innerHTML = "";
@@ -294,6 +288,7 @@ window.onload = () => {
 };
 
 function openModal() {
+  selectedEvent = null;
   document.getElementById("overlay").style.display = "block";
   document.getElementById("settingsModal").style.display = "none";
   document.getElementById("modal").style.display = "block";
