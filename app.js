@@ -27,7 +27,6 @@ function closeDetailModal() {
       const modal = document.getElementById("detailModal");
       modal.style.setProperty("display", "none", "important");
       document.getElementById("overlay").style.display = "none";
-      document.body.style.pointerEvents = "auto";
     }
 async function deleteFromDetail() {
       if (!selectedEvent) return;
@@ -260,9 +259,7 @@ window.onload = () => {
         closeAllModals();
         const event = info.event;
         selectedEvent = event;
-        document.body.style.pointerEvents = "none";
-        document.getElementById("detailModal").style.pointerEvents = "auto";
-        document.getElementById("overlay").style.pointerEvents = "auto";
+    
         document.getElementById("detailTitle").textContent =
           "タイトル: " + event.title;
         document.getElementById("detailTime").textContent =
@@ -281,7 +278,6 @@ window.onload = () => {
         selectedInfo = info;
 
         calendar.setOption("selectable", false);
-        calendarEl.style.pointerEvents = "none";
 
         document.getElementById("selectedTime").textContent =
           `予約: ${formatDateTime(info.startStr)} ～ ${formatDateTime(info.endStr)}`;
@@ -313,7 +309,6 @@ function closeModal() {
   document.getElementById("overlay").style.display = "none";
   document.getElementById("modal").style.display = "none";
   document.getElementById("settingsModal").style.display = "none";
-  document.body.style.pointerEvents = "auto";
 
   if (calendar) {
     calendar.setOption("selectable", true);
@@ -383,19 +378,6 @@ function formatDateTime(dateStr) {
 
   return month + "/" + day + " " + hour + ":" + min;
 }
-
-window.addEventListener("load", () => {
-  const overlay = document.getElementById("overlay");
-
-  overlay.addEventListener("click", (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-  });
-  overlay.addEventListener("mousedown", (e) =>
-    e.stopPropagation());
-  overlay.addEventListener("mouseup", (e) =>
-    e.stopPropagation());
-});
 
 function closeAllModals() {
   document.getElementById("overlay").style.display = "none";
