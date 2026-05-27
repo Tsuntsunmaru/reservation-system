@@ -146,8 +146,6 @@ window.onload = () => {
     }));
 
     if (calendar) calendar.destroy();
-
-    let selectedEvent = null;
     
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "timeGridWeek",
