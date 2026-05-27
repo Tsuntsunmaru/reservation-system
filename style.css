@@ -21,6 +21,7 @@ body {
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999999;
   pointer-events: all;
+  display: none;
 }
 
 #modal {
@@ -32,7 +33,7 @@ body {
   background: white;
   padding: 20px;
   border-radius: 8px;
-
+  display: none;
   z-index: 9999;
 }
 
