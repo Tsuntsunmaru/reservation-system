@@ -82,6 +82,8 @@ async function submitForm() {
         alert("更新失敗");
       }
 
+      return;
+
     } else {
 
       const res = await fetch(API + "/bookings/", {
