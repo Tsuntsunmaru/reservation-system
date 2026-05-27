@@ -24,7 +24,8 @@ function openEditModal(event) {
 }
 
 function closeDetailModal() {
-      document.getElementById("detailModal").style.display = "none";
+      const modal = document.getElementById("detailModal");
+      modal.style.setProperty("display", "none", "important");
       document.getElementById("overlay").style.display = "none";
     }
 async function deleteFromDetail() {
