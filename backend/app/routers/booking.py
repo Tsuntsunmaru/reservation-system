@@ -87,8 +87,23 @@ def update_booking(
     if booking.user_id != user.id:
         raise HTTPException(403, "自分の予約のみ更新できます")
 
-    booking.start_at = data.start_at.replace(tzinfo=None)
-    booking.end_at = data.end_at.replace(tzinfo=None)
+    start_at = data.start_at.replace(tzinfo=None)
+    end_at = data.end_at.replace(tzinfo=None)
+
+    ok, msg = can_book(
+        db,
+        data.resource_id,
+        start_at,
+        end_at,
+        user,
+        booking_id=booking_id   # ✅ これが超重要
+    )
+
+    if not ok:
+        raise HTTPException(400, msg)
+        
+    booking.start_at = start_at
+    booking.end_at = end_at
     booking.resource_id = data.resource_id
     booking.title = data.title
     booking.note = data.note
