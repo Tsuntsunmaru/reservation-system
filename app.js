@@ -196,7 +196,7 @@ window.onload = () => {
         document.getElementById("detailNote").textContent =
           "備考: " + (event.extendedProps.note || "");
         document.getElementById("detailModal").style.display = "block";
-      }
+      },
       
       selectable: true,
       events: events,
