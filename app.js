@@ -69,6 +69,34 @@ window.onload = () => {
     }
   }
 
+  function closeDetailModal() {
+      document.getElementById("detailModal").style.display = "none";
+    }
+    async function deleteFromDetail() {
+      if (!selectedEvent) return;
+      const token = localStorage.getItem("token");
+      const res = await fetch(API + "/bookings/" + selectedEvent.id, {
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+    
+      if (res.ok) {
+       alert("削除しました");
+       selectedEvent.remove();
+       closeDetailModal();
+     } else {
+       alert("削除失敗");
+     }
+   }
+
+   function editFromDetail() {
+     closeDetailModal();
+     openEditModal(selectedEvent);
+   }
+    
+
   async function initCalendar() {
 
     const eventsRaw = await loadBookings();
@@ -120,32 +148,6 @@ window.onload = () => {
     if (calendar) calendar.destroy();
 
     let selectedEvent = null;
-    function closeDetailModal() {
-      document.getElementById("detailModal").style.display = "none";
-    }
-    async function deleteFromDetail() {
-      if (!selectedEvent) return;
-      const token = localStorage.getItem("token");
-      const res = await fetch(API + "/bookings/" + selectedEvent.id, {
-        method: "DELETE",
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      });
-    
-      if (res.ok) {
-       alert("削除しました");
-       selectedEvent.remove();
-       closeDetailModal();
-     } else {
-       alert("削除失敗");
-     }
-   }
-
-   function editFromDetail() {
-     closeDetailModal();
-     openEditModal(selectedEvent);
-   }
     
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "timeGridWeek",
