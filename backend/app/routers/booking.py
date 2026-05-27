@@ -22,7 +22,7 @@ def can_book(db, resource_id, start_at, end_at, user, booking_id=None):
     )
 
     if booking_id is not None:
-        q = q.filter(Booking.id != booking_id)
+        q = q.filter(Booking.id != int(booking_id))
 
     existing = q.first()
 
