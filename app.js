@@ -24,6 +24,7 @@ function openEditModal(event) {
 
 function closeDetailModal() {
       document.getElementById("detailModal").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
     }
 async function deleteFromDetail() {
       if (!selectedEvent) return;
@@ -261,6 +262,7 @@ window.onload = () => {
           `時間: ${event.startStr}〜${event.endStr}`;
         document.getElementById("detailNote").textContent =
           "備考: " + (event.extendedProps.note || "");
+        document.getElementById("overlay").style.display = "block";
         document.getElementById("detailModal").style.display = "block";
       },
       
