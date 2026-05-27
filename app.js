@@ -276,11 +276,7 @@ async function submitForm() {
   const end = document.getElementById("endInput").value;
   const title = document.getElementById("titleInput").value;
   const note = document.getElementById("noteInput").value;
-  console.log({
-    start_at: start,
-    end_at: end
-  });
-
+  
 
 
   try {
@@ -294,8 +290,8 @@ async function submitForm() {
         },
         body: JSON.stringify({
           resource_id: Number(selectedResource),
-          start_at: start.replace(/\//g, "-").replace(" ", "T") + ":00",
-          end_at: end.replace(/\//g, "-").replace(" ", "T") + ":00",
+          start_at: start + ":00",
+          end_at: end + ":00",
           title: title,
           note: note
         })
