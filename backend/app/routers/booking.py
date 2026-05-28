@@ -76,7 +76,7 @@ def delete_booking(
         print("ROLE:", "[" + user.role + "]")
         if not booking:
             raise HTTPException(404, "見つからない")
-        if booking.user_id != user.id and not user.role != "admin":
+        if booking.user_id != user.id and user.role.strip().lower() != "admin":
             raise HTTPException(403, "削除権限がありません")
 
         db.delete(booking)
@@ -100,7 +100,7 @@ def update_booking(
     if not booking:
         raise HTTPException(404, "見つからない")
 
-    if booking.user_id != user.id and not user.role != "admin":
+    if booking.user_id != user.id and user.role.strip().lower() != "admin":
             raise HTTPException(403, "削除権限がありません")
 
     start_at = data.start_at.replace(tzinfo=None)
