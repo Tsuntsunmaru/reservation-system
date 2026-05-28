@@ -76,6 +76,11 @@ def delete_booking(
         if not booking:
             raise HTTPException(404, "見つからない")
 
+        print("BOOKING USER:", booking.user_id)
+        print("LOGIN USER:", user.id)
+        print("ROLE:", user.role)
+
+
         if booking.user_id != user.id and not user.role != "admin":
             raise HTTPException(403, "削除権限がありません")
 
