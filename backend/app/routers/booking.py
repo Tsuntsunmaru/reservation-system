@@ -105,8 +105,8 @@ def update_booking(
     if not booking:
         raise HTTPException(404, "見つからない")
 
-    if booking.user_id != user.id:
-        raise HTTPException(403, "自分の予約のみ更新できます")
+    if booking.user_id != user.id and not user.role != "admin":
+            raise HTTPException(403, "削除権限がありません")
 
     start_at = data.start_at.replace(tzinfo=None)
     end_at = data.end_at.replace(tzinfo=None)
