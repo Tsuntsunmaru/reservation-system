@@ -80,7 +80,8 @@ async function submitForm() {
       });
       if (res.ok) {
         alert("更新しました");
-        location.reload();
+        closeModal();
+        calendar.refetchEvents();
       } else {
         alert("更新失敗");
       }
@@ -106,7 +107,8 @@ async function submitForm() {
 
       if (res.ok) {
         alert("予約しました");
-        location.reload();
+        closeModal();
+        calendar.refetchEvents();
       } else {
         alert("予約失敗");
       }
