@@ -124,7 +124,7 @@ async function submitForm() {
 
 function getColor(id) {
   const hue = (id * 137) % 360;
-  return `hsl(${hue}, 70%, 50%)`;
+  return `hsl(${hue}, 60%, 40%)`;
 }
 
 window.onload = () => {
