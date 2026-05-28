@@ -255,7 +255,7 @@ window.onload = () => {
         document.getElementById("detailTitle").textContent =
           "タイトル: " + event.title;
         document.getElementById("detailTime").textContent =
-          `時間: ${event.startStr}〜${event.endStr}`;
+          `時間: ${formatDateTime(event.startStr)} ～ ${formatDateTime(event.endStr)}`;
         document.getElementById("detailNote").textContent =
           "備考: " + (event.extendedProps.note || "");
         document.getElementById("overlay").style.display = "block";
