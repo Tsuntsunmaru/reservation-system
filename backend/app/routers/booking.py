@@ -73,16 +73,15 @@ def delete_booking(
     try:
         booking = db.query(Booking).filter(Booking.id == booking_id).first()
 
+        print("🔥 START DELETE")
         if not booking:
             raise HTTPException(404, "見つからない")
-
-        print("BOOKING USER:", booking.user_id)
-        print("LOGIN USER:", user.id)
-        print("ROLE:", user.role)
-
-
+        print("🔥 AFTER BOOKING")
         if booking.user_id != user.id and not user.role != "admin":
+            print("🔥 BLOCKED HERE")
             raise HTTPException(403, "削除権限がありません")
+
+        print("🔥 PASSED PERMISSION")
 
         db.delete(booking)
         db.commit()
