@@ -40,7 +40,7 @@ def login(user: LoginUser, db: Session = Depends(get_db)):
     if not db_user or not verify_password(user.password, db_user.password):
         raise HTTPException(status_code=401, detail="Unauthorized")
         
-    return {"token": create_token({"user_id": db_user.id})}
+    return {"token": create_token({"user_id": db_user.id,"role":db_user.role})}
 
 
 @router.put("/users/me")
