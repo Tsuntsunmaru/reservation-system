@@ -266,14 +266,9 @@ window.onload = () => {
       events: async function(fetchInfo, successCallback, failureCallback) {
         try {
           const eventsRaw = await loadBookings();
-          const colors = {
-            1: "#e84118",
-            2: "#0984e3",
-            3: "#00b894"
-          };
           const events = eventsRaw.map(e => ({
             ...e,
-            color: colors[e.resource_id] || "#999"
+            color: getColor(e.resource_id)
           }));
           
           successCallback(events);
