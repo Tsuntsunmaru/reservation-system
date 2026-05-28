@@ -53,6 +53,9 @@ body {
   border: none;
   color: white;
   border: 2px solid rgba(0, 0, 0, 0.4);
+  white-space: normal;
+  word-break: break-word;
+  overflow: hidden;
 }
 
 .fc-event-time {
