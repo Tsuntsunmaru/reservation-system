@@ -122,6 +122,11 @@ async function submitForm() {
   }
 }
 
+function getColor(id) {
+  const hue = (id * 137) % 360;
+  return `hsl(${hue}, 70%, 50%)`;
+}
+
 window.onload = () => {
   const token = localStorage.getItem("token");
 
@@ -177,19 +182,11 @@ window.onload = () => {
     const legend = document.getElementById("legend");
     if (legend) {
       legend.innerHTML = "";
-
-      const colors = {
-        1: "#e84118",
-        2: "#0984e3",
-        3: "#00b894"
-      };
-
       resources.forEach(r => {
         const span = document.createElement("span");
-        const legendColor = r.id === 1 ? "#e84118" : "#0984e3";
-
-        span.innerHTML = "<span style='color:" + legendColor + "; font-weight:bold;'>■</span>" +r.name + " ";
-
+        const color = getColor(r.id);
+        span.innerHTML =
+          `<span style="color:${color}; font-weight:bold;">■</span>${r.name} `;
         legend.appendChild(span);
       });
     }
@@ -204,16 +201,9 @@ window.onload = () => {
         select.appendChild(opt);
       });
     }
-
-    const colors = {
-      1: "#e84118",
-      2: "#0984e3",
-      3: "#00b894"
-    };
-
     const events = eventsRaw.map(e => ({
       ...e,
-      color: colors[e.resource_id] || "#999"
+      color: getColor(e.resource_id)
     }));
 
     if (calendar) calendar.destroy();
