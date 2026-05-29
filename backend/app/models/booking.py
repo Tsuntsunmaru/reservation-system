@@ -11,4 +11,3 @@ class Booking(Base):
     end_at = Column(DateTime)
     title = Column(String, nullable=True)
     note = Column(Text, nullable=True)
-    all_day = Column(Boolean, default=False)
