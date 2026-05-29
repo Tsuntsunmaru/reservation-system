@@ -9,25 +9,29 @@ from app.core.deps import get_user
 
 router = APIRouter()
 
-
-
 @router.get("/bookings")
 def get_bookings(db: Session = Depends(get_db)):
     bookings = db.query(Booking).all()
 
-    return [
-        {
-            "id": b.id,
-            "title": b.title,
-            "start": b.start_at.isoformat() if b.start_at else None,
-            "end": b.end_at.isoformat() if b.end_at else None,
-            "resource_id": b.resource_id,
-            "user_name": b.user_name,
-            "note": b.note,
-            "all_day": bool(b.all_day) if b.all_day is not None else False
-        }
-        for b in bookings
-    ]
+    result = []
+
+    for b in bookings:
+        try:
+            result.append({
+                "id": b.id,
+                "title": b.title or "予約",
+                "start": b.start_at.isoformat(),
+                "end": b.end_at.isoformat(),
+                "resource_id": b.resource_id,
+                "user_name": b.user_name,
+                "note": b.note,
+                "all_day": bool(b.all_day) if b.all_day is not None else False
+            })
+        except Exception as e:
+            print("スキップ:", b.id, e)   # ←壊れたデータは無視
+            continue
+
+    return result
 
 def can_book(db, resource_id, start_at, end_at, user, booking_id=None):
     q = db.query(Booking).filter(
