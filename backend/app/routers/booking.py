@@ -53,7 +53,8 @@ def create_booking(
             start_at=start_at,
             end_at=end_at,
             title=data.title,
-            note=data.note
+            note=data.note,
+            all_day=data.all_day
         ))
 
         db.commit()
@@ -123,6 +124,7 @@ def update_booking(
     booking.resource_id = data.resource_id
     booking.title = data.title
     booking.note = data.note
+    booking.all_day = data.all_day
 
     db.commit()
 
