@@ -20,18 +20,18 @@ def get_bookings(db: Session = Depends(get_db)):
             result.append({
                 "id": b.id,
                 "title": b.title or "予約",
-                "start": b.start_at.isoformat(),
-                "end": b.end_at.isoformat(),
+                "start_at": str(b.start_at),
+                "end_at": str(b.end_at),
                 "resource_id": b.resource_id,
                 "user_name": b.user_name,
-                "note": b.note,
-                "all_day": False
+                "note": b.note
+                # ❌ all_dayは完全に消す
             })
-        except Exception as e:
-            print("スキップ:", b.id, e)   # ←壊れたデータは無視
+        except:
             continue
 
     return result
+
 
 def can_book(db, resource_id, start_at, end_at, user, booking_id=None):
     q = db.query(Booking).filter(
