@@ -53,6 +53,12 @@ function editFromDetail() {
    }
 
 async function submitForm() {
+  console.log("送信データ↓↓↓↓");
+  console.log("start:", start);
+  console.log("end:", end);
+  console.log("start_at:", start_at);
+  console.log("end_at:", end_at);
+  console.log("allDay:", isAllDay);
 
   const token = localStorage.getItem("token");
   const selectedResource = document.getElementById("resourceSelect").value;
