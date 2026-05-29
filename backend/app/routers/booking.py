@@ -25,7 +25,7 @@ def get_bookings(db: Session = Depends(get_db)):
                 "resource_id": b.resource_id,
                 "user_name": b.user_name,
                 "note": b.note,
-                "all_day": bool(b.all_day) if b.all_day is not None else False
+                "all_day": False
             })
         except Exception as e:
             print("スキップ:", b.id, e)   # ←壊れたデータは無視
