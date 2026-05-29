@@ -281,17 +281,34 @@ window.onload = () => {
         closeAllModals();
         const selectedResource =　info.resource?.id;
         const events = calendar.getEvents();
+        const selectedDate = info.startStr.slice(0, 10);
 
         const hasAllDay = events.some(e => {
           return (
             e.extendedProps.resource_id == selectedResource &&
             e.allDay &&
-            e.startStr.slice(0, 10) === info.startStr.slice(0, 10)
+            e.startStr.slice(0, 10) === selectedDate
           );
         });
 
-        if (hasAllDay) {
+        const hasNormal = events.some(e => {
+          return (
+            e.extendedProps.resource_id == selectedResource &&
+            !e.allDay &&
+            e.startStr.slice(0, 10) === selectedDate
+          );
+        });
+
+        const isAllDaySelect = info.allDay;
+        
+        if (hasAllDay && !isAllDaySelect) {
           alert("この日は終日予約があるため予約できません");
+          calendar.unselect();
+          return;
+        }
+
+        if (hasNormal && isAllDaySelect) {
+          alert("この日は時間予約があるため終日予約できません");
           calendar.unselect();
           return;
         }
