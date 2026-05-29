@@ -19,12 +19,12 @@ def get_bookings(db: Session = Depends(get_db)):
         {
             "id": b.id,
             "title": b.title,
-            "start": b.start_at.isoformat(),
-            "end": b.end_at.isoformat(),
+            "start": b.start_at.isoformat() if b.start_at else None,
+            "end": b.end_at.isoformat() if b.end_at else None,
             "resource_id": b.resource_id,
             "user_name": b.user_name,
             "note": b.note,
-            "all_day": b.all_day
+            "all_day": bool(b.all_day) if b.all_day is not None else False
         }
         for b in bookings
     ]
