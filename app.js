@@ -67,6 +67,10 @@ async function submitForm() {
 
   if (isAllDay) {
     const date = selectedInfo.startStr.slice(0, 10);
+    const d = new Date(date);
+    d.setDate(d.getDate() + 1);
+    const nextDay = d.toISOString().slice(0, 10);
+    
     start_at = date + "T00:00:00";
     end_at   = nextDay + "T00:00:00";
   } else {
