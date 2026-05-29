@@ -68,7 +68,7 @@ async function submitForm() {
   if (isAllDay) {
     const date = selectedInfo.startStr.slice(0, 10);
     start_at = date + "T00:00:00";
-    end_at   = date + "T23:59:59";
+    end_at   = nextDay + "T00:00:00";
   } else {
     if (!start || !end) {
       alert("時間を入力してください");
