@@ -60,6 +60,19 @@ async function submitForm() {
   const end = document.getElementById("endInput").value;
   const title = document.getElementById("titleInput").value;
   const note = document.getElementById("noteInput").value;
+  const isAllDay = document.getElementById("allDayCheckbox")?.checked;
+
+  let start_at;
+  let end_at;
+
+  if (isAllDay) {
+    const date = start.split("T")[0];
+    start_at = date + "T00:00:00";
+    end_at   = date + "T23:59:59";
+  } else {
+    start_at = start + ":00";
+    end_at   = end + ":00";
+  }
 
   try {
 
@@ -72,10 +85,11 @@ async function submitForm() {
         },
         body: JSON.stringify({
           resource_id: Number(selectedResource),
-          start_at: start + ":00",
-          end_at: end + ":00",
+          start_at: start_at,
+          end_at: end_at,
           title: title,
-          note: note
+          note: note,
+          all_day:isAllDay
         })
       });
       if (res.ok) {
@@ -98,10 +112,11 @@ async function submitForm() {
         },
         body: JSON.stringify({
           resource_id: Number(selectedResource),
-          start_at: start + ":00",
-          end_at: end + ":00",
+          start_at: start_at,
+          end_at: end_at,
           title: title,
-          note: note
+          note: note,
+          all_day: isAllDay
         })
       });
 
