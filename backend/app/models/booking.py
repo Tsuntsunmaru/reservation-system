@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, ForeignKey, String, Text
+from sqlalchemy import Column, Integer, DateTime, ForeignKey, String, Text, Boolean
 from app.database import Base
 
 class Booking(Base):
@@ -11,3 +11,4 @@ class Booking(Base):
     end_at = Column(DateTime)
     title = Column(String, nullable=True)
     note = Column(Text, nullable=True)
+    all_day = Column(Boolean, default=False)
