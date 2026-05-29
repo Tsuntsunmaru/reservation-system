@@ -53,12 +53,6 @@ function editFromDetail() {
    }
 
 async function submitForm() {
-  console.log("送信データ↓↓↓↓");
-  console.log("start:", start);
-  console.log("end:", end);
-  console.log("start_at:", start_at);
-  console.log("end_at:", end_at);
-  console.log("allDay:", isAllDay);
 
   const token = localStorage.getItem("token");
   const selectedResource = document.getElementById("resourceSelect").value;
@@ -72,10 +66,15 @@ async function submitForm() {
   let end_at;
 
   if (isAllDay) {
-    const date = start.split("T")[0];
+    const date = selectedInfo.startStr.slice(0, 10);
     start_at = date + "T00:00:00";
     end_at   = date + "T23:59:59";
   } else {
+    if (!start || !end) {
+      alert("時間を入力してください");
+      return;
+    }
+    
     start_at = start + ":00";
     end_at   = end + ":00";
   }
