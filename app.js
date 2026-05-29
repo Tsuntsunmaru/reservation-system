@@ -279,6 +279,24 @@ window.onload = () => {
 
       select: function (info) {
         closeAllModals();
+        const selectedResource =　info.resource?.id;
+        const events = calendar.getEvents();
+
+        const hasAllDay = events.some(e => {
+          return (
+            e.extendedProps.resource_id == selectedResource &&
+            e.allDay &&
+            e.startStr.slice(0, 10) === info.startStr.slice(0, 10)
+          );
+        });
+
+        if (hasAllDay) {
+          alert("この日は終日予約があるため予約できません");
+          calendar.unselect();
+          return;
+        }
+            
+        
         selectedInfo = info;
 
         calendar.setOption("selectable", false);
