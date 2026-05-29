@@ -148,6 +148,24 @@ function getColor(id) {
 }
 
 window.onload = () => {
+  const checkbox = document.getElementById("allDayCheckbox");
+  const startInput = document.getElementById("startInput");
+  const endInput = document.getElementById("endInput");
+
+  if (checkbox) {
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        startInput.value = "";
+        endInput.value = "";
+        startInput.disabled = true;
+        endInput.disabled = true;
+      } else {
+        startInput.disabled = false;
+        endInput.disabled = false;
+      }
+    });
+  }
+        
   const token = localStorage.getItem("token");
 
   if (!token) {
