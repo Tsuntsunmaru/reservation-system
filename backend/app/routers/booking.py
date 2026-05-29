@@ -10,9 +10,24 @@ from app.core.deps import get_user
 router = APIRouter()
 
 
+
 @router.get("/bookings")
 def get_bookings(db: Session = Depends(get_db)):
-    return db.query(Booking).all()
+    bookings = db.query(Booking).all()
+
+    return [
+        {
+            "id": b.id,
+            "title": b.title,
+            "start_at": b.start_at,
+            "end_at": b.end_at,
+            "resource_id": b.resource_id,
+            "user_name": b.user_name,
+            "note": b.note,
+            "all_day": b.all_day
+        }
+        for b in bookings
+    ]
 
 def can_book(db, resource_id, start_at, end_at, user, booking_id=None):
     q = db.query(Booking).filter(
