@@ -241,7 +241,8 @@ window.onload = () => {
     }
     const events = eventsRaw.map(e => ({
       ...e,
-      color: getColor(e.resource_id)
+      color: getColor(e.resource_id),
+      allDay: e.all_day === true
     }));
 
     if (calendar) calendar.destroy();
