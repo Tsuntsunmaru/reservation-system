@@ -96,8 +96,7 @@ async function submitForm() {
           start_at: start_at,
           end_at: end_at,
           title: title,
-          note: note,
-          all_day:isAllDay
+          note: note
         })
       });
       if (res.ok) {
@@ -123,8 +122,7 @@ async function submitForm() {
           start_at: start_at,
           end_at: end_at,
           title: title,
-          note: note,
-          all_day: isAllDay
+          note: note
         })
       });
 
