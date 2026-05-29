@@ -69,10 +69,9 @@ async function submitForm() {
     const date = selectedInfo.startStr.slice(0, 10);
     const d = new Date(date);
     d.setDate(d.getDate() + 1);
-    const nextDay = d.toISOString().slice(0, 10);
     
     start_at = date + "T00:00:00";
-    end_at   = nextDay + "T00:00:00";
+    end_at   = date + "T23:59:59"; 
   } else {
     if (!start || !end) {
       alert("時間を入力してください");
@@ -246,7 +245,6 @@ window.onload = () => {
     const events = eventsRaw.map(e => ({
       ...e,
       color: getColor(e.resource_id),
-      allDay: e.all_day === true
     }));
 
     if (calendar) calendar.destroy();
