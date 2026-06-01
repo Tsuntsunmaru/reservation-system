@@ -343,9 +343,12 @@ window.onload = () => {
         });
 
         const isAllDaySelect = info.allDay;
+        const start = new Date(info.start);
+        const hour = start.getHours() + start.getMinutes() / 60;
+        const isWorkTime = hour >= 9.5 && hour < 18;
         
-        if (hasAllDay && !isAllDaySelect) {
-          alert("この日は終日予約があるため予約できません");
+        if (hasAllDay && !isAllDaySelect && isWorkTime) {
+          alert("業務時間内は予約できません");
           calendar.unselect();
           return;
         }
