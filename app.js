@@ -240,10 +240,7 @@ window.onload = () => {
         select.appendChild(opt);
       });
     }
-    const events = eventsRaw.map(e => ({
-      ...e,
-      color: getColor(e.resource_id),
-    }));
+    const events = buildEvents(eventsRaw);
 
     if (calendar) calendar.destroy();
     
@@ -305,12 +302,7 @@ window.onload = () => {
       events: async function(fetchInfo, successCallback, failureCallback) {
         try {
           const eventsRaw = await loadBookings();
-          const events = eventsRaw.map(e => ({
-            ...e,
-            color: getColor(e.resource_id),
-            allDay: e.all_day === true
-          }));
-          
+          const events = buildEvents(eventsRaw);
           successCallback(events);
         } catch (e) {
           failureCallback(e);
@@ -464,4 +456,104 @@ function closeAllModals() {
   document.getElementById("detailModal").style.display = "none";
   document.getElementById("settingsModal").style.display = "none";
 
+}
+
+
+function buildEvents(eventsRaw) {
+  const normalEvents = [];
+  const allDayEvents = [];
+
+  const groups = {};
+
+  // ✅ 日付 × 会議室でグループ分け
+  eventsRaw.forEach(e => {
+    const date = e.start_at.slice(0, 10);
+    const key = date + "_" + e.resource_id;
+
+    if (!groups[key]) {
+      groups[key] = [];
+    }
+
+    groups[key].push(e);
+  });
+
+  // ✅ 各グループごとに判定
+  Object.values(groups).forEach(list => {
+
+    // 時間順に並べる
+    list.sort((a, b) => new Date(a.start_at) - new Date(b.start_at));
+
+    const date = list[0].start_at.slice(0, 10);
+
+    const workStart = new Date(date + "T09:30:00");
+    const breakStart = new Date(date + "T12:00:00");
+    const breakEnd = new Date(date + "T13:00:00");
+    const workEnd = new Date(date + "T18:00:00");
+
+    let morningCursor = new Date(workStart);
+    let afternoonCursor = new Date(breakEnd);
+    let coveredMorning = true;
+    let coveredAfternoon = true;
+
+
+    for (const e of list) {
+      const s = new Date(e.start_at);
+      const eTime = new Date(e.end_at);
+
+      if (eTime <= workStart || s >= breakStart) continue;
+      if (s > morningCursor) {
+        coveredMorning = false;
+        break;
+      }
+
+      if (eTime > morningCursor) {
+        morningCursor = eTime;
+      }
+    }
+
+    if (morningCursor < breakStart) coveredMorning = false;
+    
+    for (const e of list) {
+      const s = new Date(e.start_at);
+      const eTime = new Date(e.end_at);
+
+      if (eTime <= breakEnd || s >= workEnd) continue;
+
+      if (s > afternoonCursor) {
+        coveredAfternoon = false;
+        break;
+      }
+
+      if (eTime > afternoonCursor) {
+        afternoonCursor = eTime;
+      }
+    }
+
+    if (afternoonCursor < workEnd) coveredAfternoon = false;
+
+    const covered = coveredMorning && coveredAfternoon;
+
+    const sameUser = list.every(e => e.user_name === list[0].user_name);
+
+    if (covered) {
+      allDayEvents.push({
+        title: sameUser ? list[0].user_name : "終日予約",
+        start: date,
+        allDay: true,
+        color: getColor(list[0].resource_id)
+      });
+    } else {
+      list.forEach(e => {
+        normalEvents.push({
+          id: e.id,
+          title: e.title,
+          start: e.start_at,
+          end: e.end_at,
+          color: getColor(e.resource_id)
+        });
+      });
+    }
+  });
+
+  return [...normalEvents, ...allDayEvents];
 }
