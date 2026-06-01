@@ -562,6 +562,7 @@ function buildEvents(eventsRaw) {
 
     if (covered) {
       allDayEvents.push({
+        id: "allday-" + list[0].resource_id + "-" + date,
         title: sameUser  ? `${list[0].user_name}（終日）`: "終日予約（複数）",
         start: date,
         end: date,
