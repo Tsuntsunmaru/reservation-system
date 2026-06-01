@@ -549,7 +549,11 @@ function buildEvents(eventsRaw) {
           title: e.title,
           start: e.start_at,
           end: e.end_at,
-          color: getColor(e.resource_id)
+          color: getColor(e.resource_id),
+          extendedProps: {
+            user_name: e.user_name,
+            note: e.note
+          }
         });
       });
     }
