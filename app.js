@@ -560,10 +560,25 @@ function buildEvents(eventsRaw) {
 
     const sameUser = list.every(e => e.user_name === list[0].user_name);
 
+    list.forEach(e => {
+      normalEvents.push({
+        id: e.id,
+        title: e.title,
+        start: e.start_at || e.start,
+        end: e.end_at || e.end,
+        color: getColor(e.resource_id),
+        extendedProps: {
+          user_name: e.user_name,
+          note: e.note
+        }
+      });
+    });
+
+
     if (covered) {
       allDayEvents.push({
         id: "allday-" + list[0].resource_id + "-" + date,
-        title: sameUser  ? `${list[0].user_name}（終日）`: "終日予約（複数）",
+        title: sameUser  ? `${list[0].user_name}（終日）`: "(終日)",
         start: date,
         end: date,
         allDay: true,
