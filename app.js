@@ -304,6 +304,7 @@ window.onload = () => {
             `時間: ${formatDateTime(event.startStr)} ～ ${formatDateTime(event.endStr)}`;
           document.getElementById("detailNote").textContent =
             "備考: " + (event.extendedProps.note || "");
+        }
           document.getElementById("overlay").style.display = "block";
           document.getElementById("detailModal").style.display = "block";
         },
