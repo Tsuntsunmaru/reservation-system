@@ -481,9 +481,11 @@ function buildEvents(eventsRaw) {
   Object.values(groups).forEach(list => {
 
     // 時間順に並べる
-    list.sort((a, b) => new Date(a.start_at) - new Date(b.start_at));
+    list.sort((a, b) =>
+      new Date(a.start_at || a.start) - new Date(b.start_at || b.start)
+             );
 
-    const date = list[0].start_at.slice(0, 10);
+    const date = (list[0].start_at || list[0].start).slice(0, 10);
 
     const workStart = new Date(date + "T09:30:00");
     const breakStart = new Date(date + "T12:00:00");
@@ -551,8 +553,8 @@ function buildEvents(eventsRaw) {
         normalEvents.push({
           id: e.id,
           title: e.title,
-          start: e.start_at,
-          end: e.end_at,
+          start: e.start_at || e.start,
+          end: e.end_at || e.end,
           color: getColor(e.resource_id),
           extendedProps: {
             user_name: e.user_name,
