@@ -40,7 +40,10 @@ async function deleteFromDetail() {
     
       if (res.ok) {
        alert("削除しました");
-       selectedEvent.remove();
+       calendar.removeAllEvents();
+        setTimeout(() => {
+          calendar.refetchEvents();
+        }, 300);
        closeDetailModal();
      } else {
        alert("削除失敗");
