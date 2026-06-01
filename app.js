@@ -102,7 +102,11 @@ async function submitForm() {
       if (res.ok) {
         alert("更新しました");
         closeModal();
-        calendar.refetchEvents();
+        calendar.removeAllEvents();
+        setTimeout(() => {
+          calendar.refetchEvents();
+        }, 300);
+      }
       } else {
         alert("更新失敗");
       }
@@ -129,7 +133,11 @@ async function submitForm() {
       if (res.ok) {
         alert("予約しました");
         closeModal();
-        calendar.refetchEvents();
+        calendar.removeAllEvents();
+        setTimeout(() => {
+          calendar.refetchEvents();
+        }, 300);
+      }
       } else {
         alert("予約失敗");
       }
