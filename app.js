@@ -467,7 +467,7 @@ function buildEvents(eventsRaw) {
 
   // ✅ 日付 × 会議室でグループ分け
   eventsRaw.forEach(e => {
-    const date = e.start_at.slice(0, 10);
+    const date = (e.start_at || e.start).slice(0, 10);
     const key = date + "_" + e.resource_id;
 
     if (!groups[key]) {
@@ -497,8 +497,8 @@ function buildEvents(eventsRaw) {
 
 
     for (const e of list) {
-      const s = new Date(e.start_at);
-      const eTime = new Date(e.end_at);
+      const s = new Date(e.start_at || e.start);
+      const eTime = new Date(e.end_at || e.end);
 
       if (eTime <= workStart || s >= breakStart) continue;
       if (s > morningCursor) {
@@ -514,8 +514,8 @@ function buildEvents(eventsRaw) {
     if (morningCursor < breakStart) coveredMorning = false;
     
     for (const e of list) {
-      const s = new Date(e.start_at);
-      const eTime = new Date(e.end_at);
+      const s = new Date(e.start_at || e.start);
+      const eTime = new Date(e.end_at || e.end);
 
       if (eTime <= breakEnd || s >= workEnd) continue;
 
