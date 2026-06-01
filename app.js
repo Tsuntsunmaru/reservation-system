@@ -588,21 +588,7 @@ function buildEvents(eventsRaw) {
           note: ""
         }
       });
-    } else {
-      list.forEach(e => {
-        normalEvents.push({
-          id: e.id,
-          title: e.title,
-          start: e.start_at || e.start,
-          end: e.end_at || e.end,
-          color: getColor(e.resource_id),
-          extendedProps: {
-            user_name: e.user_name,
-            note: e.note
-          }
-        });
-      });
-    }
+    } 
   });
 
   return [...normalEvents, ...allDayEvents];
