@@ -137,7 +137,6 @@ async function submitForm() {
         setTimeout(() => {
           calendar.refetchEvents();
         }, 300);
-      }
       } else {
         alert("予約失敗");
       }
