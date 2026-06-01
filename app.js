@@ -287,16 +287,26 @@ window.onload = () => {
         closeAllModals();
         const event = info.event;
         selectedEvent = event;
-    
-        document.getElementById("detailTitle").textContent =
-          "タイトル: " + event.title;
-        document.getElementById("detailTime").textContent =
-          `時間: ${formatDateTime(event.startStr)} ～ ${formatDateTime(event.endStr)}`;
-        document.getElementById("detailNote").textContent =
-          "備考: " + (event.extendedProps.note || "");
-        document.getElementById("overlay").style.display = "block";
-        document.getElementById("detailModal").style.display = "block";
-      },
+
+        if (event.allDay) {
+          document.getElementById("detailTitle").textContent =
+            "タイトル: " + event.title;
+
+          document.getElementById("detailTime").textContent =
+            "時間: 終日（9:30〜18:00）";
+
+          document.getElementById("detailNote").textContent =
+            "備考: 本日は会議室が埋まっています";
+        } else {
+          document.getElementById("detailTitle").textContent =
+            "タイトル: " + event.title;
+          document.getElementById("detailTime").textContent =
+            `時間: ${formatDateTime(event.startStr)} ～ ${formatDateTime(event.endStr)}`;
+          document.getElementById("detailNote").textContent =
+            "備考: " + (event.extendedProps.note || "");
+          document.getElementById("overlay").style.display = "block";
+          document.getElementById("detailModal").style.display = "block";
+        },
       
       selectable: true,
       events: async function(fetchInfo, successCallback, failureCallback) {
@@ -539,8 +549,9 @@ function buildEvents(eventsRaw) {
 
     if (covered) {
       allDayEvents.push({
-        title: sameUser ? list[0].user_name : "終日予約",
+        title: sameUser  ? `${list[0].user_name}（終日）`: "終日予約（複数）",
         start: date,
+        end: date,
         allDay: true,
         color: getColor(list[0].resource_id),
         extendedProps: {
