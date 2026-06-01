@@ -540,7 +540,11 @@ function buildEvents(eventsRaw) {
         title: sameUser ? list[0].user_name : "終日予約",
         start: date,
         allDay: true,
-        color: getColor(list[0].resource_id)
+        color: getColor(list[0].resource_id),
+        extendedProps: {
+          user_name: sameUser ? list[0].user_name : "",
+          note: ""
+        }
       });
     } else {
       list.forEach(e => {
