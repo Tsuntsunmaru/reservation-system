@@ -8,7 +8,7 @@ from sqlalchemy import text
 
 app = FastAPI()
 
-@app.get("/")
+@app.api_route("/", methods=["GET","HEAD"])
 def root():
     return {"message": "ok"}
 
