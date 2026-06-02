@@ -404,6 +404,19 @@ function closeModal() {
   document.getElementById("modal").style.display = "none";
   document.getElementById("settingsModal").style.display = "none";
 
+  document.getElementById("titleInput").value = "";
+  document.getElementById("noteInput").value = "";
+  document.getElementById("allDayCheckbox").checked = false;
+
+  const startInput = document.getElementById("startInput");
+  const endInput = document.getElementById("endInput");
+
+  startInput.value = "";
+  endInput.value = "";
+  startInput.disabled = false;
+  endInput.disabled = false;
+
+  
   if (calendar) {
     calendar.setOption("selectable", true);
     calendar.unselect();
