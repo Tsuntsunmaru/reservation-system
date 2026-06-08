@@ -32,7 +32,6 @@ async function login() {
         return;
       }
       localStorage.setItem("token", token);
-      alert("ログイン成功");
       window.location.href = "index.html";
     }
 
