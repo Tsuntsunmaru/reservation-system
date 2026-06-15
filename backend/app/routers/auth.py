@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from app.database import get_db
+from app.database import get_db,SessionLocal
 from app.models.user import User
 from app.models.booking import Booking
 from app.core.auth import *
@@ -38,9 +38,11 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login")
-def login(user: LoginUser, db: Session = Depends(get_db)):
+def login(user: LoginUser):
 
     for i in range(5):
+        db = SessionLocal()
+        
         try:
             db_user = db.query(User).filter(User.email == user.email).first()
 
@@ -49,14 +51,18 @@ def login(user: LoginUser, db: Session = Depends(get_db)):
         
             return {"access_token": create_token({"user_id": db_user.id,"role":db_user.role})}
 
-        except HYYPException:
+        except HTTPException:
             raise
             
         except Exception as e:
             print("login retry:",i , e)
             time.sleep(2)
+        
+        finally:db.close()
             
     raise HTTPException(status_code=500, detail="DB接続不安定")
+    
+   
 
 
 @router.put("/users/me")
