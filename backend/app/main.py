@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Depends
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import booking,resource,auth,admin
@@ -6,12 +6,19 @@ from app.routers import booking,resource,auth,admin
 from app.database import engine
 from sqlalchemy import text
 
+from sqlalchemy.orm import Session
+from app.database import get_db
+
 app = FastAPI()
 
 @app.api_route("/", methods=["GET","HEAD"])
 def root():
     return {"message": "ok"}
 
+@app.get("/ping")
+def ping(db: Session = Depends(get_db)):
+    return {"status": "ok"}
+    
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
