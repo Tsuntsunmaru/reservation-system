@@ -39,12 +39,17 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login")
 def login(user: LoginUser, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.email == user.email).first()
+    try:
+        db_user = db.query(User).filter(User.email == user.email).first()
 
-    if not db_user or not verify_password(user.password, db_user.password):
-        raise HTTPException(status_code=401, detail="Unauthorized")
+        if not db_user or not verify_password(user.password, db_user.password):
+            raise HTTPException(status_code=401, detail="Unauthorized")
         
-    return {"token": create_token({"user_id": db_user.id,"role":db_user.role})}
+        return {"token": create_token({"user_id": db_user.id,"role":db_user.role})}
+        
+    except Exception as e:
+        print("login error:", e)
+        raise HTTPException(status_code=500, detail="login error")
 
 
 @router.put("/users/me")
