@@ -53,6 +53,10 @@ def login(user: LoginUser):
 
         except HTTPException:
             raise
+
+        except OperationalError as e:
+            print("DB not ready retry:", i, e)
+            time.sleep(3)
             
         except Exception as e:
             print("login retry:",i , e)
