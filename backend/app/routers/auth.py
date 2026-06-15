@@ -41,9 +41,9 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 def login(user: LoginUser):
 
     for i in range(5):
-        db = SessionLocal()
         
         try:
+            db = SessionLocal()
             db_user = db.query(User).filter(User.email == user.email).first()
 
             if not db_user or not verify_password(user.password, db_user.password):
