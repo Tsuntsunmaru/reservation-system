@@ -41,6 +41,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 def login(user: LoginUser):
 
     for i in range(5):
+        db = None
         
         try:
             db = SessionLocal()
