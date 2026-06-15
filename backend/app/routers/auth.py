@@ -48,6 +48,10 @@ def login(user: LoginUser, db: Session = Depends(get_db)):
                 raise HTTPException(status_code=401, detail="Unauthorized")
         
             return {"access_token": create_token({"user_id": db_user.id,"role":db_user.role})}
+
+        except HYYPException:
+            raise
+            
         except Exception as e:
             print("login retry:",i , e)
             time.sleep(2)
