@@ -10,6 +10,10 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
+@router.options("/login")
+def options_login():
+    return {}
+
 class PasswordUpdate(BaseModel):
     old_password: str
     new_password: str
