@@ -40,7 +40,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 @router.post("/login")
 def login(user: LoginUser, db: Session = Depends(get_db)):
 
-    for i in range(3):
+    for i in range(5):
         try:
             db_user = db.query(User).filter(User.email == user.email).first()
 
@@ -52,7 +52,7 @@ def login(user: LoginUser, db: Session = Depends(get_db)):
             print("login retry:",i , e)
             time.sleep(2)
             
-    raise HTTPException(status_code=500, detail="login error")
+    raise HTTPException(status_code=500, detail="DB接続不安定")
 
 
 @router.put("/users/me")
