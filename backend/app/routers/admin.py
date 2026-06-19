@@ -35,38 +35,47 @@ def admin_user(
 
 
 @router.post("/admin/resources")
-def create_resource(name: str, type: str, center: str,user: User = Depends(admin_user)):
-    db = SessionLocal()
+def create_resource(
+    name: str, type: str, center: str,user: User = Depends(admin_user),
+    db: Session = Depends(get_db)
+):
     db.add(Resource(name=name, type=type,center=center))
     db.commit()
     return {"msg": "ok"}
 
 @router.post("/admin/block")
-def block(resource_id: int, start_at: str, end_at: str, user: User = Depends(admin_user)):
-    db = SessionLocal()
+def block(
+    resource_id: int, start_at: str, end_at: str, user: User = Depends(admin_user),
+    db: Session = Depends(get_db)
+):
     db.add(BlockedSlot(resource_id=resource_id, start_at=start_at, end_at=end_at))
     db.commit()
     return {"msg": "ok"}
 
 @router.post("/admin/holiday")
-def holiday(date: str, user: User = Depends(admin_user)):
-    db = SessionLocal()
+def holiday(date: str, user: User = Depends(admin_user),
+            db: Session = Depends(get_db)
+           ):
     db.add(Holiday(date=date, is_blocked=1))
     db.commit()
     return {"msg": "ok"}
 
 @router.get("/admin/blocks")
-def get_blocks(user: User = Depends(admin_user)):
-    db = SessionLocal()
+def get_blocks(
+    user: User = Depends(admin_user),
+    db: Session = Depends(get_db)
+):
     return db.query(BlockedSlot).all()
 
 @router.get("/admin/holidays")
-def get_holidays(user: User = Depends(admin_user)):
-    db = SessionLocal()
+def get_holidays(
+    user: User = Depends(admin_user),
+    db: Session = Depends(get_db)
+):
     return db.query(Holiday).all()
 @router.post("/admin/promote")
 def promote_user(email: str):
-    db = SessionLocal()
+    db: Session = Depends(get_db)
 
     target = db.query(User).filter(User.email == email).first()
     if not target:
