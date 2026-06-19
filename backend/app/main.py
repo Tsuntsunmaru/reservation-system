@@ -9,6 +9,25 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.database import get_db
 
+
+try:
+    with engine.connect() as conn:
+
+        res = conn.execute(text("""
+            SELECT column_name
+            FROM information_schema.columns
+            WHERE table_name='bookings' AND column_name='center';
+        """))
+
+        if res.fetchone() is None:
+            conn.execute(text("ALTER TABLE bookings ADD COLUMN center VARCHAR;"))
+            conn.execute(text("UPDATE bookings SET center = 'gioda_minami';"))
+            conn.commit()
+
+except Exception as e:
+    print("DB init error:", e)
+
+
 app = FastAPI()
 
 @app.api_route("/", methods=["GET","HEAD"])
