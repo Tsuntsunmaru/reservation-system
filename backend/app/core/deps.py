@@ -1,13 +1,13 @@
-from fastapi import Depends, Header
+from fastapi.security import HTTPBearer
+from fastapi import Depends
+from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import User
 from app.core.auth import decode_token
 
-def get_user(authorization: str = Header(None),db: Session = Depends(get_db)):
+security = HTTPBearer()
 
-    if not authorization:
-        return db.query(User).first()
-
-    token = authorization.replace("Bearer ", "")
+def get_user(credentials=Depends(security), db: Session = Depends(get_db)):
+    token = credentials.credentials
     payload = decode_token(token)
     return db.query(User).get(payload["user_id"])
