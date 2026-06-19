@@ -11,7 +11,7 @@ router = APIRouter()
 
 @router.get("/bookings")
 def get_bookings(db: Session = Depends(get_db)):
-    bookings = db.query(Booking).filter(Booking.center == center).all()
+    bookings = db.query(Booking).all()
 
     result = []
 
