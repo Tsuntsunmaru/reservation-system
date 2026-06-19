@@ -4,6 +4,10 @@ let calendar;
 let selectedInfo = null;
 let selectedEvent = null;
 
+function getCenter() {
+  return document.getElementById("center").value;
+}
+
 function openEditModal(event) {
   selectedEvent = event;
 
@@ -99,7 +103,8 @@ async function submitForm() {
           start_at: start_at,
           end_at: end_at,
           title: title,
-          note: note
+          note: note,
+          center: getCenter()
         })
       });
       if (res.ok) {
@@ -128,7 +133,8 @@ async function submitForm() {
           start_at: start_at,
           end_at: end_at,
           title: title,
-          note: note
+          note: note,
+          center: getCenter()
         })
       });
 
@@ -162,6 +168,14 @@ window.onload = () => {
   const startInput = document.getElementById("startInput");
   const endInput = document.getElementById("endInput");
 
+  document.getElementById("center").addEventListener("change", () => {
+    calendar.removeAllEvents();
+    setTimeout(() => {
+      calendar.refetchEvents();
+    }, 100);
+  });
+
+
   if (checkbox) {
     checkbox.addEventListener("change", () => {
       if (checkbox.checked) {
@@ -193,7 +207,7 @@ window.onload = () => {
 
   async function loadBookings() {
     try {
-      const res = await fetch(API + "/bookings");
+      const res = await fetch(API + "/bookings?center=" + getCenter());
       const bookings = await res.json();
 
       return bookings.map(b => ({
