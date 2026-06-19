@@ -180,6 +180,9 @@ window.onload = () => {
 
   document.getElementById("center").addEventListener("change", () => {
     calendar.removeAllEvents();
+
+     loadResources();
+    
     setTimeout(() => {
       calendar.refetchEvents();
     }, 100);
