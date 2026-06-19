@@ -9,6 +9,18 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.database import get_db
 
+
+try:
+    with engine.connect() as conn:
+        conn.execute(text("""
+            UPDATE bookings
+            SET center = 'gyoda_minami';
+        """))
+        conn.commit()
+except Exception as e:
+    print("center fix:", e)
+
+
 app = FastAPI()
 
 @app.api_route("/", methods=["GET","HEAD"])
