@@ -121,6 +121,8 @@ async function submitForm() {
           calendar.refetchEvents();
         }, 300);
       } else {
+        const text = await res.text();
+        console.log("エラー内容:", text);
         alert("更新失敗");
       }
 
