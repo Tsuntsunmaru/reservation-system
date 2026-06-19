@@ -152,6 +152,8 @@ async function submitForm() {
           calendar.refetchEvents();
         }, 300);
       } else {
+        const text = await res.text();
+        console.log(text);
         alert("予約失敗");
       }
     }
