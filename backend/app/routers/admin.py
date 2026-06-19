@@ -18,13 +18,21 @@ def admin_user(
 ):
     token = credentials.credentials
 
-    payload = decode_token(token)
-    user = db.query(User).get(payload["user_id"])
+    try:
+        payload = decode_token(token)
+    except Exception:
+        raise HTTPException(401, "トークン無効")
+
+    user = db.query(User).get(payload.get("user_id"))
+
+    if not user:
+        raise HTTPException(401, "ユーザーが存在しません")
 
     if user.role != "admin":
         raise HTTPException(403, "権限なし")
 
     return user
+
 
 @router.post("/admin/resources")
 def create_resource(name: str, type: str, center: str,user: User = Depends(admin_user)):
