@@ -6,17 +6,19 @@ from app.models.holiday import Holiday
 from app.models.user import User
 from app.core.auth import decode_token
 
-router = APIRouter()
+security = HTTPBearer()
 
-def admin_user(token: str = Header()):
-    token = authorization.replace("Bearer","")
-    
+def admin_user(
+    credentials=Depends(security),
+    db: Session = Depends(get_db)
+):
+    token = credentials.credentials
+
     payload = decode_token(token)
-    db = SessionLocal()
     user = db.query(User).get(payload["user_id"])
 
     if user.role != "admin":
-        raise HTTPException(403)
+        raise HTTPException(403, "権限なし")
 
     return user
 
