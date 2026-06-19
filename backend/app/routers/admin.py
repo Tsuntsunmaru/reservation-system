@@ -6,6 +6,7 @@ from app.models.holiday import Holiday
 from app.models.user import User
 from app.core.auth import decode_token
 from fastapi.security import HTTPBearer
+from app.database import get_db
 
 security = HTTPBearer()
 
