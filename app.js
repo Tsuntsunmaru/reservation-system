@@ -5,7 +5,13 @@ let selectedInfo = null;
 let selectedEvent = null;
 
 function getCenter() {
-  return document.getElementById("center").value;
+  const el = document.getElementById("center");
+  if (!el || !el.value) {
+    console.error("centerが取得できてない");
+    return "gyoda_minami";
+  }
+
+  return el.value;
 }
 
 function openEditModal(event) {
