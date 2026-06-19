@@ -522,7 +522,6 @@ function buildEvents(eventsRaw) {
 
   const groups = {};
 
-  // ✅ 日付 × 会議室でグループ分け
   eventsRaw.forEach(e => {
     const date = (e.start_at || e.start).slice(0, 10);
     const key = date + "_" + e.resource_id;
@@ -534,10 +533,8 @@ function buildEvents(eventsRaw) {
     groups[key].push(e);
   });
 
-  // ✅ 各グループごとに判定
   Object.values(groups).forEach(list => {
 
-    // 時間順に並べる
     list.sort((a, b) =>
       new Date(a.start_at || a.start) - new Date(b.start_at || b.start)
              );
