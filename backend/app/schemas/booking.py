@@ -8,3 +8,4 @@ class BookingIn(BaseModel):
     end_at: datetime
     title: Optional[str] = None
     note: Optional[str] = None
+    center: str
