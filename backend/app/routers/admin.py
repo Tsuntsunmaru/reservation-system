@@ -21,7 +21,7 @@ def admin_user(token: str = Header()):
     return user
 
 @router.post("/admin/resources")
-def create_resource(name: str, type: str, user: User = Depends(admin_user)):
+def create_resource(name: str, type: str, center: str,user: User = Depends(admin_user)):
     db = SessionLocal()
     db.add(Resource(name=name, type=type,center=center))
     db.commit()
