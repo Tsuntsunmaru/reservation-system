@@ -7,5 +7,7 @@ from app.models.resource import Resource
 router = APIRouter()
 
 @router.get("/resources")
-def get_resources(db: Session = Depends(get_db)):
-    return db.query(Resource).all()
+def get_resources(center: str, db: Session = Depends(get_db)):
+    return db.query(Resource)\
+    .filter(Resource.center == center)\
+    .all()
