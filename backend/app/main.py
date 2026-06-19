@@ -10,6 +10,17 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.database import get_db
 
+
+try:
+    with engine.connect() as conn:
+        conn.execute(text("""
+            ALTER TABLE resources ADD COLUMN center VARCHAR;
+        """))
+        conn.commit()
+except Exception as e:
+    print("add center column:", e)
+
+
 app = FastAPI()
 
 @app.api_route("/", methods=["GET","HEAD"])
