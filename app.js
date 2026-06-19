@@ -207,6 +207,7 @@ window.onload = () => {
 
   async function loadBookings() {
     try {
+      console.log(getCenter());
       const res = await fetch(API + "/bookings?center=" + getCenter());
       const bookings = await res.json();
 
