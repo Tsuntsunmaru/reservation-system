@@ -6,3 +6,4 @@ class Resource(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     type = Column(String)
+    center = Column(String)
