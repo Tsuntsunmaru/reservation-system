@@ -8,6 +8,8 @@ from app.core.auth import decode_token
 from fastapi.security import HTTPBearer
 from app.database import get_db
 
+router = APIRouter()
+
 security = HTTPBearer()
 
 def admin_user(
