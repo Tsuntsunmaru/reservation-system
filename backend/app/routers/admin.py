@@ -5,6 +5,7 @@ from app.models.blocked import BlockedSlot
 from app.models.holiday import Holiday
 from app.models.user import User
 from app.core.auth import decode_token
+from fastapi.security import HTTPBearer
 
 security = HTTPBearer()
 
