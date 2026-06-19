@@ -239,7 +239,7 @@ window.onload = () => {
 
   async function loadResources() {
     try {
-      const res = await fetch(API + "/resources");
+      const res = await fetch(API + "/resources?center=" + getCenter());
       return await res.json();
     } catch (e) {
       console.log("resource取得失敗", e);
