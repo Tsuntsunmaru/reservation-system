@@ -11,7 +11,7 @@ router = APIRouter()
 
 @router.get("/bookings")
 def get_bookings(db: Session = Depends(get_db)):
-    bookings = db.query(Booking).all()
+    bookings = db.query(Booking).filter(Booking.center == center).all()
 
     result = []
 
@@ -73,6 +73,7 @@ def create_booking(
             end_at=end_at,
             title=data.title,
             note=data.note,
+            center=data.center
         ))
 
         db.commit()
@@ -142,6 +143,7 @@ def update_booking(
     booking.resource_id = data.resource_id
     booking.title = data.title
     booking.note = data.note
+    booking.center = data.center
 
     db.commit()
 
