@@ -18,10 +18,14 @@
 </div>
 
   <h2>予約カレンダー</h2>
+  
   <div id="legend"></div>
   <div id="calendar"></div>
-
-  <!-- ✅ モーダル -->
+  <select id="center">
+    <option value="gyoda_minami">行田南センター</option>
+    <option value="hanasaki">花崎センター</option>
+    <option value="kazo">加須センター</option>
+  </select>
   <div id="overlay" style="display:none;" onclick="closeModal()">
     <div id="modal" onclick="event.stopPropagation()">
       <p id="selectedTime"></p>
@@ -72,10 +76,8 @@
     </div>
   </div>
 
-  <!-- ✅ 🔥 ここが重要（bodyの一番下に移動） -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
-  <!-- ✅ 自分のJS（最後に） -->
   <script src="app.js"></script>
 
   <script>
