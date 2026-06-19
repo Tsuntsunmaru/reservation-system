@@ -10,8 +10,26 @@ from app.core.deps import get_user
 router = APIRouter()
 
 @router.get("/bookings")
-def get_bookings(db: Session = Depends(get_db)):
-    bookings = db.query(Booking).filter(Booking.center == center).all()
+def get_bookings(center: str, db: Session = Depends(get_db)):
+    print("center:",center)
+    try:
+        bookings = db.query(Booking).filter(Booking.center == center).all()
+        print("count",len(bookings))
+        
+        return [{
+            "id": b.id,
+            "title": b.title,
+            "start_at": str(b.start_at),
+            "end_at": str(b.end_at),
+            "resource_id": b.resource_id,
+            "user_name": b.user_name,
+            "note": b.note
+        }for b in bookings]
+
+    
+    except Exception as e:
+        print("ERROR:", e)
+        return []
 
     result = []
 
