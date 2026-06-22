@@ -196,16 +196,13 @@ window.onload = () => {
   const startInput = document.getElementById("startInput");
   const endInput = document.getElementById("endInput");
 
-  document.getElementById("center").addEventListener("change", () => {
-    calendar.removeAllEvents();
-
-    const resources = await loadResources();
-    renderLegend(resources);
-    
-    setTimeout(() => {
-      calendar.refetchEvents();
-    }, 100);
-  });
+  document.getElementById("center").addEventListener("change",
+                                                     async () =>{
+                                                       calendar.removeAllEvents();
+                                                       const resources = await loadResources();
+                                                       renderLegend(resources);
+                                                       calendar.refetchEvents();
+                                                     });
 
 
   if (checkbox) {
