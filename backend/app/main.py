@@ -7,6 +7,20 @@ from app.database import engine
 from sqlalchemy import text
 
 
+try:
+    with engine.connect() as conn:
+        conn.execute(text("""
+            UPDATE resources
+            SET center = 'gyoda_minami'
+            WHERE center IS NULL
+               OR TRIM(center) != 'gyoda_minami';
+        """))
+        conn.commit()
+except Exception as e:
+    print("fix gyoda center:", e)
+
+
+
 from sqlalchemy.orm import Session
 from app.database import get_db
 
