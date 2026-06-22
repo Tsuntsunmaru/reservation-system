@@ -208,7 +208,13 @@ function updateTitle() {
   }
 }
 
-window.onload = () => {
+window.onload = async () => {
+
+  updateTitle();
+
+  const resources = await loadResources();
+  renderLegend(resources);
+  
   const checkbox = document.getElementById("allDayCheckbox");
   const startInput = document.getElementById("startInput");
   const endInput = document.getElementById("endInput");
@@ -219,6 +225,7 @@ window.onload = () => {
                                                        const resources = await loadResources();
                                                        renderLegend(resources);
                                                        calendar.refetchEvents();
+                                                       updateTitle();
                                                      });
 
 
