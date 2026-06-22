@@ -244,7 +244,7 @@ window.onload = () => {
     try {
       const res = await fetch(API + "/resources?center=" + getCenter());
       const data = await res.json();
-      const select = document.getElementById("resource");
+      const select = document.getElementById("resourceSelect");
       select.innerHTML = "";
 
       data.forEach(r => {
