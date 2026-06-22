@@ -243,7 +243,19 @@ window.onload = () => {
   async function loadResources() {
     try {
       const res = await fetch(API + "/resources?center=" + getCenter());
-      return await res.json();
+      const data = await res.json();
+      const select = document.getElementById("resource");
+      select.innerHTML = "";
+
+      data.forEach(r => {
+        const opt = document.createElement("option");
+        opt.value = r.id;
+        opt.textContent = r.name;
+        select.appendChild(opt);
+      });
+
+      return data;
+
     } catch (e) {
       console.log("resource取得失敗", e);
       return [];
