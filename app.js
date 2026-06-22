@@ -173,6 +173,24 @@ function getColor(id) {
   return `hsl(${hue}, 60%, 40%)`;
 }
 
+
+function renderLegend(resources) {
+  const legend = document.getElementById("legend");
+  if (!legend) return;
+
+  legend.innerHTML = "";
+
+  resources.forEach(r => {
+    const span = document.createElement("span");
+    const color = getColor(r.id);
+
+    span.innerHTML =
+      `<span style="color:${color}; font-weight:bold;">■</span> ${r.name} `;
+
+    legend.appendChild(span);
+  });
+}
+
 window.onload = () => {
   const checkbox = document.getElementById("allDayCheckbox");
   const startInput = document.getElementById("startInput");
@@ -181,7 +199,8 @@ window.onload = () => {
   document.getElementById("center").addEventListener("change", () => {
     calendar.removeAllEvents();
 
-     loadResources();
+    const resources = await loadResources();
+    renderLegend(resources);
     
     setTimeout(() => {
       calendar.refetchEvents();
@@ -266,18 +285,7 @@ window.onload = () => {
 
     const eventsRaw = await loadBookings();
     const resources = await loadResources();
-
-    const legend = document.getElementById("legend");
-    if (legend) {
-      legend.innerHTML = "";
-      resources.forEach(r => {
-        const span = document.createElement("span");
-        const color = getColor(r.id);
-        span.innerHTML =
-          `<span style="color:${color}; font-weight:bold;">■</span>${r.name} `;
-        legend.appendChild(span);
-      });
-    }
+    renderLegend(resources);
 
     const select = document.getElementById("resourceSelect");
     if (select) {
