@@ -191,6 +191,23 @@ function renderLegend(resources) {
   });
 }
 
+function updateTitle() {
+  const center = getCenter();
+
+  const map = {
+    gyoda_minami: "行田南",
+    hanasaki: "花崎",
+    kazo: "加須"
+  };
+
+  const name = map[center] || "";
+
+  const title = document.getElementById("title");
+  if (title) {
+    title.textContent = `${name}予約カレンダー`;
+  }
+}
+
 window.onload = () => {
   const checkbox = document.getElementById("allDayCheckbox");
   const startInput = document.getElementById("startInput");
