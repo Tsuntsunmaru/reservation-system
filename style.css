@@ -201,6 +201,6 @@ button:disabled {
 #center {
   position: absolute;
   top: 50px;
-  right: 450px;
+  right: 400px;
   z-index: 1000;
 }
