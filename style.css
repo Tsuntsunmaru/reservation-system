@@ -193,3 +193,11 @@ button:disabled {
   
   display: none; 
 }
+
+
+#center {
+  position: absolute;
+  top: 10px;
+  left: 200px;
+  z-index: 1000;
+}
