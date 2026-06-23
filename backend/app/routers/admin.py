@@ -7,6 +7,7 @@ from app.models.user import User
 from app.core.auth import decode_token
 from fastapi.security import HTTPBearer
 from app.database import get_db
+from app.core.deps import get_user, is_admin, is_hq, is_leader
 
 router = APIRouter()
 
