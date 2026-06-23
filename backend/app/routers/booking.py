@@ -5,7 +5,7 @@ from app.schemas.booking import BookingIn
 from app.services.booking_logic import can_book
 from app.models.booking import Booking
 from app.models.user import User
-from app.core.deps import get_user
+from app.core.deps import get_user, is_admin, is_hq, is_leader
 
 router = APIRouter()
 
