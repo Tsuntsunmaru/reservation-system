@@ -11,3 +11,12 @@ def get_user(credentials=Depends(security), db: Session = Depends(get_db)):
     token = credentials.credentials
     payload = decode_token(token)
     return db.query(User).get(payload["user_id"])
+
+def is_admin(user):
+    return user.role == "admin"
+
+def is_hq(user):
+    return user.role == "hq"
+
+def is_leader(user):
+    return user.role == "leader"
