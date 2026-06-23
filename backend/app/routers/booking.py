@@ -60,6 +60,15 @@ def create_booking(
         start_at = data.start_at.replace(tzinfo=None)
         end_at = data.end_at.replace(tzinfo=None)
 
+        resource = db.query(Resource).get(data.resource_id)
+
+        if user.role in ["admin", "hq", "leader"]:
+            pass
+
+        else:
+            if resource.center != user.center:
+                raise HTTPException(403, "他センター予約不可")
+
         ok, msg = can_book(db, data.resource_id, start_at, end_at, user)
 
         if not ok:
@@ -91,13 +100,29 @@ def delete_booking(
     db: Session = Depends(get_db)
 ):
     try:
-        booking = db.query(Booking).filter(Booking.id == booking_id).first()
-
+        booking = db.query(Booking).get(Booking.id)
         print("ROLE:", "[" + user.role + "]")
         if not booking:
             raise HTTPException(404, "見つからない")
-        if booking.user_id != user.id and user.role.strip().lower() != "admin":
-            raise HTTPException(403, "削除権限がありません")
+
+        resource = db.query(Resource).get(booking.resource_id)
+        if not resource:
+            raise HTTPException(404, "resource not found")
+        
+        if user.role == "admin":
+            pass
+
+        elif user.role == "leader":
+            if resource.center != user.center:
+                raise HTTPException(403, "他センター削除不可")
+
+        elif user.role == "hq":
+            if booking.user_id != user.id:
+                raise HTTPException(403, "自分の予約のみ削除可能")
+
+        else:
+            if booking.user_id != user.id:
+                raise HTTPException(403, "自分の予約のみ削除可能")
 
         db.delete(booking)
         db.commit()
