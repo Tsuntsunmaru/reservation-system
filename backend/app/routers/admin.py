@@ -73,15 +73,27 @@ def get_holidays(
     db: Session = Depends(get_db)
 ):
     return db.query(Holiday).all()
-@router.post("/admin/promote")
-def promote_user(email: str):
+
+
+@router.post("/admin/change-role")
+def change_role(
+    email: str,
+    role: str,
+    center: str,  
+    user: User = Depends(get_user),
     db: Session = Depends(get_db)
+):
+    if user.role != "admin":
+        raise HTTPException(403, "権限なし")
 
     target = db.query(User).filter(User.email == email).first()
     if not target:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(404, "ユーザーが見つかりません")
 
-    target.role = "admin"
+    target.role = role
+
+    target.center = center
+
     db.commit()
 
-    return {"msg": "promoted to admin"}
+    return {"msg": "updated"}
