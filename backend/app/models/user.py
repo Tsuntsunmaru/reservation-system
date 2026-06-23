@@ -8,3 +8,4 @@ class User(Base):
     password = Column(String)
     role = Column(String, default="user")
     username = Column(String, unique=True)
+    center = Column(string)
