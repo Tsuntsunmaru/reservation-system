@@ -6,16 +6,9 @@ from app.routers import booking,resource,auth,admin
 from app.database import engine
 from sqlalchemy import text
 
-try:
-    with engine.connect() as conn:
-        conn.execute(text("""
-            UPDATE resources
-            SET center = 'hanasaki'
-            WHERE name = '花崎会議室';
-        """))
-        conn.commit()
-except Exception as e:
-    print("fix hanasaki:", e)
+with engine.connect() as conn:
+    conn.execute(text("ALTER TABLE users ADD COLUMN center VARCHAR;"))
+    conn.commit()
 
 
 from sqlalchemy.orm import Session
