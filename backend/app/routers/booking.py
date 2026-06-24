@@ -25,7 +25,6 @@ def get_bookings(center: str, db: Session = Depends(get_db)):
                 "resource_id": b.resource_id,
                 "user_name": b.user_name,
                 "note": b.note
-                # ❌ all_dayは完全に消す
             })
         except:
             continue
@@ -59,6 +58,8 @@ def create_booking(
     try:
         start_at = data.start_at.replace(tzinfo=None)
         end_at = data.end_at.replace(tzinfo=None)
+
+        resource = db.query(Resource).get(data.resource_id)
 
         if not resource:
             raise HTTPException(404, "resourceが見つからない")
