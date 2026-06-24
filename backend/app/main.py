@@ -9,11 +9,14 @@ from sqlalchemy import text
 try:
     with engine.connect() as conn:
         conn.execute(text("""
-            ALTER TABLE users ADD COLUMN center VARCHAR;
+            UPDATE users
+            SET center = 'gyoda_minami'
+            WHERE center IS NULL;
         """))
         conn.commit()
 except Exception as e:
-    print("add center column:", e)
+    print("fix center:", e)
+
 
 from sqlalchemy.orm import Session
 from app.database import get_db
