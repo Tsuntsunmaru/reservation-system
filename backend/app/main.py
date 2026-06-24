@@ -6,10 +6,14 @@ from app.routers import booking,resource,auth,admin
 from app.database import engine
 from sqlalchemy import text
 
-with engine.connect() as conn:
-    conn.execute(text("ALTER TABLE users ADD COLUMN center VARCHAR;"))
-    conn.commit()
-
+try:
+    with engine.connect() as conn:
+        conn.execute(text("""
+            ALTER TABLE users ADD COLUMN center VARCHAR;
+        """))
+        conn.commit()
+except Exception as e:
+    print("add center column:", e)
 
 from sqlalchemy.orm import Session
 from app.database import get_db
