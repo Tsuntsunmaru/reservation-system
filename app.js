@@ -154,17 +154,18 @@ async function submitForm() {
           calendar.refetchEvents();
         }, 300);
       } else {
-        const text = await res.text();
-        console.log(text);
-        alert("予約失敗");
+        const data = await res.json().catch(() => null);
+        console.log("STATUS:",res.status);
+        console.log("RESPONSE:",data);
+        alert(data? detail || "予約失敗");
       }
     }
 
     selectedEvent = null;  
 
   } catch (e) {
-    console.error(e);
-    alert("エラー");
+    console.error("FETCH ERROR:",e);
+    alert("通信エラー");
   }
 }
 
