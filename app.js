@@ -142,7 +142,6 @@ async function submitForm() {
           end_at: end_at,
           title: title,
           note: note,
-          center: getCenter()
         })
       });
 
@@ -157,7 +156,7 @@ async function submitForm() {
         const data = await res.json().catch(() => null);
         console.log("STATUS:",res.status);
         console.log("RESPONSE:",data);
-        alert(data? detail || "予約失敗");
+        alert(data?.detail || "予約失敗");
       }
     }
 
