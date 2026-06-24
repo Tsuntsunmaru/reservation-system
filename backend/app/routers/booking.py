@@ -60,12 +60,10 @@ def create_booking(
         start_at = data.start_at.replace(tzinfo=None)
         end_at = data.end_at.replace(tzinfo=None)
 
-        resource = db.query(Resource).get(data.resource_id)
+        if not resource:
+            raise HTTPException(404, "resourceが見つからない")
 
-        if user.role in ["admin", "hq", "leader"]:
-            pass
-
-        else:
+        if user.role not in ["admin", "hq", "leader"]:
             if resource.center != user.center:
                 raise HTTPException(403, "他センター予約不可")
 
