@@ -82,7 +82,7 @@ def create_booking(
             end_at=end_at,
             title=data.title,
             note=data.note,
-            center=data.center
+            center=resource.center
         ))
 
         db.commit()
