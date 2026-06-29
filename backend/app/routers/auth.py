@@ -94,7 +94,9 @@ def login(user: LoginUser):
             print("login retry:",i , e)
             time.sleep(2)
         
-        finally:db.close()
+        finally:
+            if db:
+                db.close()
             
     raise HTTPException(status_code=500, detail="DB接続不安定")
     
