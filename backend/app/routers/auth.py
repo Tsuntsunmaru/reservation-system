@@ -43,7 +43,8 @@ def register(user: UserCreate, current_user: User = Depends(get_user),db: Sessio
             email=user.email,
             username=user.username,
             password=hash_password(user.password),
-            role="user"
+            role=user.role,
+            center=user.center
         )
         db.add(new_user)
         db.commit()
@@ -53,6 +54,10 @@ def register(user: UserCreate, current_user: User = Depends(get_user),db: Sessio
         db.rollback()
         raise
 
+    except Exception as e:
+        db.rollback()
+        print("REGISTER ERROR:", e)
+        raise
 
 @router.post("/login")
 def login(user: LoginUser):
