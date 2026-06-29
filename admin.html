@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,47 +9,83 @@
 
 <body>
 
-<h2>管理画面</h2>
+  <h2>管理画面</h2>
 
-<button onclick="addRoom()">会議室追加</button>
-<button onclick="addCar()">車追加</button>
+  index.html予約カレンダーへ戻る</button>
 
-<br><br>
+  <hr>
 
-<input type="date" id="holidayDate">
-<button onclick="setHoliday()">休日設定</button>
+  <h3>ユーザー登録</h3>
 
-<script>
-const API = "https://reservation-system-nle7.onrender.com";
-const token = localStorage.getItem("token");
+  <input id="regEmail" placeholder="メールアドレス">
+  <input id="regPassword" type="password" placeholder="パスワード">
+  <input id="regUsername" placeholder="名前">
 
-async function addRoom(){
-  await fetch(API + "/admin/resources?name=会議室A&type=room", {
-    method:"POST",
-    headers:{token}
-  });
-  alert("追加完了");
-}
+  <select id="regCenter">
+    <option value="gyoda_minami">行田南</option>
+    <option value="hanasaki">花崎</option>
+    <option value="kazo">加須</option>
+    <option value="hq">本社</option>
+  </select>
 
-async function addCar(){
-  await fetch(API + "/admin/resources?name=社用車A&type=car", {
-    method:"POST",
-    headers:{token}
-  });
-  alert("追加完了");
-}
+  <select id="regRole">
+    <option value="user">一般</option>
+    <option value="leader">責任者</option>
+    <option value="hq">本社</option>
+    <option value="admin">管理者</option>
+  </select>
 
-async function setHoliday(){
-  const date = document.getElementById("holidayDate").value;
+  <button onclick="registerUser()">ユーザー登録</button>
 
-  await fetch(API + "/admin/holiday?date=" + date, {
-    method:"POST",
-    headers:{token}
-  });
+  <hr>
 
-  alert("休日設定");
-}
-</script>
+  <h3>ユーザー権限・所属変更</h3>
+
+  <input id="changeEmail" placeholder="対象メールアドレス">
+
+  <select id="changeCenter">
+    <option value="gyoda_minami">行田南</option>
+    <option value="hanasaki">花崎</option>
+    <option value="kazo">加須</option>
+    <option value="hq">本社</option>
+  </select>
+
+  <select id="changeRole">
+    <option value="user">一般</option>
+    <option value="leader">責任者</option>
+    <option value="hq">本社</option>
+    <option value="admin">管理者</option>
+  </select>
+
+  <button onclick="changeRole()">変更</button>
+
+  <hr>
+
+  <h3>設備登録</h3>
+
+  <input id="resourceName" placeholder="例：花崎会議室 / 社用車1">
+
+  <select id="resourceType">
+    <option value="room">会議室</option>
+    <option value="car">社用車</option>
+  </select>
+
+  <select id="resourceCenter">
+    <option value="gyoda_minami">行田南</option>
+    <option value="hanasaki">花崎</option>
+    <option value="kazo">加須</option>
+  </select>
+
+  <button onclick="createResource()">設備登録</button>
+
+  <hr>
+
+  <h3>休日設定</h3>
+
+  <input type="date" id="holidayDate">
+  <button onclick="setHoliday()">休日設定</button>
+
+  <script src="admin.js"></script>
 
 </body>
 </html>
