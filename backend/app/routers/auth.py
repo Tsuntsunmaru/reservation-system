@@ -20,8 +20,25 @@ class PasswordUpdate(BaseModel):
 
 
 @router.post("/register")
-def register(user: UserCreate, db: Session = Depends(get_db)):
+def register(user: UserCreate, current_user: User = Depends(get_user),db: Session = Depends(get_db)):
     try:
+        if current_user.role not in ["admin", "leader"]:
+            raise HTTPException(403, "ユーザー登録権限がありません")
+
+        allowed_roles = ["user", "leader", "hq", "admin"]
+        if user.role not in allowed_roles:
+            raise HTTPException(400, "無効なroleです")
+
+        if user.center not in allowed_centers:
+            raise HTTPException(400, "無効なcenterです")
+
+        if current_user.role == "leader":
+            if user.center != current_user.center:
+                raise HTTPException(403, "他センターのユーザーは登録できません")
+
+            if user.role != "user":
+                raise HTTPException(403, "leaderは一般ユーザーのみ登録できます")
+        
         new_user = User(
             email=user.email,
             username=user.username,
