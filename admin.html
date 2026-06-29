@@ -58,7 +58,7 @@
     <option value="admin">管理者</option>
   </select>
 
-  <button onclick="changeRole()">変更</button>
+  <button onclick="changeUserRole()">変更</button>
 
   <hr>
 
@@ -87,6 +87,17 @@
   <button onclick="setHoliday()">休日設定</button>
 
   <script src="admin.js"></script>
+  <script>
+    function goCalendar() {
+      window.location.href = "index.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "login.html";
+    }
+  </script>
 
 </body>
 </html>
