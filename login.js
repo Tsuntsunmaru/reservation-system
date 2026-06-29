@@ -25,13 +25,14 @@ async function login() {
     const data = await res.json();
     
     if (res.ok) {
-      console.log(data);  // 🔥 確認用
+      console.log(data);  
       const token = data.access_token || data.token || data.accessToken;
       if (!token) {
         alert("token取得失敗");
         return;
       }
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(data.user));
       window.location.href = "index.html";
     }
 
