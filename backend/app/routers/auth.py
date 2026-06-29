@@ -73,7 +73,15 @@ def login(user: LoginUser):
             if not db_user or not verify_password(user.password, db_user.password):
                 raise HTTPException(status_code=401, detail="Unauthorized")
         
-            return {"access_token": create_token({"user_id": db_user.id,"role":db_user.role})}
+            return {"access_token": create_token({"user_id": db_user.id,"role":db_user.role}),
+                   "user":{
+                       "id":db_user.id,
+                       "email": db_user.email,
+                       "username": db_user.username,
+                       "role": db_user.role,
+                       "center": db_user.center
+                   }
+            }
 
         except HTTPException:
             raise
