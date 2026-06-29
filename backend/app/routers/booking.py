@@ -100,7 +100,7 @@ def delete_booking(
     db: Session = Depends(get_db)
 ):
     try:
-        booking = db.query(Booking).get(Booking_id)
+        booking = db.query(Booking).get(booking_id)
         print("ROLE:", "[" + user.role + "]")
         if not booking:
             raise HTTPException(404, "見つからない")
