@@ -38,27 +38,46 @@ function closeDetailModal() {
       modal.style.setProperty("display", "none", "important");
       document.getElementById("overlay").style.display = "none";
     }
+
 async function deleteFromDetail() {
-      if (!selectedEvent) return;
-      const token = localStorage.getItem("token");
-      const res = await fetch(API + "/bookings/" + selectedEvent.id, {
-        method: "DELETE",
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      });
-    
-      if (res.ok) {
-       alert("削除しました");
-       calendar.removeAllEvents();
-        setTimeout(() => {
-          calendar.refetchEvents();
-        }, 300);
-       closeDetailModal();
-     } else {
-       alert("削除失敗");
-     }
-   }
+  if (!selectedEvent || !selectedEvent.id) {
+    alert("削除対象のIDが取得できていません");
+    console.log("selectedEvent:", selectedEvent);
+    return;
+  }
+
+  console.log("削除ID:", selectedEvent.id);
+
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await fetch(API + "/bookings/" + selectedEvent.id, {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    });
+
+    const text = await res.text();
+
+    console.log("DELETE STATUS:", res.status);
+    console.log("DELETE RESPONSE:", text);
+
+    if (res.ok) {
+      alert("削除しました");
+      calendar.removeAllEvents();
+      calendar.refetchEvents();
+      closeDetailModal();
+    } else {
+      alert("削除失敗: " + text);
+    }
+
+  } catch (e) {
+    console.error("DELETE FETCH ERROR:", e);
+    alert("通信エラー");
+  }
+}
+
 
 function editFromDetail() {
      closeDetailModal();
