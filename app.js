@@ -270,6 +270,13 @@ window.onload = async () => {
     return;
   }
 
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const adminMenuBtn = document.getElementById("adminMenuBtn");
+  
+  if (adminMenuBtn && user && (user.role === "admin" || user.role === "leader")) {
+    adminMenuBtn.style.display = "inline-block";
+  }
+
   const calendarEl = document.getElementById("calendar");
 
   document.getElementById("menuButton").onclick = () => {
