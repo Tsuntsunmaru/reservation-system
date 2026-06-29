@@ -29,6 +29,7 @@ def register(user: UserCreate, current_user: User = Depends(get_user),db: Sessio
         if user.role not in allowed_roles:
             raise HTTPException(400, "無効なroleです")
 
+        allowed_centers = ["gyoda_minami", "hanasaki", "kazo", "hq"]
         if user.center not in allowed_centers:
             raise HTTPException(400, "無効なcenterです")
 
