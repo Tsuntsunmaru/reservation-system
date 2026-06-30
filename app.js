@@ -313,6 +313,12 @@ window.onload = async () => {
       const select = document.getElementById("resourceSelect");
       select.innerHTML = "";
 
+      data.sort((a, b) => {
+        if (a.type === "room" && b.type !== "room") return -1;
+        if (a.type !== "room" && b.type === "room") return 1;
+        return a.name.localeCompare(b.name);
+      });
+
       data.forEach(r => {
         const opt = document.createElement("option");
         opt.value = r.id;
