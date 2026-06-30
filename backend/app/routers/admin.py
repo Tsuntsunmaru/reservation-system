@@ -37,20 +37,6 @@ def admin_user(
     return user
 
 
-
-@router.get("/admin/export-all")
-def export_all(db: Session = Depends(get_db)):
-    users = db.query(User).all()
-    resources = db.query(Resource).all()
-    bookings = db.query(Booking).all()
-
-    return {
-        "users": [u.__dict__ for u in users],
-        "resources": [r.__dict__ for r in resources],
-        "bookings": [b.__dict__ for b in bookings],
-    }
-
-
 @router.post("/admin/resources")
 def create_resource(
     name: str, type: str, center: str,user: User = Depends(admin_user),
@@ -114,3 +100,49 @@ def change_role(
     db.commit()
 
     return {"msg": "updated"}
+
+
+
+
+@router.get("/admin/export-all")
+def export_all(db: Session = Depends(get_db)):
+    users = db.query(User).all()
+    resources = db.query(Resource).all()
+    bookings = db.query(Booking).all()
+
+    return {
+        "users": [
+            {
+                "id": u.id,
+                "email": u.email,
+                "username": u.username,
+                "password": u.password,
+                "role": u.role,
+                "center": u.center,
+            }
+            for u in users
+        ],
+        "resources": [
+            {
+                "id": r.id,
+                "name": r.name,
+                "type": r.type,
+                "center": r.center,
+            }
+            for r in resources
+        ],
+        "bookings": [
+            {
+                "id": b.id,
+                "user_id": b.user_id,
+                "user_name": b.user_name,
+                "resource_id": b.resource_id,
+                "start_at": b.start_at.isoformat() if b.start_at else None,
+                "end_at": b.end_at.isoformat() if b.end_at else None,
+                "title": b.title,
+                "note": b.note,
+                "center": b.center,
+            }
+            for b in bookings
+        ],
+    }
