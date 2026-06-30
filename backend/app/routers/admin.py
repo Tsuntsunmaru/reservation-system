@@ -3,6 +3,8 @@ from app.database import SessionLocal
 from app.models.resource import Resource
 from app.models.blocked import BlockedSlot
 from app.models.holiday import Holiday
+from sqlalchemy.orm import Session
+from app.models.booking import Booking
 from app.models.user import User
 from app.core.auth import decode_token
 from fastapi.security import HTTPBearer
