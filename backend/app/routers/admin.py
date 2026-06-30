@@ -35,6 +35,20 @@ def admin_user(
     return user
 
 
+
+@router.get("/admin/export-all")
+def export_all(db: Session = Depends(get_db)):
+    users = db.query(User).all()
+    resources = db.query(Resource).all()
+    bookings = db.query(Booking).all()
+
+    return {
+        "users": [u.__dict__ for u in users],
+        "resources": [r.__dict__ for r in resources],
+        "bookings": [b.__dict__ for b in bookings],
+    }
+
+
 @router.post("/admin/resources")
 def create_resource(
     name: str, type: str, center: str,user: User = Depends(admin_user),
