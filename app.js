@@ -102,8 +102,8 @@ async function submitForm() {
     const d = new Date(date);
     d.setDate(d.getDate() + 1);
     
-    start_at = date + "T00:00:00";
-    end_at   = date + "T23:59:59"; 
+    start_at = date + "T09:30:00";
+    end_at   = date + "T18:00:00"; 
   } else {
     if (!start || !end) {
       alert("時間を入力してください");
