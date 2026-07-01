@@ -11,6 +11,7 @@ from fastapi.security import HTTPBearer
 from app.database import get_db
 from app.core.deps import get_user, is_admin, is_hq, is_leader
 from datetime import datetime
+from sqlalchemy import text
 
 router = APIRouter()
 
@@ -192,3 +193,34 @@ def reset_all(db: Session = Depends(get_db)):
     db.commit()
 
     return {"msg": "reset done"}
+
+
+@router.post("/admin/fix-sequences")
+def fix_sequences(db: Session = Depends(get_db)):
+    db.execute(text("""
+        SELECT setval(
+            'users_id_seq',
+            COALESCE((SELECT MAX(id) FROM users), 1),
+            true
+        );
+    """))
+
+    db.execute(text("""
+        SELECT setval(
+            'resources_id_seq',
+            COALESCE((SELECT MAX(id) FROM resources), 1),
+            true
+        );
+    """))
+
+    db.execute(text("""
+        SELECT setval(
+            'bookings_id_seq',
+            COALESCE((SELECT MAX(id) FROM bookings), 1),
+            true
+        );
+    """))
+
+    db.commit()
+
+    return {"msg": "sequences fixed"}
