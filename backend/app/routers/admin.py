@@ -10,6 +10,7 @@ from app.core.auth import decode_token
 from fastapi.security import HTTPBearer
 from app.database import get_db
 from app.core.deps import get_user, is_admin, is_hq, is_leader
+from datetime import datetime
 
 router = APIRouter()
 
@@ -146,3 +147,32 @@ def export_all(db: Session = Depends(get_db)):
             for b in bookings
         ],
     }
+
+
+
+@router.post("/admin/import-all")
+def import_all(
+    data: dict,
+    user: User = Depends(admin_user),
+    db: Session = Depends(get_db)
+):
+    # users
+    for u in data.get("users", []):
+        db.add(User(**u))
+
+    # resources
+    for r in data.get("resources", []):
+        db.add(Resource(**r))
+
+    # bookings
+    for b in data.get("bookings", []):
+        if b["start_at"]:
+            b["start_at"] = datetime.fromisoformat(b["start_at"])
+        if b["end_at"]:
+            b["end_at"] = datetime.fromisoformat(b["end_at"])
+
+        db.add(Booking(**b))
+
+    db.commit()
+
+    return {"msg": "imported"}
