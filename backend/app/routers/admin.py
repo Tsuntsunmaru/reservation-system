@@ -153,7 +153,6 @@ def export_all(db: Session = Depends(get_db)):
 @router.post("/admin/import-all")
 def import_all(
     data: dict,
-    user: User = Depends(admin_user),
     db: Session = Depends(get_db)
 ):
     # users
