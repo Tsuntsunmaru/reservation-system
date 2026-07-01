@@ -149,29 +149,35 @@ def export_all(db: Session = Depends(get_db)):
     }
 
 
-
 @router.post("/admin/import-all")
 def import_all(
     data: dict,
     db: Session = Depends(get_db)
 ):
-    # users
-    for u in data.get("users", []):
-        db.add(User(**u))
+    try:
+        # 1. users を先に入れて確定
+        for u in data.get("users", []):
+            db.add(User(**u))
+        db.commit()
 
-    # resources
-    for r in data.get("resources", []):
-        db.add(Resource(**r))
+        # 2. resources を入れて確定
+        for r in data.get("resources", []):
+            db.add(Resource(**r))
+        db.commit()
 
-    # bookings
-    for b in data.get("bookings", []):
-        if b["start_at"]:
-            b["start_at"] = datetime.fromisoformat(b["start_at"])
-        if b["end_at"]:
-            b["end_at"] = datetime.fromisoformat(b["end_at"])
+        # 3. 最後に bookings を入れる
+        for b in data.get("bookings", []):
+            if b.get("start_at"):
+                b["start_at"] = datetime.fromisoformat(b["start_at"])
+            if b.get("end_at"):
+                b["end_at"] = datetime.fromisoformat(b["end_at"])
 
-        db.add(Booking(**b))
+            db.add(Booking(**b))
 
-    db.commit()
+        db.commit()
 
-    return {"msg": "imported"}
+        return {"msg": "imported"}
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
