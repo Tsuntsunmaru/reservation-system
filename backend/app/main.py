@@ -24,7 +24,7 @@ def root():
 def ping(db: Session = Depends(get_db)):
     return {"status": "ok"}
 
-from app.services.database import Base
+from app.database import Base
 from app.models import user, resource, booking, blocked, holiday
 @app.on_event("startup")
 def create_tables():
