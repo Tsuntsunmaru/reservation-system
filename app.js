@@ -149,7 +149,7 @@ async function submitForm() {
 
     } else {
 
-      const res = await fetch(API + "/bookings/", {
+      const res = await fetch(API + "/bookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
