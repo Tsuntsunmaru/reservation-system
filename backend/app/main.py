@@ -1,7 +1,10 @@
 from fastapi import FastAPI,Depends
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import booking,resource,auth,admin
+from app.routers import booking as booking_router
+from app.routers import resource as resource_router
+from app.routers import auth as auth_router
+from app.routers import admin as admin_router
 
 from app.database import engine
 from sqlalchemy import text
