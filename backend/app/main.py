@@ -41,10 +41,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(booking.router)
-app.include_router(resource.router)
-app.include_router(auth.router)
-app.include_router(admin.router)
+
+app.include_router(booking_router.router)
+app.include_router(resource_router.router)
+app.include_router(auth_router.router)
+app.include_router(admin_router.router)
+
 
 #try:
    # with engine.connect() as conn:
