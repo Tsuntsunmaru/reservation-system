@@ -181,3 +181,14 @@ def import_all(
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/reset-all")
+def reset_all(db: Session = Depends(get_db)):
+    db.query(Booking).delete()
+    db.query(BlockedSlot).delete()
+    db.query(Holiday).delete()
+    db.query(Resource).delete()
+    db.query(User).delete()
+    db.commit()
+
+    return {"msg": "reset done"}
