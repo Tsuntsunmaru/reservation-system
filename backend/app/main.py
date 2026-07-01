@@ -26,12 +26,6 @@ def root():
 @app.get("/ping")
 def ping(db: Session = Depends(get_db)):
     return {"status": "ok"}
-
-from app.database import Base
-from app.models import user, resource, booking, blocked, holiday
-@app.on_event("startup")
-def create_tables():
-    Base.metadata.create_all(bind=engine)
     
 app.add_middleware(
     CORSMiddleware,
