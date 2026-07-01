@@ -12,6 +12,10 @@ from app.database import get_db
 
 app = FastAPI()
 
+
+
+
+
 @app.api_route("/", methods=["GET","HEAD"])
 def root():
     return {"message": "ok"}
@@ -19,6 +23,12 @@ def root():
 @app.get("/ping")
 def ping(db: Session = Depends(get_db)):
     return {"status": "ok"}
+
+from app.services.database import Base
+from app.models import user, resource, booking, blocked, holiday
+@app.on_event("startup")
+def create_tables():
+    Base.metadata.create_all(bind=engine)
     
 app.add_middleware(
     CORSMiddleware,
