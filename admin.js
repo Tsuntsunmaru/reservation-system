@@ -37,7 +37,7 @@ async function registerUser() {
   }
 }
 
-async function changeRole() {
+async function changeUserRole() {
   const email = document.getElementById("changeEmail").value;
   const role = document.getElementById("changeRole").value;
   const center = document.getElementById("changeCenter").value;
