@@ -7,11 +7,15 @@ from app.models.booking import Booking
 from app.models.user import User
 from app.core.deps import get_user, is_admin, is_hq, is_leader
 from app.models.resource import Resource
+from datetime import datetime, timedelta
 
 router = APIRouter()
 
 @router.get("/bookings")
 def get_bookings(center: str, db: Session = Depends(get_db)):
+
+    cleanup_old_bookings(db)
+    
     bookings = db.query(Booking).filter(Booking.center == center).all()
 
     result = []
@@ -49,6 +53,15 @@ def can_book(db, resource_id, start_at, end_at, user, booking_id=None):
         return False, "その時間は既に予約があります"
 
     return True, "ok"
+
+def cleanup_old_bookings(db: Session):
+    threshold = datetime.now() - timedelta(days=30)
+
+    db.query(Booking).filter(
+        Booking.end_at < threshold
+    ).delete(synchronize_session=False)
+
+    db.commit()
 
 @router.post("/bookings")
 def create_booking(
